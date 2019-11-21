@@ -18,7 +18,7 @@ void tasks() {
 
 void printVector(vector<string>& v) {
   cout << endl;
-  cout << "Printing Vector:";
+  cout << "Printing Vector:" << endl;
   for (int i = 0; i < (int) v.size(); i++) {
     cout << v[i] << endl;
   }
@@ -26,9 +26,13 @@ void printVector(vector<string>& v) {
 }
 
 void basicFileTest() {
+  cout << endl
+       << "Basic file loading test:"
+       << endl;
   vector<string> lines;
   loadFile(lines, "assembler/BabyTest1-Assembler.txt");
   printVector(lines);
+  displayTest("Loads assembler text file (requires manual checking, will always pass)");
 }
 
 void displayIntro() {
