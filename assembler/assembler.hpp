@@ -5,4 +5,4 @@
 using namespace std;
 
 // Seperates a line into different components
-int splitLine(string line, vector<string> token);
+int splitLine(string line, vector<string> &token);
