@@ -5,7 +5,8 @@ using namespace std;
 
 vector<opcode> opcodes;
 
-void storeOpcode(string assembly, int decimal) {
+void storeOpcode(string assembly, int decimal)
+{
   opcode toStore;
   toStore.assembly = assembly;
   toStore.decimal = decimal;
@@ -13,7 +14,8 @@ void storeOpcode(string assembly, int decimal) {
   opcodes.push_back(toStore);
 }
 
-void storeOpcodes() {
+void storeOpcodes()
+{
   storeOpcode("JMP", 0);
   storeOpcode("JRP", 1);
   storeOpcode("LDN", 2);
