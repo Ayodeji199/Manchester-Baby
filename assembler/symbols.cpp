@@ -1,15 +1,15 @@
-#include "symbolTable.hpp"
+#include "symbols.hpp"
 
 using namespace std;
 
 // Constructor
-SymbolTable::SymbolTable()
+Symbols::Symbols()
 {
     num = 0;
 }
 
 // Stores a variable in the symbol table if it hasn't already been stored and assigns it a memory location
-int SymbolTable::store(string var)
+int Symbols::store(string var)
 {
     // Checks if the variable is not already in the table
     if (table.find(var) == table.end())
@@ -20,6 +20,7 @@ int SymbolTable::store(string var)
 }
 
 // Returns the memory location of a variable
-int SymbolTable::get(string var) {
+int Symbols::get(string var)
+{
     return table[var];
 }
