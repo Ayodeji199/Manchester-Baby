@@ -20,11 +20,13 @@ int main()
 		{
 			cout << token.at(j) << " ";
 		}
-		if ((int)token.size() != 0) // at the end of the test loop, ends the line
+		// at the end of the test loop, output \n
+		if ((int)token.size() != 0)
 		{
 			cout << endl;
 		}
 	}
+
 	// > CURRENT OUTPUT <
 	/*
 	VAR 0 
@@ -38,6 +40,7 @@ int main()
 	NUM02: VAR 621 
 	MYSUM: VAR 0
 	*/
+
 	return 0;
 }
 
@@ -52,19 +55,25 @@ int splitLine(string line, vector<string> &token)
 		// if the character is ;
 		if (line[i] == ';')
 		{
+			// if there is a component to add
 			if (chrs.length() != 0)
 			{
+				// add component to vector
 				token.push_back(chrs);
 				chrs = "";
 			}
 			break;
 		}
+		// if the character isn't \0, a tab or a whitespace
 		if (line[i] != '\0' && line[i] != '\t' && line[i] != ' ')
 		{
+			// add character to component
 			chrs += line[i];
 		}
+		// if there is a component to add
 		else if (chrs.length() != 0)
 		{
+			// add component to vector
 			token.push_back(chrs);
 			chrs = "";
 		}
