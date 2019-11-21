@@ -54,7 +54,3 @@ int splitLine(string line, vector<string> token)
 
 	return 0;
 }
-
-// Hey Tadas, I'm just about to leave the qmb so could you save what you have and commit it
-// one sec
-// ight u can go
