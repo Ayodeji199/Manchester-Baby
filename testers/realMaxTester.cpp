@@ -1,7 +1,7 @@
 #include "realMaxTester.hpp"
 
 // Include the files you are testing here
-#include "../assembler/assembler.hpp"
+#include "../file/file.hpp"
 
 using namespace std;
 
