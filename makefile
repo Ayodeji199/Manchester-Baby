@@ -10,8 +10,12 @@ CVERSION = -std=c++17
 all: realMaxTester
 
 realMaxTester: tester/realMaxTester.cpp file/file.cpp
-	# Compiles program
+	# Compiles real max tester
 	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o realMaxTester.o tester/realMaxTester.cpp file/file.cpp
+
+assembler: assembler/assembler.cpp file.file.cpp
+	# Compiles assembler
+	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o assembler/assembler.o assembler/assembler.cpp file/file.cpp
 
 clean :
 	# Deletes unused files
