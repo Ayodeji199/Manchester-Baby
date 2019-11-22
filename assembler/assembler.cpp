@@ -1,7 +1,7 @@
 #include "assembler.hpp"
 #include "opcodes.hpp"
 #include "symbols.hpp"
-#include "error/error.hpp"
+#include "../error/error.hpp"
 
 using namespace std;
 
