@@ -6,13 +6,6 @@
 #include <string>
 #include <vector>
 
-enum states {
-  SUCCESS,
-  FILE_NOT_FOUND,
-  FILE_INVALID,
-};
-
-int loadFile(std::vector<std::string>& fileLines, std::string filename);
-int openFile(std::ifstream* fileToOpen, std::string filename);
-
+void loadFile(std::vector<std::string> &fileLines, std::string filename);
+int openFile(std::ifstream *fileToOpen, std::string filename);
 #endif

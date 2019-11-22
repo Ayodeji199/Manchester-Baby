@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// Constructor
 Opcodes::Opcodes() {
   storeDefaults();
 }
@@ -12,16 +13,19 @@ bool Opcodes::isOpcode(string assembly) {
   return table.find(assembly) != table.end();
 }
 
+// Stores an opcode in the table
 void Opcodes::store(string assembly, int decimal)
 {
   table[assembly] = decimalToBinary(decimal);
 }
 
+// Returns the binary value for an opcode stored in the table
 string Opcodes::getBinary(string assembly)
 {
   return table[assembly];
 }
 
+// Stores the Manchester Baby's default opcodes in the table
 void Opcodes::storeDefaults()
 {
   store("JMP", 0);
