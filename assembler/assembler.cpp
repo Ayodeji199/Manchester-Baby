@@ -97,7 +97,8 @@ int splitLine(string line, vector<string> &token)
 }
 
 // Analyses an instruction
-int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes &opcodeObj, Symbols &symbolObj) {
+int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes &opcodeObj, Symbols &symbolObj)
+{
 	if (opcodeCandidate == "VAR")
 	{
 		symbolObj.storeVar(operandCandidate);
@@ -106,7 +107,8 @@ int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes 
 	{
 		// TODO: Store some indication to store opcode in object code in second pass
 	}
-	else {
+	else
+	{
 		// TODO: Invalid opcode
 	}
 	return 0;
