@@ -47,7 +47,9 @@ int Assembler::assembly()
 
 	for (int i = 0; i < (int)line->size(); i++) // go through each line
 	{
-		// TODO - this is gonna be the assembly loop
+		// TODO - ANY ASSEMBLY-RELATED FUNCTIONS GO IN THIS LOOP
+		// NOTE - ASSEMBLY HAS TO BE DONE LINE BY LINE
+
 		vector<string> token = {};					  // create vector to store the line's components
 		if (splitLine(line->at(i), token) != SUCCESS) // separates a line into different components
 		{
