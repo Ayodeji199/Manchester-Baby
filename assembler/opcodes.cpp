@@ -18,7 +18,8 @@ bool Opcodes::isOpcode(string assembly)
 // Stores an opcode in the table
 void Opcodes::store(string assembly, int decimal)
 {
-  table[assembly] = decimalToBinary(decimal);
+  // TODO: Uncomment line when decimal to binary method is written
+  // table[assembly] = decimalToBinary(decimal);
 }
 
 // Returns the binary value for an opcode stored in the table
