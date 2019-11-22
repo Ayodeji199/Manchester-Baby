@@ -33,8 +33,8 @@ Assembler::Assembler()
 {
 	opcodesObj = new Opcodes();
 	symbolsObj = new Symbols();
-	line = new vector<string>;			  // vector to store lines
-	filename = "BabyTest1-Assembler.txt"; // REVIEW - potential string for user input
+	line = new vector<string>; // vector to store lines
+	filename = "BabyTest1-Assembler.txt";
 	objectCode = new vector<string>;
 }
 
@@ -43,20 +43,12 @@ Assembler::Assembler()
 ====================*/
 int Assembler::assembly()
 {
-	loadFile(*line, filename); // load file and store lines into vector
-	splitLines(); 			   // splits each line into individual components
-
-	// firstPass(token, opcodesObj, symbolsObj);
-	return SUCCESS;
-}
-
-/*===================================================
-    Separates each line into different components
-===================================================*/
-int Assembler::splitLines() {
+	loadFile(*line, filename);					// load file and store lines into vector
 	for (int i = 0; i < (int)line->size(); i++) // go through each line
 	{
-		// TODO - this is gonna be the assembly loop
+		// TODO - PLACE OTHER ASSEMBLY-RELATED FUNCTIONS IN THIS LOOP
+		// NOTE - THE ASSEMBLY PROCESS HAS TO BE LINE BY LINE
+
 		vector<string> token = {};					  // create vector to store the line's components
 		if (splitLine(line->at(i), token) != SUCCESS) // separates a line into different components
 		{
@@ -136,7 +128,8 @@ int Assembler::analyseInstruction(string opcodeCandidate, string operandCandidat
 		symbolsObj->storeVar(operandCandidate);
 	}
 	// Checks if the opcode candidate is not a standard opcode
-	else if (!opcodesObj->isOpcode(opcodeCandidate)) {
+	else if (!opcodesObj->isOpcode(opcodeCandidate))
+	{
 		// Displays an error message and quits the program
 		checkValidity(INVALID_OPCODE);
 	}

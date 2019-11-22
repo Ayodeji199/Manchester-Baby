@@ -21,8 +21,6 @@ public:
     Assembler();
     // The whole shabang
     int assembly();
-    //
-    int splitLines();
     // Seperates a line into different components
     int splitLine(std::string line, std::vector<std::string> &token);
     //
