@@ -44,7 +44,7 @@ int binaryToDecimal(string binary)
 
         // initialise variables for conversion algorithm
         // Conversion algorithm was aquired from https://www.geeksforgeeks.org/program-binary-decimal-conversion/
-        int temp = stoi(binary); // note we convert the user's string to an integer using the stoi function
+        long int temp = stol(binary); // note we convert the user's string to an integer using the stoi function
         int convertedDecimal = 0;
         int base = 1;
         int lastNum;

@@ -87,13 +87,17 @@ int splitLine(string line, vector<string> &token)
 	return 0;
 }
 
-
-int findType(string snippet, Opcodes &opcodeObj, Symbols &symbolObj) {
-	if (opcodeObj.isOpcode(snippet))
+// Analyses an instruction
+int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes &opcodeObj, Symbols &symbolObj) {
+	if (opcodeCandidate == "VAR")
 	{
-		// TODO: Store opcode in object code
+		symbolObj.storeVar(operandCandidate);
+	}
+	if (opcodeObj.isOpcode(opcodeCandidate))
+	{
+		// TODO: Store some indication to store opcode in object code in second pass
 	}
 	else {
-		symbolObj.storeVar(snippet);
+		// TODO: Invalid opcode
 	}
 }
