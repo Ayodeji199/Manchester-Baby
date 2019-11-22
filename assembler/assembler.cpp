@@ -1,6 +1,7 @@
 #include "assembler.hpp"
 #include "opcodes.hpp"
 #include "symbols.hpp"
+#include "error/error.hpp"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ int main()
 
 	Opcodes opcodesObj = Opcodes();
 	Symbols symbolsObj = Symbols();
+	vector<string> objectCode;
 
 	return 0;
 }
@@ -87,17 +89,19 @@ int splitLine(string line, vector<string> &token)
 	return 0;
 }
 
-// Analyses an instruction
+// Analyses an instruction for the first time to get symbols and verify syntax
 int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes &opcodeObj, Symbols &symbolObj) {
+	// Checks if the opcode candidate is a variable
 	if (opcodeCandidate == "VAR")
 	{
+		// Stores the variable in the symbols table
 		symbolObj.storeVar(operandCandidate);
 	}
-	if (opcodeObj.isOpcode(opcodeCandidate))
-	{
-		// TODO: Store some indication to store opcode in object code in second pass
-	}
+	// Checks if the opcode candidate is a normal opcode
+	if (opcodeObj.isOpcode(opcodeCandidate)) {}
+	// Runs if the opcode candidate isn't valid
 	else {
-		// TODO: Invalid opcode
+		// Displays an error message and quits the program
+		checkValidity(INVALID_OPCODE);
 	}
 }
