@@ -1,15 +1,17 @@
-#include <opcodes.hpp>
-#include <../converter/converter.hpp>
+#include "opcodes.hpp"
+#include "../converter/converter.hpp"
 
 using namespace std;
 
 // Constructor
-Opcodes::Opcodes() {
+Opcodes::Opcodes()
+{
   storeDefaults();
 }
 
 // Returns true if the variable is contained within the Opcodes table
-bool Opcodes::isOpcode(string assembly) {
+bool Opcodes::isOpcode(string assembly)
+{
   return table.find(assembly) != table.end();
 }
 
@@ -36,4 +38,3 @@ void Opcodes::storeDefaults()
   store("CMP", 6);
   store("STP", 7);
 }
-

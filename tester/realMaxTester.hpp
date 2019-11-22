@@ -1,3 +1,6 @@
+#ifndef REAL_MAX_TESTER_H
+#define REAL_MAX_TESTER_H
+
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -13,3 +16,5 @@ void displayPass();
 void displayFail();
 void failIndividual();
 void displayTest(std::string str);
+
+#endif
