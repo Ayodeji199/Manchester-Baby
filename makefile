@@ -15,7 +15,7 @@ realMaxTester: tester/realMaxTester.cpp file/file.cpp
 
 assembler: assembler/assembler.cpp file.file.cpp
 	# Compiles assembler
-	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o assembler/assembler.o assembler/assembler.cpp file/file.cpp
+	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o assembler.o assembler/assembler.cpp file/file.cpp
 
 clean :
 	# Deletes unused files

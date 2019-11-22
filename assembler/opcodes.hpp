@@ -11,6 +11,8 @@ private:
 
 public:
   Opcodes();
+  // Returns true if the variable is contained within the Symbols table
+  bool isOpcode(string assembly);
   void store(std::string assembly, int decimal);
   std::string getBinary(std::string assembly);
 };

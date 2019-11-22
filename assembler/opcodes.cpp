@@ -7,6 +7,11 @@ Opcodes::Opcodes() {
   storeDefaults();
 }
 
+// Returns true if the variable is contained within the Opcodes table
+bool Opcodes::isOpcode(string assembly) {
+  return table.find(assembly) != table.end();
+}
+
 void Opcodes::store(string assembly, int decimal)
 {
   table[assembly] = decimalToBinary(decimal);
