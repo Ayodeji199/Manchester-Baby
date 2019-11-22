@@ -1,4 +1,6 @@
 #include "assembler.hpp"
+#include "opcodes.hpp"
+#include "symbols.hpp"
 
 using namespace std;
 
@@ -41,6 +43,9 @@ int main()
 	MYSUM: VAR 0
 	*/
 
+	Opcodes opcodesObj = Opcodes();
+	Symbols symbolsObj = Symbols();
+
 	return 0;
 }
 
@@ -80,4 +85,15 @@ int splitLine(string line, vector<string> &token)
 	}
 
 	return 0;
+}
+
+
+int findType(string snippet, Opcodes &opcodeObj, Symbols &symbolObj) {
+	if (opcodeObj.isOpcode(snippet))
+	{
+		// TODO: Store opcode in object code
+	}
+	else {
+		symbolObj.storeVar(snippet);
+	}
 }
