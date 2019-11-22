@@ -1,4 +1,5 @@
 #include "converter.hpp"
+#include "../error/error.hpp"
 #include <iostream>
 #include <locale>
 #include <algorithm>
@@ -11,9 +12,7 @@ int binaryToDecimal(string binary)
         if (binary.empty())
         {
             // print an error message if any of the above conditions are true
-            cout << "INVALID INPUT - PLEASE TRY AGAIN" << endl;
-            cout << endl;
-            return 999; //  return error code;
+            checkValidity(INVALID_INPUT_PARAMETER);
         }
 
         // initialise variables for error check algorithm
@@ -33,9 +32,7 @@ int binaryToDecimal(string binary)
                 if (tempString.compare("1") != 0)
                 {
                     // if the element is not a 1 then it is invalid. Print an error messages to signal this
-                    cout << "INVALID INPUT - NUMBERS ARE NOT 1 OR 0" << endl;
-                    cout << endl;
-                    return 999; // return error code           	}
+                   checkValidity(INVALID_INPUT_PARAMETER);
                 }
             }
 
