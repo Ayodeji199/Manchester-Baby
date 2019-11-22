@@ -13,6 +13,8 @@
 #define FILE_NOT_FOUND -202
 #define FILE_NOT_SAVED -203
 
+#define INVALID_INPUT_PARAMETER -101
+
 // Displays an error message to the user based on the apppropriate error code
 // imported and quits the program, will do nothing if SUCCESS is passed
 void checkValidity(int valid);
