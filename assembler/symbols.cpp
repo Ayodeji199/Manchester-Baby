@@ -27,7 +27,10 @@ int Symbols::storeVar(string var)
         freeMemory += 32;
         //
         num++;
+        //
+        return true;
     }
+    return false;
 }
 
 // Returns the memory location of a variable
