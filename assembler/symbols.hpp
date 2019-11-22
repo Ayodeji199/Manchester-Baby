@@ -1,3 +1,6 @@
+#ifndef SYMBOLS_H
+#define SYMBOLS_H
+
 #include <string>
 #include <map>
 #include <unordered_map>
@@ -23,3 +26,5 @@ public:
     // Returns the memory location of a variable
     int get(std::string var);
 };
+
+#endif

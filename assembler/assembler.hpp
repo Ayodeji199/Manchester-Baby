@@ -1,3 +1,5 @@
+#ifndef ASSEMBLER_H
+#define ASSEMBLER_H
 
 #include "../file/file.hpp"
 #include <iostream>
@@ -12,3 +14,5 @@ enum states
 
 // Seperates a line into different components
 int splitLine(std::string line, std::vector<std::string> &token);
+
+#endif
