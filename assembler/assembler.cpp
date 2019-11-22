@@ -39,21 +39,12 @@ Assembler::Assembler()
 }
 
 /*====================
-    The whole shabang
+    The assembly loop
 ====================*/
 int Assembler::assembly()
 {
 	loadFile(*line, filename); // load file and store lines into vector
-	splitLines(); 			   // splits each line into individual components
 
-	// firstPass(token, opcodesObj, symbolsObj);
-	return SUCCESS;
-}
-
-/*===================================================
-    Separates each line into different components
-===================================================*/
-int Assembler::splitLines() {
 	for (int i = 0; i < (int)line->size(); i++) // go through each line
 	{
 		// TODO - this is gonna be the assembly loop
@@ -136,7 +127,8 @@ int Assembler::analyseInstruction(string opcodeCandidate, string operandCandidat
 		symbolsObj->storeVar(operandCandidate);
 	}
 	// Checks if the opcode candidate is not a standard opcode
-	else if (!opcodesObj->isOpcode(opcodeCandidate)) {
+	else if (!opcodesObj->isOpcode(opcodeCandidate))
+	{
 		// Displays an error message and quits the program
 		checkValidity(INVALID_OPCODE);
 	}
