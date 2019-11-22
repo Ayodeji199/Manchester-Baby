@@ -14,6 +14,7 @@ bool individualPass = true;
 // functions used in the header files (maybe needing to return 0)
 void tasks() {
   basicFileTest();
+  assemblerFirstPassTest();
 }
 
 void printVector(vector<string>& v) {
@@ -33,6 +34,15 @@ void basicFileTest() {
   loadFile(lines, "assembler/BabyTest1-Assembler.txt");
   printVector(lines);
   displayTest("Loads assembler text file (requires manual checking, will always pass)");
+}
+
+void assemblerFirstPassTest()
+{
+  cout << endl
+       << "Assembler first pass test:"
+       << endl;
+
+  displayTest("");
 }
 
 void displayIntro() {
