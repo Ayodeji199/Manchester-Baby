@@ -19,7 +19,7 @@ public:
   // Constructor
   Opcodes();
   // Returns true if the variable is contained within the Symbols table
-  bool isOpcode(string assembly);
+  bool isOpcode(std::string assembly);
   // Stores an opcode in the table
   void store(std::string assembly, int decimal);
   // Returns the binary value for an opcode stored in the table

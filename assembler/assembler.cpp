@@ -6,27 +6,9 @@ using namespace std;
 
 int main()
 {
-	vector<string> line = {};					 // vector to store lines
-	string filename = "BabyTest1-Assembler.txt"; // REVIEW - potential string for user input
-	loadFile(line, filename);					 // load file and store lines into vector
-
-	for (int i = 0; i < (int)line.size(); i++) // go through each line
+	if (assembly() != SUCCESS)
 	{
-		// TODO - this is gonna be the assembly loop
-
-		vector<string> token = {};	// create vector to store the line's components
-		splitLine(line.at(i), token); // separates a line into different components
-
-		// loop for testing. outputs the line's tokens (components) separated by spaces
-		for (int j = 0; j < (int)token.size(); j++)
-		{
-			cout << token.at(j) << " ";
-		}
-		// at the end of the test loop, output \n
-		if ((int)token.size() != 0)
-		{
-			cout << endl;
-		}
+		return 1;
 	}
 
 	// > CURRENT OUTPUT <
@@ -43,10 +25,37 @@ int main()
 	MYSUM: VAR 0
 	*/
 
+	return SUCCESS;
+}
+
+/*====================
+    The whole shabang
+====================*/
+int assembly()
+{
 	Opcodes opcodesObj = Opcodes();
 	Symbols symbolsObj = Symbols();
 
-	return 0;
+	vector<string> line = {};					 // vector to store lines
+	string filename = "BabyTest1-Assembler.txt"; // REVIEW - potential string for user input
+	loadFile(line, filename);					 // load file and store lines into vector
+
+	for (int i = 0; i < (int)line.size(); i++) // go through each line
+	{
+		// TODO - this is gonna be the assembly loop
+
+		vector<string> token = {};					 // create vector to store the line's components
+		if (splitLine(line.at(i), token) != SUCCESS) // separates a line into different components
+		{
+			return 5; // no enum for this yet im just kinda using a random number for now as a general fail
+		}
+		if (testTokenization(token) != SUCCESS)
+		{
+			return 5; // no enum for this yet im just kinda using a random number for now as a general fail
+		}
+	}
+
+	return SUCCESS;
 }
 
 /*=============================================
@@ -84,7 +93,7 @@ int splitLine(string line, vector<string> &token)
 		}
 	}
 
-	return 0;
+	return SUCCESS;
 }
 
 // Analyses an instruction
@@ -100,4 +109,22 @@ int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes 
 	else {
 		// TODO: Invalid opcode
 	}
+	return 0;
+}
+
+// =================== ANCHOR - TEST FUNCTIONS ===================
+
+int testTokenization(vector<string> token)
+{
+	// loop for testing. outputs the line's tokens (components) separated by spaces
+	for (int j = 0; j < (int)token.size(); j++)
+	{
+		cout << token.at(j) << " ";
+	}
+	// at the end of the test loop, output \n
+	if ((int)token.size() != 0)
+	{
+		cout << endl;
+	}
+	return SUCCESS;
 }
