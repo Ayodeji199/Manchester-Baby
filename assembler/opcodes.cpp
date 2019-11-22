@@ -1,26 +1,35 @@
-#include <../converter/converter.hpp>
 #include <opcodes.hpp>
+#include <../converter/converter.hpp>
 
 using namespace std;
 
-vector<opcode> opcodes;
-
-void storeOpcode(string assembly, int decimal)
-{
-  opcode toStore;
-  toStore.assembly = assembly;
-  toStore.decimal = decimal;
-  toStore.binary = decimalToBinary(decimal);
-  opcodes.push_back(toStore);
+Opcodes::Opcodes() {
+  storeDefaults();
 }
 
-void storeOpcodes()
-{
-  storeOpcode("JMP", 0);
-  storeOpcode("JRP", 1);
-  storeOpcode("LDN", 2);
-  storeOpcode("STO", 3);
-  storeOpcode("SUB", 4);
-  storeOpcode("CMP", 6);
-  storeOpcode("STP", 7);
+// Returns true if the variable is contained within the Opcodes table
+bool Opcodes::isOpcode(string assembly) {
+  return table.find(assembly) != table.end();
 }
+
+void Opcodes::store(string assembly, int decimal)
+{
+  table[assembly] = decimalToBinary(decimal);
+}
+
+string Opcodes::getBinary(string assembly)
+{
+  return table[assembly];
+}
+
+void Opcodes::storeDefaults()
+{
+  store("JMP", 0);
+  store("JRP", 1);
+  store("LDN", 2);
+  store("STO", 3);
+  store("SUB", 4);
+  store("CMP", 6);
+  store("STP", 7);
+}
+

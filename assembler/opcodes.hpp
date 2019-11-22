@@ -1,10 +1,18 @@
 #include <string>
+#include <map>
+#include <unordered_map>
 #include <vector>
 
-struct opcode {
-  std::string assembly;
-  std::string binary;
-  int decimal;
-};
+class Opcodes
+{
+private:
+  std::map<std::string, std::string> table;
+  void storeDefaults();
 
-void storeOpcode(std::string assembly, int decimal);
+public:
+  Opcodes();
+  // Returns true if the variable is contained within the Symbols table
+  bool isOpcode(string assembly);
+  void store(std::string assembly, int decimal);
+  std::string getBinary(std::string assembly);
+};
