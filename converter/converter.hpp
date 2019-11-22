@@ -1,3 +1,6 @@
+#ifndef CONVERTER_H
+#define CONVERTER_H
+
 #include <string>
 
 int binaryToDecimal(std::string binary);
@@ -8,3 +11,5 @@ int decimalToHex(int decimal);
 
 std::string hexToBinary(int hex);
 int hexToDecimal(int hex);
+
+#endif

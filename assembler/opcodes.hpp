@@ -1,3 +1,6 @@
+#ifndef OPCODES_H
+#define OPCODES_H
+
 #include <string>
 #include <map>
 #include <unordered_map>
@@ -16,3 +19,5 @@ public:
   void store(std::string assembly, int decimal);
   std::string getBinary(std::string assembly);
 };
+
+#endif
