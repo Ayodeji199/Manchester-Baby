@@ -47,6 +47,7 @@ int main()
 	Opcodes opcodesObj = Opcodes();
 	Symbols symbolsObj = Symbols();
 	vector<string> objectCode;
+	// firstPass(token, opcodesObj, symbolsObj);
 
 	return 0;
 }
@@ -89,18 +90,39 @@ int splitLine(string line, vector<string> &token)
 	return 0;
 }
 
+int firstPass(vector<string> &token, Opcodes &opcodesObj, Symbols &symbolsObj)
+{
+	for (int i = 0; i < (int)token.size(); i++)
+	{
+		// Checks if a token defines a method
+		if (token[i].back() == ':')
+		{
+			string method = token[i].substr(0, token[i].size() - 2);
+		}
+		else
+		{
+			analyseInstruction(token[i],token[i+1],opcodesObj,symbolsObj);
+			i++;
+		}
+	}
+}
+
 // Analyses an instruction for the first time to get symbols and verify syntax
-int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes &opcodeObj, Symbols &symbolObj) {
+int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes &opcodesObj, Symbols &symbolsObj)
+{
 	// Checks if the opcode candidate is a variable
 	if (opcodeCandidate == "VAR")
 	{
 		// Stores the variable in the symbols table
-		symbolObj.storeVar(operandCandidate);
+		symbolsObj.storeVar(operandCandidate);
 	}
 	// Checks if the opcode candidate is a normal opcode
-	if (opcodeObj.isOpcode(opcodeCandidate)) {}
+	if (opcodesObj.isOpcode(opcodeCandidate))
+	{
+	}
 	// Runs if the opcode candidate isn't valid
-	else {
+	else
+	{
 		// Displays an error message and quits the program
 		checkValidity(INVALID_OPCODE);
 	}
