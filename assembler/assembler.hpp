@@ -20,16 +20,16 @@ private:
 public:
     Assembler();
     // The assembly loop
-    int assembly();
+    void assembly();
     // Seperates a line into different components
-    int splitLine(std::string line, std::vector<std::string> &token);
+    void splitLine(std::string line, std::vector<std::string> &token);
     //
-    int firstPass(std::vector<std::string> &token);
+    void processLine(std::vector<std::string> &token);
     //
-    int analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
+    void analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
 
     // =================== ANCHOR - TEST FUNCTIONS ===================
-    int testTokenization(std::vector<std::string> token);
+    void testTokenization(std::vector<std::string> token);
 };
 
 #endif

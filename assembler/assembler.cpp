@@ -6,12 +6,7 @@ using namespace std;
 int main()
 {
 	Assembler assemblerObj = Assembler();
-
-	if (assemblerObj.assembly() != SUCCESS)
-	{
-		return 1;
-	}
-
+	assemblerObj.assembly();
 	return SUCCESS;
 }
 
@@ -41,7 +36,7 @@ Assembler::Assembler()
 /*====================
     The assembly loop
 ====================*/
-int Assembler::assembly()
+void Assembler::assembly()
 {
 	loadFile(*line, filename); // load file and store lines into vector
 
@@ -49,24 +44,17 @@ int Assembler::assembly()
 	{
 		// TODO - ANY ASSEMBLY-RELATED FUNCTIONS GO IN THIS LOOP
 		// NOTE - ASSEMBLY HAS TO BE DONE LINE BY LINE
-
-		vector<string> token = {};					  // create vector to store the line's components
-		if (splitLine(line->at(i), token) != SUCCESS) // separates a line into different components
-		{
-			return 5; // no enum for this yet im just kinda using a random number for now as a general fail
-		}
-		if (testTokenization(token) != SUCCESS)
-		{
-			return 5; // no enum for this yet im just kinda using a random number for now as a general fail
-		}
+		vector<string> token;		   // create vector to store the line's components
+		splitLine(line->at(i), token); // separates a line into different components
+		testTokenization(token);
+		processLine(token);
 	}
-	return SUCCESS;
 }
 
 /*=============================================
     Separates a line into different components
 =============================================*/
-int Assembler::splitLine(string line, vector<string> &token)
+void Assembler::splitLine(string line, vector<string> &token)
 {
 	string chrs = "";
 	for (int i = 0; i < (int)line.length(); i++)
@@ -97,13 +85,11 @@ int Assembler::splitLine(string line, vector<string> &token)
 			chrs = "";
 		}
 	}
-
-	return SUCCESS;
 }
 
-int Assembler::firstPass(vector<string> &token)
+void Assembler::processLine(vector<string> &token)
 {
-	for (int i = 0; i < (int)token.size(); i++)
+	for (int i = 0; i < (int) token.size(); i++)
 	{
 		// Checks if a token defines a method
 		if (token[i].back() == ':')
@@ -116,11 +102,10 @@ int Assembler::firstPass(vector<string> &token)
 			i++;
 		}
 	}
-	return SUCCESS;
 }
 
 // Analyses an individual instruction for the first time to get symbols and verify syntax
-int Assembler::analyseInstruction(string opcodeCandidate, string operandCandidate)
+void Assembler::analyseInstruction(string opcodeCandidate, string operandCandidate)
 {
 	// Checks if the opcode candidate is a variable
 	if (opcodeCandidate == "VAR")
@@ -134,13 +119,11 @@ int Assembler::analyseInstruction(string opcodeCandidate, string operandCandidat
 		// Displays an error message and quits the program
 		checkValidity(INVALID_OPCODE);
 	}
-
-	return 0;
 }
 
 // =================== ANCHOR - TEST FUNCTIONS ===================
 
-int Assembler::testTokenization(vector<string> token)
+void Assembler::testTokenization(vector<string> token)
 {
 	// loop for testing. outputs the line's tokens (components) separated by spaces
 	for (int j = 0; j < (int)token.size(); j++)
@@ -152,5 +135,4 @@ int Assembler::testTokenization(vector<string> token)
 	{
 		cout << endl;
 	}
-	return SUCCESS;
 }
