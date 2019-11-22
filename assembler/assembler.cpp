@@ -1,19 +1,22 @@
 #include "assembler.hpp"
-#include "opcodes.hpp"
-#include "symbols.hpp"
 #include "../error/error.hpp"
 
 using namespace std;
 
 int main()
 {
-	if (assembly() != SUCCESS)
+	Assembler assemblerObj = Assembler();
+
+	if (assemblerObj.assembly() != SUCCESS)
 	{
 		return 1;
 	}
 
-	// > CURRENT OUTPUT <
-	/*
+	return SUCCESS;
+}
+
+// > CURRENT OUTPUT <
+/*
 	VAR 0 
 	START: LDN NUM01 
 	SUB NUM02 
@@ -26,29 +29,36 @@ int main()
 	MYSUM: VAR 0
 	*/
 
-	return SUCCESS;
+Assembler::Assembler()
+{
+	opcodesObj = new Opcodes();
+	symbolsObj = new Symbols();
+	line = new vector<string>;			  // vector to store lines
+	filename = "BabyTest1-Assembler.txt"; // REVIEW - potential string for user input
+	objectCode = new vector<string>;
 }
 
 /*====================
     The whole shabang
 ====================*/
-int assembly()
+int Assembler::assembly()
 {
-	Opcodes opcodesObj = Opcodes();
-	Symbols symbolsObj = Symbols();
-	vector<string> objectCode;
+	loadFile(*line, filename); // load file and store lines into vector
+	splitLines(); 			   // splits each line into individual components
+
 	// firstPass(token, opcodesObj, symbolsObj);
+	return SUCCESS;
+}
 
-	vector<string> line = {};					 // vector to store lines
-	string filename = "BabyTest1-Assembler.txt"; // REVIEW - potential string for user input
-	loadFile(line, filename);					 // load file and store lines into vector
-
-	for (int i = 0; i < (int)line.size(); i++) // go through each line
+/*===================================================
+    Separates each line into different components
+===================================================*/
+int Assembler::splitLines() {
+	for (int i = 0; i < (int)line->size(); i++) // go through each line
 	{
 		// TODO - this is gonna be the assembly loop
-
-		vector<string> token = {};					 // create vector to store the line's components
-		if (splitLine(line.at(i), token) != SUCCESS) // separates a line into different components
+		vector<string> token = {};					  // create vector to store the line's components
+		if (splitLine(line->at(i), token) != SUCCESS) // separates a line into different components
 		{
 			return 5; // no enum for this yet im just kinda using a random number for now as a general fail
 		}
@@ -57,14 +67,13 @@ int assembly()
 			return 5; // no enum for this yet im just kinda using a random number for now as a general fail
 		}
 	}
-
 	return SUCCESS;
 }
 
 /*=============================================
     Separates a line into different components
 =============================================*/
-int splitLine(string line, vector<string> &token)
+int Assembler::splitLine(string line, vector<string> &token)
 {
 	string chrs = "";
 	for (int i = 0; i < (int)line.length(); i++)
@@ -99,7 +108,7 @@ int splitLine(string line, vector<string> &token)
 	return SUCCESS;
 }
 
-int firstPass(vector<string> &token, Opcodes &opcodesObj, Symbols &symbolsObj)
+int Assembler::firstPass(vector<string> &token)
 {
 	for (int i = 0; i < (int)token.size(); i++)
 	{
@@ -110,37 +119,34 @@ int firstPass(vector<string> &token, Opcodes &opcodesObj, Symbols &symbolsObj)
 		}
 		else
 		{
-			analyseInstruction(token[i],token[i+1],opcodesObj,symbolsObj);
+			analyseInstruction(token[i], token[i + 1]);
 			i++;
 		}
 	}
+	return SUCCESS;
 }
 
-// Analyses an instruction for the first time to get symbols and verify syntax
-int analyseInstruction(string opcodeCandidate, string operandCandidate, Opcodes &opcodesObj, Symbols &symbolsObj)
+// Analyses an individual instruction for the first time to get symbols and verify syntax
+int Assembler::analyseInstruction(string opcodeCandidate, string operandCandidate)
 {
 	// Checks if the opcode candidate is a variable
 	if (opcodeCandidate == "VAR")
 	{
 		// Stores the variable in the symbols table
-		symbolsObj.storeVar(operandCandidate);
+		symbolsObj->storeVar(operandCandidate);
 	}
-	// Checks if the opcode candidate is a normal opcode
-	if (opcodesObj.isOpcode(opcodeCandidate))
-	{
-	}
-	// Runs if the opcode candidate isn't valid
-	else
-	{
+	// Checks if the opcode candidate is not a standard opcode
+	else if (!opcodesObj->isOpcode(opcodeCandidate)) {
 		// Displays an error message and quits the program
 		checkValidity(INVALID_OPCODE);
 	}
+
 	return 0;
 }
 
 // =================== ANCHOR - TEST FUNCTIONS ===================
 
-int testTokenization(vector<string> token)
+int Assembler::testTokenization(vector<string> token)
 {
 	// loop for testing. outputs the line's tokens (components) separated by spaces
 	for (int j = 0; j < (int)token.size(); j++)
