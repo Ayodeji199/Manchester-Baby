@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 enum states
 {
     SUCCESS,
@@ -13,4 +11,4 @@ enum states
 };
 
 // Seperates a line into different components
-int splitLine(std::string line, std::vector<std::string> token);
+int splitLine(std::string line, std::vector<std::string> &token);
