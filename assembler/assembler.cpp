@@ -1,14 +1,15 @@
 #include "assembler.hpp"
 #include "../error/error.hpp"
+#include <cmath>
 
 using namespace std;
 
-int main()
-{
-	Assembler assemblerObj = Assembler();
-	assemblerObj.assembly();
-	return SUCCESS;
-}
+// int main()
+// {
+// 	Assembler assemblerObj = Assembler();
+// 	assemblerObj.assembly();
+// 	return SUCCESS;
+// }
 
 // > CURRENT OUTPUT <
 /*
@@ -26,6 +27,8 @@ int main()
 
 Assembler::Assembler()
 {
+	// Stores the number of words (32-bit integers our memory can store)
+	memoryWordSize = 32;
 	opcodesObj = new Opcodes();
 	symbolsObj = new Symbols();
 	line = new vector<string>;			  // vector to store lines
@@ -38,14 +41,23 @@ Assembler::Assembler()
 ====================*/
 void Assembler::assembly()
 {
-	loadFile(*line, filename); // load file and store lines into vector
+	loadFile(*line, filename);		   // load file and store lines into vector
+	vector<vector<string>> components; // stores each component for each line
 
+	// First Pass: Validates code, stores user-defined variables and assigns them memory locations
 	for (int i = 0; i < (int)line->size(); i++) // go through each line
 	{
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
-		testTokenization(token);
+		// testTokenization(token);
 		processLine(token);
+		components.push_back(token);
+	}
+
+	// Second Pass: Generates object code
+	for (int i = 0; i < (int)components.size(); i++) // go through each line
+	{
+		genBinary(components[i]);
 	}
 }
 
@@ -87,16 +99,21 @@ void Assembler::splitLine(string line, vector<string> &token)
 
 void Assembler::processLine(vector<string> &token)
 {
-	for (int i = 0; i < (int) token.size(); i++)
+	// Loops through each component of the line
+	for (int i = 0; i < (int)token.size(); i++)
 	{
-		// Checks if a token defines a method
+		// Checks if a token defines a user defined variable
 		if (token[i].back() == ':')
 		{
-			string method = token[i].substr(0, token[i].size() - 2);
+			// Deletes the ':' from the token and stores this as the name of the symbol we're storing
+			string name = token[i].substr(0, token[i].size() - 2);
+			// Stores the varialbe in the symbols table
+			symbolsObj->storeVar(token[i + 1]);
 		}
 		else
 		{
 			analyseInstruction(token[i], token[i + 1]);
+			// Increments counter by 1 as the next component is an operand and has already been analysed
 			i++;
 		}
 	}
@@ -117,6 +134,93 @@ void Assembler::analyseInstruction(string opcodeCandidate, string operandCandida
 		// Displays an error message and quits the program
 		checkValidity(INVALID_OPCODE);
 	}
+}
+
+void Assembler::genBinary(vector<string> &token)
+{
+	// Loops through each component of the line
+	for (int i = 0; i < (int)token.size(); i++)
+	{
+		// Checks if a token defines a user defined variable
+		if (token[i].back() == ':')
+		{
+			// Deletes the ':' from the token and stores this as the name of the symbol we're storing
+			string name = token[i].substr(0, token[i].size() - 2);
+			// Stores the memory location in the symbols table
+			string memoryLocation = symbolsObj->get(token[i + 1]);
+			//
+			objectCode->push_back(memoryLocation);
+		}
+		else if (token[i] == "STP") {
+			// Adds together each part of the 32-bit instruction
+			string instruction = "0000000000000" + opcodesObj->getBinary("STP") + "0000000000000000";
+			// Stores the binary in the object code
+			objectCode->push_back(instruction);
+		}
+		else
+		{
+			//
+			storeInstruction(token[i], token[i + 1]);
+			// Increments counter by 1 as the next component is an operand and has already been analysed
+			i++;
+		}
+	}
+}
+
+// Analyses an individual instruction for the first time to get symbols and verify syntax
+void Assembler::storeInstruction(string opcodeCandidate, string operandCandidate)
+{
+	// Checks if the opcode candidate is a variable
+	if (opcodeCandidate == "VAR")
+	{
+		// Extracts binary for the operand
+		string instruction = symbolsObj->get(operandCandidate);
+		// Stores the binary in the object code
+		objectCode->push_back(instruction);
+	}
+	// Checks if the opcode candidate is not a standard opcode
+	else
+	{
+		// Extracts the binary for the opcode stored
+		string opcodeBinary = opcodesObj->getBinary(opcodeCandidate);
+		// Extracts the binary for the operand stored
+		string operandBinary = symbolsObj->get(operandCandidate);
+		// Stores the number of blank bits that are needed to produce a 32 bit number
+		string blankBits = calcBlankBits();
+		// Adds together each part of the 32-bit instruction
+		string instruction = operandBinary + blankBits + opcodeBinary + "0000000000000000";
+		// Stores the binary in the object code
+		objectCode->push_back(instruction);
+	}
+}
+
+// Calculates the number of blank bits that are needed to produce a 32 bit number
+string Assembler::calcBlankBits()
+{
+	if (memoryWordSize > 8192 || memoryWordSize < 0)
+	{
+		checkValidity(INVALID_MEMORY_SIZE);
+	}
+	// Calculates how many zeros we need to return
+	int zeros = calcZeros(memoryWordSize);
+	// Stores the blank bits we're returning
+	string blankBits = "";
+	// Adds "0" a number of times to the string
+	for (int i = 0; i < zeros; i++)
+	{
+		blankBits += "0";
+	}
+	return blankBits;
+}
+
+int Assembler::calcZeros(int number)
+{
+	if (number == pow(2,13)) {
+		return 0;
+	}
+
+	int zeros = calcZeros(number*2) + 1;
+	return zeros;
 }
 
 // =================== ANCHOR - TEST FUNCTIONS ===================

@@ -10,10 +10,10 @@ class Symbols
 {
 private:
     // Stores the symbols as a map which is essentially a hash table
-    std::map<std::string, int> table;
+    std::map<std::string, std::string> table;
     // Stores the number of items stored in the table and the number of memory locations we've used
     int num;
-    // Stores the next free memory location to allocate data to
+    // Stores the next free memory location to allocate data to in decimal
     int freeMemory;
 
 public:
@@ -24,7 +24,7 @@ public:
     // Stores a 32-bit variable in the symbol table if it hasn't already been stored and assigns it a memory location
     int storeVar(std::string var);
     // Returns the memory location of a variable
-    int get(std::string var);
+    std::string get(std::string var);
 };
 
 #endif

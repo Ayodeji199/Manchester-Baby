@@ -10,6 +10,7 @@
 #include <string>
 
 void basicFileTest();
+void assemblerFirstPassTest();
 
 void displayIntro();
 void displayPass();

@@ -1,4 +1,5 @@
 #include "symbols.hpp"
+#include "../converter/converter.hpp"
 
 using namespace std;
 
@@ -22,7 +23,8 @@ int Symbols::storeVar(string var)
     if (table.find(var) == table.end())
     {
         // Stores the variable with the next free memory location in the table
-        table[var] = freeMemory;
+        // TODO: Uncomment when decimal to binary is written
+        // table[var] = decimalToBinary(freeMemory);
         // Sets the next free memory location as we have now allocated 32 bits for the variable
         freeMemory += 32;
         //
@@ -34,7 +36,7 @@ int Symbols::storeVar(string var)
 }
 
 // Returns the memory location of a variable
-int Symbols::get(string var)
+string Symbols::get(string var)
 {
     return table[var];
 }
