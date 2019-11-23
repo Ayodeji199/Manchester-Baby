@@ -21,13 +21,20 @@ private:
 
 public:
     Assembler();
+
+    //Gets arguments and returns them as a vector
+    vector<string> Assembler::getArgs(int argc, char *argv[]);
+
     // The assembly loop
     void assembly();
+
     // Seperates a line into different components
     void splitLine(std::string line, std::vector<std::string> &token);
-    //
+
+    // Goes through the line and decides what to do with each token
     void processLine(std::vector<std::string> &token);
-    //
+
+    // Analyses an individual instruction for the first time to get symbols and verify syntax
     void analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
     //
     void genBinary(std::vector<std::string> &token);
@@ -38,8 +45,8 @@ public:
     //
     int calcZeros(int number);
 
-    // =================== ANCHOR - TEST FUNCTIONS ===================
-    void testTokenization(std::vector<std::string> token);
+    // Prints converted line of code into file
+    void Assembler::printMachineCode(string var, string opCode, ofstream fileOut);
 };
 
 #endif
