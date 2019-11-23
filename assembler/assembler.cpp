@@ -47,7 +47,7 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 	vector<string> args = {};
 	for (int i = 0; i < argc; i++)
 	{
-		if (argv[i] != NULL)
+		if (argv[i] != NULL && i != 0)
 		{
 			args.push_back(argv[i]);
 		}
