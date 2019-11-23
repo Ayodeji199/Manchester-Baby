@@ -11,27 +11,35 @@
 class Assembler
 {
 private:
+    std::string filename;
+    // Stores the number of words (32-bit integers our memory can store)
+    int memoryWordSize;
     Opcodes *opcodesObj;
     Symbols *symbolsObj;
     std::vector<std::string> *line;
-    std::string filename;
     std::vector<std::string> *objectCode;
 
 public:
     Assembler();
-    // The whole shabang
-    int assembly();
-    //
-    int splitLines();
+    // The assembly loop
+    void assembly();
     // Seperates a line into different components
-    int splitLine(std::string line, std::vector<std::string> &token);
+    void splitLine(std::string line, std::vector<std::string> &token);
     //
-    int firstPass(std::vector<std::string> &token);
+    void processLine(std::vector<std::string> &token);
     //
-    int analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
+    void analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
+    //
+    void genBinary(std::vector<std::string> &token);
+    //
+    void storeInstruction(std::string opcodeCandidate, std::string operandCandidate);
+    //
+    std::string calcBlankBits();
+    //
+    int calcZeros(int number);
 
     // =================== ANCHOR - TEST FUNCTIONS ===================
-    int testTokenization(std::vector<std::string> token);
+    void testTokenization(std::vector<std::string> token);
 };
 
 #endif

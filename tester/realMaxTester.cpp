@@ -2,6 +2,7 @@
 
 // Include the files you are testing here
 #include "../file/file.hpp"
+#include "../assembler/assembler.hpp"
 
 using namespace std;
 
@@ -13,7 +14,8 @@ bool individualPass = true;
 // you may have to comment out the tests you're not using or create blank
 // functions used in the header files (maybe needing to return 0)
 void tasks() {
-  basicFileTest();
+  // basicFileTest();
+  assemblerFirstPassTest();
 }
 
 void printVector(vector<string>& v) {
@@ -33,6 +35,34 @@ void basicFileTest() {
   loadFile(lines, "assembler/BabyTest1-Assembler.txt");
   printVector(lines);
   displayTest("Loads assembler text file (requires manual checking, will always pass)");
+  cout << endl;
+}
+
+void assemblerFirstPassTest()
+{
+  cout << endl
+       << "Assembler first pass test:"
+       << endl;
+
+  Assembler assemblerObj = Assembler();
+
+  if (assemblerObj.calcZeros(32) != 8) {
+    failIndividual();
+  }
+  displayTest("Highest square storage test for 32-words of memory");
+  cout << endl << "\tPower: " << assemblerObj.calcZeros(32) << endl;
+
+  if (assemblerObj.calcZeros(64) != 7)
+  {
+    failIndividual();
+  }
+  displayTest("Highest square storage test for 64-words of memory");
+  cout << endl
+       << "\tPower: " << assemblerObj.calcZeros(64) << endl;
+
+  
+  assemblerObj.assembly();
+  displayTest("Runs main assembly method");
 }
 
 void displayIntro() {
