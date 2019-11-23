@@ -25,11 +25,3 @@ string parseInstruction(string opcode){
         return "invalid opcode";
     }
 }
-
-int main(){
-    string opcode;
-    cin >> opcode;
-    string out = parseInstruction(opcode);
-    cout << out << endl;
-    return 0;
-}
