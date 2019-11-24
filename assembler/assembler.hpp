@@ -50,6 +50,9 @@ public:
     void printVec(std::vector<std::string> &v);
     //
     std::vector<std::string> getObjectCode();
+
+    // Prints converted line of code into file
+    void printMachineCode(std::string fileOut);
 };
 
 #endif
