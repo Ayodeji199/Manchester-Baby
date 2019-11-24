@@ -10,7 +10,7 @@ void loadFile(vector<string> &fileLines, string filename)
   ifstream fileToOpen;
   // Attempts to open the file using the stored filename
   int valid = openFile(&fileToOpen, filename);
-  // Couunts through each character of the file
+  // Couunts through each line of the file
   while (valid == SUCCESS && !fileToOpen.eof())
   {
     // Creates a variable to store a line
@@ -42,4 +42,40 @@ int openFile(ifstream *fileToOpen, string filename)
     return SUCCESS;
   }
   return FILE_NOT_FOUND;
+}
+
+// Saves the contents of a vector of lines to a file
+void saveFile(vector<string> &fileLines, string filename)
+{
+  // Creates an object to write to a file
+  ofstream fileToWrite;
+  // Attempts to open the file using the stored filename
+  int valid = openFileToWrite(&fileToWrite, filename);
+  // Stores which line number we are currently saving
+  int counter = 0;
+  // Couunts through each line of the file
+  while (valid == SUCCESS && counter < fileLines.size())
+  {
+    // Stores a line in the file
+    fileToWrite << fileLines[counter];
+    // Increments the line number
+    counter++;
+  }
+  // Closes the file
+  fileToWrite.close();
+  // Displays an error message and quits the program if we haven't successfully saved a file
+  checkValidity(valid);
+}
+
+// Attempts to open a file to write to and returns if the function was successful
+int openFileToWrite(ofstream *fileToWrite, string filename)
+{
+  // Opens the file object
+  fileToWrite->open(filename);
+  // Checks if the file is open
+  if (fileToWrite->is_open())
+  {
+    return SUCCESS;
+  }
+  return FILE_NOT_SAVED;
 }
