@@ -24,7 +24,7 @@ int Symbols::storeVar(string var)
     {
         // Stores the variable with the next free memory location in the table
         // TODO: Uncomment when decimal to binary is written
-        // table[var] = decimalToBinary(freeMemory);
+        table[var] = decimalToBinary(freeMemory);
         // Sets the next free memory location as we have now allocated 32 bits for the variable
         freeMemory += 32;
         //

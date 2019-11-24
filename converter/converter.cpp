@@ -68,11 +68,11 @@ int binaryToDecimal(string binary)
     return convertedDecimal; // return the converted decimal number
 }
 
-string decimalConversion(long long int decimalNum)
+string decimalToBinary(int decimal)
 {
     // initialise variables for conversion algorithm
     string convertedBinary;
-    long long int temp = decimalNum;
+    long long int temp = decimal;
     long long int binaryVal;
 
     // while loop runs 8 times to allow return value to be in 8 bit binary form

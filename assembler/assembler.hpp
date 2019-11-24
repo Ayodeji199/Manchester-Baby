@@ -3,7 +3,6 @@
 
 #include "opcodes.hpp"
 #include "symbols.hpp"
-#include "../file/file.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,7 +10,8 @@
 class Assembler
 {
 private:
-    std::string filename;
+    std::string openFyall;
+    std::string saveFyall;
     // Stores the number of words (32-bit integers our memory can store)
     int memoryWordSize;
     Opcodes *opcodesObj;
@@ -21,14 +21,23 @@ private:
 
 public:
     Assembler();
+
+    //Gets arguments and returns them as a vector
+    std::vector<std::string> getArgs(int argc, char *argv[]);
+
     // The assembly loop
     void assembly();
+
     // Seperates a line into different components
     void splitLine(std::string line, std::vector<std::string> &token);
-    //
+
+    // Goes through the line and decides what to do with each token
     void processLine(std::vector<std::string> &token);
-    //
+
+    // Analyses an individual instruction for the first time to get symbols and verify syntax
     void analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
+    // Prints converted line of code into file
+    void printMachineCode(std::string var, std::string opCode, std::ofstream fileOut);
     //
     void genBinary(std::vector<std::string> &token);
     //
@@ -37,9 +46,13 @@ public:
     std::string calcBlankBits();
     //
     int calcZeros(int number);
+    //
+    void printVec(std::vector<std::string> &v);
+    //
+    std::vector<std::string> getObjectCode();
 
-    // =================== ANCHOR - TEST FUNCTIONS ===================
-    void testTokenization(std::vector<std::string> token);
+    // Prints converted line of code into file
+    void printMachineCode(std::string fileOut);
 };
 
 #endif
