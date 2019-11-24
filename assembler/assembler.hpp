@@ -11,6 +11,7 @@ class Assembler
 {
 private:
     std::string filename;
+    std::string filenameOut;
     // Stores the number of words (32-bit integers our memory can store)
     int memoryWordSize;
     Opcodes *opcodesObj;
@@ -22,7 +23,7 @@ public:
     Assembler();
 
     //Gets arguments and returns them as a vector
-    vector<string> Assembler::getArgs(int argc, char *argv[]);
+    std::vector<std::string> getArgs(int argc, char *argv[]);
 
     // The assembly loop
     void assembly();
@@ -45,7 +46,7 @@ public:
     int calcZeros(int number);
 
     // Prints converted line of code into file
-    void Assembler::printMachineCode(string var, string opCode, ofstream fileOut);
+    void printMachineCode(std::string fileOut);
 };
 
 #endif

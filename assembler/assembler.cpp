@@ -67,8 +67,6 @@ void Assembler::assembly()
 	// First Pass: Validates code, stores user-defined variables and assigns them memory locations
 	for (int i = 0; i < (int)line->size(); i++) // go through each line
 	{
-		// TODO - ANY ASSEMBLY-RELATED FUNCTIONS GO IN THIS LOOP
-		// NOTE - ASSEMBLY HAS TO BE DONE LINE BY LINE
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
 		processLine(token);
@@ -80,6 +78,8 @@ void Assembler::assembly()
 	{
 		genBinary(components[i]);
 	}
+
+	printMachineCode(filenameOut);
 }
 
 /*=============================================
@@ -161,11 +161,27 @@ void Assembler::analyseInstruction(string opcodeCandidate, string operandCandida
 	}
 }
 
-/*==========================================
-	Prints converted line of code into file - TODO
-==========================================*/
-void Assembler::printMachineCode(string var, string opCode, ofstream fileOut)
+/*==================================
+	Prints converted code into file - TODO
+==================================*/
+void Assembler::printMachineCode(string filenameOut)
 {
+	ofstream fileOut;
+	fileOut.open(filenameOut);
+
+	if (fileOut)
+	{
+		for (int i = 0; i < (int)objectCode->size(); i++)
+		{
+			cout << objectCode->at(i) << endl;
+		}
+
+		fileOut.close();
+	}
+	else
+	{
+		checkValidity(FILE_NOT_FOUND);
+	}
 }
 
 void Assembler::genBinary(vector<string> &token)
