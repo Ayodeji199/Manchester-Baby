@@ -10,8 +10,8 @@
 class Assembler
 {
 private:
-    std::string filename;
-    std::string filenameOut;
+    std::string openFyall;
+    std::string saveFyall;
     // Stores the number of words (32-bit integers our memory can store)
     int memoryWordSize;
     Opcodes *opcodesObj;
@@ -36,6 +36,8 @@ public:
 
     // Analyses an individual instruction for the first time to get symbols and verify syntax
     void analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
+    // Prints converted line of code into file
+    void printMachineCode(std::string var, std::string opCode, std::ofstream fileOut);
     //
     void genBinary(std::vector<std::string> &token);
     //
@@ -44,6 +46,10 @@ public:
     std::string calcBlankBits();
     //
     int calcZeros(int number);
+    //
+    void printVec(std::vector<std::string> &v);
+    //
+    std::vector<std::string> getObjectCode();
 
     // Prints converted line of code into file
     void printMachineCode(std::string fileOut);

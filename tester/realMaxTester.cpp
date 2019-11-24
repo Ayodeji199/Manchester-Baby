@@ -14,7 +14,7 @@ bool individualPass = true;
 // you may have to comment out the tests you're not using or create blank
 // functions used in the header files (maybe needing to return 0)
 void tasks() {
-  // basicFileTest();
+  basicFileTest();
   assemblerFirstPassTest();
 }
 
@@ -62,7 +62,9 @@ void assemblerFirstPassTest()
 
   
   assemblerObj.assembly();
-  displayTest("Runs main assembly method");
+  // vector<string> objectCode = assemblerObj.getObjectCode();
+  // printVector(objectCode);
+  displayTest("Runs main assembly method and saves object code (requires manual checking, will always pass)");
 }
 
 void displayIntro() {

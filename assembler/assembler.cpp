@@ -5,12 +5,12 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
-	Assembler assemblerObj = Assembler();
-	assemblerObj.assembly();
-	return SUCCESS;
-}
+// int main(int argc, char *argv[])
+// {
+// 	Assembler assemblerObj = Assembler();
+// 	assemblerObj.assembly();
+// 	return SUCCESS;
+// }
 
 // > CURRENT OUTPUT <
 /*
@@ -31,12 +31,13 @@ int main(int argc, char *argv[])
 ==============*/
 Assembler::Assembler()
 {
+	openFyall = "assembler/BabyTest1-Assembler.txt";
+	saveFyall = "assembler/output.txt";
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	opcodesObj = new Opcodes();
 	symbolsObj = new Symbols();
 	line = new vector<string>; // vector to store lines
-	filename = "BabyTest1-Assembler.txt";
 	objectCode = new vector<string>;
 }
 
@@ -61,7 +62,7 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 ====================*/
 void Assembler::assembly()
 {
-	loadFile(*line, filename);		   // load file and store lines into vector
+	loadFile(*line, openFyall);		   // load file and store lines into vector
 	vector<vector<string>> components; // stores each component for each line
 
 	// First Pass: Validates code, stores user-defined variables and assigns them memory locations
@@ -69,6 +70,7 @@ void Assembler::assembly()
 	{
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
+		// printVec(token);
 		processLine(token);
 		components.push_back(token);
 	}
@@ -78,8 +80,10 @@ void Assembler::assembly()
 	{
 		genBinary(components[i]);
 	}
+	// Saves object code to output file
+	saveFile(*objectCode, saveFyall);
 
-	printMachineCode(filenameOut);
+	// printMachineCode(saveFyall);
 }
 
 /*=============================================
@@ -135,9 +139,14 @@ void Assembler::processLine(vector<string> &token)
 		}
 		else
 		{
-			analyseInstruction(token[i], token[i + 1]);
-			// Increments counter by 1 as the next component is an operand and has already been analysed
-			i++;
+			if ((int) token.size() > i + 1) {
+				analyseInstruction(token[i], token[i + 1]);
+				// Increments counter by 1 as the next component is an operand and has already been analysed
+				i++;
+			}
+			else {
+				analyseInstruction(token[i],"");
+			}
 		}
 	}
 }
@@ -275,4 +284,20 @@ int Assembler::calcZeros(int number)
 
 	int zeros = calcZeros(number * 2) + 1;
 	return zeros;
+}
+
+void Assembler::printVec(vector<string> &v)
+{
+	cout << endl;
+	cout << "Printing Vector:" << endl;
+	for (int i = 0; i < (int)v.size(); i++)
+	{
+		cout << v[i] << endl;
+	}
+	cout << endl;
+}
+
+vector<string> Assembler::getObjectCode()
+{
+	return *objectCode;
 }
