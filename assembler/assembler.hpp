@@ -45,6 +45,10 @@ public:
     std::string calcBlankBits();
     //
     int calcZeros(int number);
+    //
+    void printVec(std::vector<std::string> &v);
+    //
+    std::vector<std::string> getObjectCode();
 };
 
 #endif

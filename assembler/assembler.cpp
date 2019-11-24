@@ -36,7 +36,7 @@ Assembler::Assembler()
 	opcodesObj = new Opcodes();
 	symbolsObj = new Symbols();
 	line = new vector<string>; // vector to store lines
-	filename = "BabyTest1-Assembler.txt";
+	filename = "assembler/BabyTest1-Assembler.txt";
 	objectCode = new vector<string>;
 }
 
@@ -71,6 +71,7 @@ void Assembler::assembly()
 		// NOTE - ASSEMBLY HAS TO BE DONE LINE BY LINE
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
+		// printVec(token);
 		processLine(token);
 		components.push_back(token);
 	}
@@ -135,9 +136,14 @@ void Assembler::processLine(vector<string> &token)
 		}
 		else
 		{
-			analyseInstruction(token[i], token[i + 1]);
-			// Increments counter by 1 as the next component is an operand and has already been analysed
-			i++;
+			if ((int) token.size() > i + 1) {
+				analyseInstruction(token[i], token[i + 1]);
+				// Increments counter by 1 as the next component is an operand and has already been analysed
+				i++;
+			}
+			else {
+				analyseInstruction(token[i],"");
+			}
 		}
 	}
 }
@@ -259,4 +265,20 @@ int Assembler::calcZeros(int number)
 
 	int zeros = calcZeros(number * 2) + 1;
 	return zeros;
+}
+
+void Assembler::printVec(vector<string> &v)
+{
+	cout << endl;
+	cout << "Printing Vector:" << endl;
+	for (int i = 0; i < (int)v.size(); i++)
+	{
+		cout << v[i] << endl;
+	}
+	cout << endl;
+}
+
+vector<string> Assembler::getObjectCode()
+{
+	return *objectCode;
 }
