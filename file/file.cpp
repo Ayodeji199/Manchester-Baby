@@ -11,7 +11,7 @@ void loadFile(vector<string> &fileLines, string filename)
   // Attempts to open the file using the stored filename
   int valid = openFile(&fileToOpen, filename);
   // Couunts through each character of the file
-  while (!fileToOpen.eof())
+  while (valid == SUCCESS && !fileToOpen.eof())
   {
     // Creates a variable to store a line
     string line;

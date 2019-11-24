@@ -14,7 +14,7 @@ void checkValidity(int valid)
         return;
     }
 
-    cout << "Error" << valid << ": ";
+    cout << endl << "Error " << valid << ": ";
 
     switch (valid)
     {
