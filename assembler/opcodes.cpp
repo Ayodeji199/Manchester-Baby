@@ -6,6 +6,7 @@ using namespace std;
 // Constructor
 Opcodes::Opcodes()
 {
+  table = map<string,string>();
   storeDefaults();
 }
 
@@ -19,7 +20,7 @@ bool Opcodes::isOpcode(string assembly)
 void Opcodes::store(string assembly, int decimal)
 {
   // TODO: Uncomment line when decimal to binary method is written
-  // table[assembly] = decimalToBinary(decimal);
+  table[assembly] = decimalToBinary(decimal);
 }
 
 // Returns the binary value for an opcode stored in the table
