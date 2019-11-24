@@ -5,12 +5,12 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
-	Assembler assemblerObj = Assembler();
-	assemblerObj.assembly();
-	return SUCCESS;
-}
+// int main(int argc, char *argv[])
+// {
+// 	Assembler assemblerObj = Assembler();
+// 	assemblerObj.assembly();
+// 	return SUCCESS;
+// }
 
 // > CURRENT OUTPUT <
 /*

@@ -22,7 +22,7 @@ public:
     Assembler();
 
     //Gets arguments and returns them as a vector
-    vector<string> Assembler::getArgs(int argc, char *argv[]);
+    std::vector<std::string> getArgs(int argc, char *argv[]);
 
     // The assembly loop
     void assembly();
@@ -35,8 +35,8 @@ public:
 
     // Analyses an individual instruction for the first time to get symbols and verify syntax
     void analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
-    //
-    void printMachineCode(string var, string opCode, ofstream fileOut);
+    // Prints converted line of code into file
+    void printMachineCode(std::string var, std::string opCode, std::ofstream fileOut);
     //
     void genBinary(std::vector<std::string> &token);
     //
@@ -45,9 +45,6 @@ public:
     std::string calcBlankBits();
     //
     int calcZeros(int number);
-
-    // Prints converted line of code into file
-    void Assembler::printMachineCode(string var, string opCode, ofstream fileOut);
 };
 
 #endif
