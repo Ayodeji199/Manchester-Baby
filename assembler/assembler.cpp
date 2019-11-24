@@ -83,7 +83,7 @@ void Assembler::assembly()
 	// Saves object code to output file
 	saveFile(*objectCode, saveFyall);
 
-	printMachineCode(filenameOut);
+	// printMachineCode(saveFyall);
 }
 
 /*=============================================
