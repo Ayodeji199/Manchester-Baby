@@ -70,7 +70,7 @@ void Assembler::assembly()
 	{
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
-		// printVec(token);
+		printVec(token);
 		processLine(token);
 		components.push_back(token);
 	}
