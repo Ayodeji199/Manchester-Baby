@@ -1,5 +1,6 @@
 #include "assembler.hpp"
 #include "../error/error.hpp"
+#include "../file/file.hpp"
 #include <cmath>
 
 using namespace std;

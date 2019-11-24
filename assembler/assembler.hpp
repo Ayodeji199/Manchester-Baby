@@ -3,7 +3,6 @@
 
 #include "opcodes.hpp"
 #include "symbols.hpp"
-#include "../file/file.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
