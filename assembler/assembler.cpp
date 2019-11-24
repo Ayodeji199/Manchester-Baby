@@ -46,14 +46,18 @@ Assembler::Assembler()
 ==============================================*/
 vector<string> Assembler::getArgs(int argc, char *argv[])
 {
-	vector<string> args = {};
+	vector<string> args = {}; // initialize the empty vector
+	// go through each argument
 	for (int i = 0; i < argc; i++)
 	{
+		// if argument isn't the executable
 		if (argv[i] != NULL && i != 0)
 		{
+			// add argument to the vector
 			args.push_back(argv[i]);
 		}
 	}
+
 	return args;
 }
 
@@ -139,13 +143,15 @@ void Assembler::processLine(vector<string> &token)
 		}
 		else
 		{
-			if ((int) token.size() > i + 1) {
+			if ((int)token.size() > i + 1)
+			{
 				analyseInstruction(token[i], token[i + 1]);
 				// Increments counter by 1 as the next component is an operand and has already been analysed
 				i++;
 			}
-			else {
-				analyseInstruction(token[i],"");
+			else
+			{
+				analyseInstruction(token[i], "");
 			}
 		}
 	}
@@ -171,24 +177,30 @@ void Assembler::analyseInstruction(string opcodeCandidate, string operandCandida
 }
 
 /*==================================
-	Prints converted code into file - TODO
+	Prints converted code into file
 ==================================*/
 void Assembler::printMachineCode(string filenameOut)
 {
+	// open file to write
 	ofstream fileOut;
 	fileOut.open(filenameOut);
 
+	// check if file opened properly
 	if (fileOut)
 	{
+		// for each line
 		for (int i = 0; i < (int)objectCode->size(); i++)
 		{
+			// print machine code
 			cout << objectCode->at(i) << endl;
+			fileOut << objectCode->at(i) << endl;
 		}
 
 		fileOut.close();
 	}
 	else
 	{
+		// display error
 		checkValidity(FILE_NOT_FOUND);
 	}
 }
