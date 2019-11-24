@@ -36,6 +36,8 @@ public:
     // Analyses an individual instruction for the first time to get symbols and verify syntax
     void analyseInstruction(std::string opcodeCandidate, std::string operandCandidate);
     //
+    void printMachineCode(string var, string opCode, ofstream fileOut);
+    //
     void genBinary(std::vector<std::string> &token);
     //
     void storeInstruction(std::string opcodeCandidate, std::string operandCandidate);
