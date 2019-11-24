@@ -5,12 +5,12 @@
 
 using namespace std;
 
-// int main()
-// {
-// 	Assembler assemblerObj = Assembler();
-// 	assemblerObj.assembly();
-// 	return SUCCESS;
-// }
+int main(int argc, char *argv[])
+{
+	Assembler assemblerObj = Assembler();
+	assemblerObj.assembly();
+	return SUCCESS;
+}
 
 // > CURRENT OUTPUT <
 /*
@@ -24,17 +24,36 @@ using namespace std;
 	NUM01: VAR 1025 
 	NUM02: VAR 621 
 	MYSUM: VAR 0
-	*/
+*/
 
+/*==============
+    Constructor
+==============*/
 Assembler::Assembler()
 {
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	opcodesObj = new Opcodes();
 	symbolsObj = new Symbols();
-	line = new vector<string>;			  // vector to store lines
-	filename = "BabyTest1-Assembler.txt"; // REVIEW - potential string for user input
+	line = new vector<string>; // vector to store lines
+	filename = "BabyTest1-Assembler.txt";
 	objectCode = new vector<string>;
+}
+
+/*==============================================
+	Gets arguments and returns them as a vector - REVIEW 
+==============================================*/
+vector<string> Assembler::getArgs(int argc, char *argv[])
+{
+	vector<string> args = {};
+	for (int i = 0; i < argc; i++)
+	{
+		if (argv[i] != NULL && i != 0)
+		{
+			args.push_back(argv[i]);
+		}
+	}
+	return args;
 }
 
 /*====================
@@ -48,9 +67,10 @@ void Assembler::assembly()
 	// First Pass: Validates code, stores user-defined variables and assigns them memory locations
 	for (int i = 0; i < (int)line->size(); i++) // go through each line
 	{
+		// TODO - ANY ASSEMBLY-RELATED FUNCTIONS GO IN THIS LOOP
+		// NOTE - ASSEMBLY HAS TO BE DONE LINE BY LINE
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
-		// testTokenization(token);
 		processLine(token);
 		components.push_back(token);
 	}
@@ -63,7 +83,7 @@ void Assembler::assembly()
 }
 
 /*=============================================
-    Separates a line into different components
+	Separates a line into different components
 =============================================*/
 void Assembler::splitLine(string line, vector<string> &token)
 {
@@ -97,7 +117,9 @@ void Assembler::splitLine(string line, vector<string> &token)
 		}
 	}
 }
-
+/*===============================================================
+	Goes through the line and decides what to do with each token
+===============================================================*/
 void Assembler::processLine(vector<string> &token)
 {
 	// Loops through each component of the line
@@ -120,7 +142,9 @@ void Assembler::processLine(vector<string> &token)
 	}
 }
 
-// Analyses an individual instruction for the first time to get symbols and verify syntax
+/*=========================================================================================
+	Analyses an individual instruction for the first time to get symbols and verify syntax
+=========================================================================================*/
 void Assembler::analyseInstruction(string opcodeCandidate, string operandCandidate)
 {
 	// Checks if the opcode candidate is a variable
@@ -135,6 +159,13 @@ void Assembler::analyseInstruction(string opcodeCandidate, string operandCandida
 		// Displays an error message and quits the program
 		checkValidity(INVALID_OPCODE);
 	}
+}
+
+/*==========================================
+	Prints converted line of code into file - TODO
+==========================================*/
+void Assembler::printMachineCode(string var, string opCode, ofstream fileOut)
+{
 }
 
 void Assembler::genBinary(vector<string> &token)
@@ -152,7 +183,8 @@ void Assembler::genBinary(vector<string> &token)
 			//
 			objectCode->push_back(memoryLocation);
 		}
-		else if (token[i] == "STP") {
+		else if (token[i] == "STP")
+		{
 			// Adds together each part of the 32-bit instruction
 			string instruction = "0000000000000" + opcodesObj->getBinary("STP") + "0000000000000000";
 			// Stores the binary in the object code
@@ -168,7 +200,9 @@ void Assembler::genBinary(vector<string> &token)
 	}
 }
 
-// Analyses an individual instruction for the first time to get symbols and verify syntax
+/*=====================================================================================
+Analyses an individual instruction for the first time to get symbols and verify syntax
+=====================================================================================*/
 void Assembler::storeInstruction(string opcodeCandidate, string operandCandidate)
 {
 	// Checks if the opcode candidate is a variable
@@ -195,7 +229,9 @@ void Assembler::storeInstruction(string opcodeCandidate, string operandCandidate
 	}
 }
 
-// Calculates the number of blank bits that are needed to produce a 32 bit number
+/*=============================================================================
+Calculates the number of blank bits that are needed to produce a 32 bit number
+=============================================================================*/
 string Assembler::calcBlankBits()
 {
 	if (memoryWordSize > 8192 || memoryWordSize < 0)
@@ -216,26 +252,11 @@ string Assembler::calcBlankBits()
 
 int Assembler::calcZeros(int number)
 {
-	if (number == pow(2,13)) {
+	if (number == pow(2, 13))
+	{
 		return 0;
 	}
 
-	int zeros = calcZeros(number*2) + 1;
+	int zeros = calcZeros(number * 2) + 1;
 	return zeros;
-}
-
-// =================== ANCHOR - TEST FUNCTIONS ===================
-
-void Assembler::testTokenization(vector<string> token)
-{
-	// loop for testing. outputs the line's tokens (components) separated by spaces
-	for (int j = 0; j < (int)token.size(); j++)
-	{
-		cout << token.at(j) << " ";
-	}
-	// at the end of the test loop, output \n
-	if ((int)token.size() != 0)
-	{
-		cout << endl;
-	}
 }
