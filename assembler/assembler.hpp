@@ -10,7 +10,8 @@
 class Assembler
 {
 private:
-    std::string filename;
+    std::string openFyall;
+    std::string saveFyall;
     // Stores the number of words (32-bit integers our memory can store)
     int memoryWordSize;
     Opcodes *opcodesObj;

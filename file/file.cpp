@@ -54,10 +54,10 @@ void saveFile(vector<string> &fileLines, string filename)
   // Stores which line number we are currently saving
   int counter = 0;
   // Couunts through each line of the file
-  while (valid == SUCCESS && counter < fileLines.size())
+  while (valid == SUCCESS && counter < (int) fileLines.size())
   {
     // Stores a line in the file
-    fileToWrite << fileLines[counter];
+    fileToWrite << fileLines[counter] << endl;
     // Increments the line number
     counter++;
   }

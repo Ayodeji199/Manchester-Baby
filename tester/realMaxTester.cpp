@@ -62,9 +62,9 @@ void assemblerFirstPassTest()
 
   
   assemblerObj.assembly();
-  vector<string> objectCode = assemblerObj.getObjectCode();
-  printVector(objectCode);
-  displayTest("Runs main assembly method and prints object code (requires manual checking, will always pass)");
+  // vector<string> objectCode = assemblerObj.getObjectCode();
+  // printVector(objectCode);
+  displayTest("Runs main assembly method and saves object code (requires manual checking, will always pass)");
 }
 
 void displayIntro() {

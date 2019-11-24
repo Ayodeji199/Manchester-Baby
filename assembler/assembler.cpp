@@ -31,12 +31,13 @@ using namespace std;
 ==============*/
 Assembler::Assembler()
 {
+	openFyall = "assembler/BabyTest1-Assembler.txt";
+	saveFyall = "assembler/output.txt";
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	opcodesObj = new Opcodes();
 	symbolsObj = new Symbols();
 	line = new vector<string>; // vector to store lines
-	filename = "assembler/BabyTest1-Assembler.txt";
 	objectCode = new vector<string>;
 }
 
@@ -61,7 +62,7 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 ====================*/
 void Assembler::assembly()
 {
-	loadFile(*line, filename);		   // load file and store lines into vector
+	loadFile(*line, openFyall);		   // load file and store lines into vector
 	vector<vector<string>> components; // stores each component for each line
 
 	// First Pass: Validates code, stores user-defined variables and assigns them memory locations
@@ -81,6 +82,8 @@ void Assembler::assembly()
 	{
 		genBinary(components[i]);
 	}
+	// Saves object code to output file
+	saveFile(*objectCode, saveFyall);
 }
 
 /*=============================================
