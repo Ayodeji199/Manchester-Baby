@@ -31,12 +31,13 @@ using namespace std;
 ==============*/
 Assembler::Assembler()
 {
+	// openFyall = "assembler/test.txt";
 	openFyall = "assembler/BabyTest1-Assembler.txt";
 	saveFyall = "assembler/output.txt";
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	opcodesObj = new Opcodes();
-	symbolsObj = new Symbols();
+	symbolsObj = new Symbols(memoryWordSize);
 	line = new vector<string>; // vector to store lines
 	objectCode = new vector<string>;
 }
@@ -57,9 +58,9 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 	return args;
 }
 
-/*====================
-    The assembly loop
-====================*/
+/*=============================================
+    Converts an assembly file to a binary file
+===============================================*/
 void Assembler::assembly()
 {
 	loadFile(*line, openFyall);		   // load file and store lines into vector
@@ -70,9 +71,8 @@ void Assembler::assembly()
 	{
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
-		printVec(token);
-		processLine(token);
-		components.push_back(token);
+		processLine(token);			   // 
+		components.push_back(token);   // 
 	}
 
 	// Second Pass: Generates object code
@@ -121,6 +121,7 @@ void Assembler::splitLine(string line, vector<string> &token)
 		}
 	}
 }
+
 /*===============================================================
 	Goes through the line and decides what to do with each token
 ===============================================================*/
@@ -133,18 +134,22 @@ void Assembler::processLine(vector<string> &token)
 		if (token[i].back() == ':')
 		{
 			// Deletes the ':' from the token and stores this as the name of the symbol we're storing
-			string name = token[i].substr(0, token[i].size() - 2);
-			// Stores the varialbe in the symbols table
-			symbolsObj->storeVar(token[i + 1]);
+			string name = token[i].substr(0, token[i].size() - 1);
+			// Stores the variable in the symbols table
+			symbolsObj->storeOperand(name);
 		}
 		else
 		{
+			// Checks if there is an opcode and an operand to process
+			// this is not the case with STP instruction
 			if ((int) token.size() > i + 1) {
+				// Analyses the opcode and operand together as an instruction
 				analyseInstruction(token[i], token[i + 1]);
 				// Increments counter by 1 as the next component is an operand and has already been analysed
 				i++;
 			}
 			else {
+				// Analyses the opcode
 				analyseInstruction(token[i],"");
 			}
 		}
@@ -193,6 +198,9 @@ void Assembler::printMachineCode(string filenameOut)
 	}
 }
 
+/*==================================
+	Generates the binary object code
+==================================*/
 void Assembler::genBinary(vector<string> &token)
 {
 	// Loops through each component of the line
@@ -201,13 +209,14 @@ void Assembler::genBinary(vector<string> &token)
 		// Checks if a token defines a user defined variable
 		if (token[i].back() == ':')
 		{
-			// Deletes the ':' from the token and stores this as the name of the symbol we're storing
-			string name = token[i].substr(0, token[i].size() - 2);
-			// Stores the memory location in the symbols table
-			string memoryLocation = symbolsObj->get(token[i + 1]);
-			//
-			objectCode->push_back(memoryLocation);
+			// Deletes the ':' from the token and stores this as the name of the symbol we're finding
+			// string name = token[i].substr(0, token[i].size() - 1);
+			// Lookups the memory location in the symbols table for the variable
+			// string memoryLocation = symbolsObj->get(token[i + 1]);
+			// Stores the line for the object code 
+			// objectCode->push_back(memoryLocation);
 		}
+		// Checks if we dealing with a STP instruction
 		else if (token[i] == "STP")
 		{
 			// Adds together each part of the 32-bit instruction
@@ -217,7 +226,7 @@ void Assembler::genBinary(vector<string> &token)
 		}
 		else
 		{
-			//
+			// 
 			storeInstruction(token[i], token[i + 1]);
 			// Increments counter by 1 as the next component is an operand and has already been analysed
 			i++;
@@ -226,7 +235,7 @@ void Assembler::genBinary(vector<string> &token)
 }
 
 /*=====================================================================================
-Analyses an individual instruction for the first time to get symbols and verify syntax
+	Stores an individual instruction to the binary object code
 =====================================================================================*/
 void Assembler::storeInstruction(string opcodeCandidate, string operandCandidate)
 {
