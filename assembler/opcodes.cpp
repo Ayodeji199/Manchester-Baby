@@ -6,6 +6,7 @@ using namespace std;
 // Constructor
 Opcodes::Opcodes()
 {
+  // Initialises the table
   table = map<string,string>();
   storeDefaults();
 }
