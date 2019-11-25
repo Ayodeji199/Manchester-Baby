@@ -31,12 +31,13 @@ using namespace std;
 ==============*/
 Assembler::Assembler()
 {
+	// openFyall = "assembler/test.txt";
 	openFyall = "assembler/BabyTest1-Assembler.txt";
 	saveFyall = "assembler/output.txt";
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	opcodesObj = new Opcodes();
-	symbolsObj = new Symbols();
+	symbolsObj = new Symbols(memoryWordSize);
 	line = new vector<string>; // vector to store lines
 	objectCode = new vector<string>;
 }
@@ -57,9 +58,9 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 	return args;
 }
 
-/*====================
+/*=============================================
     Converts an assembly file to a binary file
-====================*/
+===============================================*/
 void Assembler::assembly()
 {
 	loadFile(*line, openFyall);		   // load file and store lines into vector
@@ -133,9 +134,9 @@ void Assembler::processLine(vector<string> &token)
 		if (token[i].back() == ':')
 		{
 			// Deletes the ':' from the token and stores this as the name of the symbol we're storing
-			string name = token[i].substr(0, token[i].size() - 2);
-			// Stores the varialbe in the symbols table
-			symbolsObj->storeVar(token[i + 1]);
+			string name = token[i].substr(0, token[i].size() - 1);
+			// Stores the variable in the symbols table
+			symbolsObj->storeOperand(name);
 		}
 		else
 		{
@@ -209,11 +210,11 @@ void Assembler::genBinary(vector<string> &token)
 		if (token[i].back() == ':')
 		{
 			// Deletes the ':' from the token and stores this as the name of the symbol we're finding
-			string name = token[i].substr(0, token[i].size() - 2);
+			// string name = token[i].substr(0, token[i].size() - 1);
 			// Lookups the memory location in the symbols table for the variable
-			string memoryLocation = symbolsObj->get(token[i + 1]);
+			// string memoryLocation = symbolsObj->get(token[i + 1]);
 			// Stores the line for the object code 
-			objectCode->push_back(memoryLocation);
+			// objectCode->push_back(memoryLocation);
 		}
 		// Checks if we dealing with a STP instruction
 		else if (token[i] == "STP")
