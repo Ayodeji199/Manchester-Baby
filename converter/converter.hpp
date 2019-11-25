@@ -6,7 +6,7 @@
 int binaryToDecimal(std::string binary);
 int binaryToHex(int hex);
 
-std::string decimalToBinary(int decimal);
+std::string decimalToBinary(int decimal, int bits);
 int decimalToHex(int decimal);
 
 std::string hexToBinary(int hex);
