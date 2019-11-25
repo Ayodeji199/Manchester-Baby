@@ -22,7 +22,7 @@ public:
     // Returns true if the variable is contained within the Symbols table
     bool isSymbol(std::string var);
     // Stores a 32-bit variable in the symbol table if it hasn't already been stored and assigns it a memory location
-    int storeVar(std::string var);
+    bool storeVar(std::string var);
     // Returns the memory location of a variable
     std::string get(std::string var);
 };
