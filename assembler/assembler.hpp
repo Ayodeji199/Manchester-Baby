@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 class Assembler
 {
@@ -14,6 +15,7 @@ private:
     std::string saveFyall;
     // Stores the number of words (32-bit integers our memory can store)
     int memoryWordSize;
+    bool extendedinstr;
     Opcodes *opcodesObj;
     Symbols *symbolsObj;
     std::vector<std::string> *line;
@@ -22,8 +24,11 @@ private:
 public:
     Assembler();
 
-    //Gets arguments and returns them as a vector
+    // Gets arguments and returns them as a vector
     std::vector<std::string> getArgs(int argc, char *argv[]);
+
+    // If possible, assigns filenames, memory size, extended instruction set arguments values from vector
+    void Assembler::assignArgs(vector<string> args);
 
     // The assembly loop
     void assembly();
