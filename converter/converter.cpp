@@ -13,10 +13,14 @@
 using namespace std;
 long long  Bits[32];
 int f;
+int f1;
+int f2;
 long long final = 0;
 long long decimal = 0;
 long long values[10];
 long long val[32];
+long long lineNumber[10];
+string FuncNumber[10];
 int binaryToDecimal(string binary)
 {
     // error checking, check if the string is empty, check if the string is in 8 bit binary format
@@ -110,7 +114,7 @@ string decimalConversion(long long int decimalNum)
 /**
  * This is the final method that puts the final values of the array into an array.
  **/
-void FillFinalArray(long long array[])
+void FillFinalArray()
 {
     
     long long l = 0;
@@ -124,46 +128,6 @@ void FillFinalArray(long long array[])
     // cout<<" l is  "<< l<<endl;
     values[f]=l;
     f++;
-}
-
-
-// This is the method that reads the character file
-int CharReader() {
-  char letter;
-  int i=0;
-  int valcn=0;
-  ifstream reader("BabyTest1-MC.txt");
-  
-  if( ! reader ) {
-    cout << "Error opening input file" << endl;
-    return 1;
-  }
-   final = 0;
-
-  while(reader.get(letter)) {
-   if (letter == '\n')
-   {
-       FillFinalArray(val);
-       valcn=0;
-   }
-   else
-   {
-    
-    // int ia = (int)letter;
-    // ia = ia-48;
-    // cout<< " ia is "<<ia<<endl;
-    // cout<< " letter is "<<letter<<endl;
-    long long b = 0;
-    b = (long long) letter;
-    b = b-48;
-    // cout<< " b is "<<b<<endl;
-      val[valcn] = b; 
-      valcn++;
-   }
-  }
-
-  reader.close();
-  return 0;
 }
 // This is the method that calculates the exponents of the array.
 long long exponent(int power)
@@ -196,3 +160,80 @@ void Arrayinitilizer()
     }
     
 }
+void LineNumber(long long linNum[])
+{
+    long long m = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        if (linNum[i]<0)
+        {
+            linNum[i] = 0;
+        }
+        
+        
+        m = m +(linNum[i]*Bits[i]);
+
+    }
+    lineNumber[f2]=m;
+    f2++;
+}
+
+void FunctionNumber( string v)
+{
+    FuncNumber[f1]=v;
+    f1++;
+}
+
+// This is the method that reads the character file
+int CharReader() {
+  char letter;
+  int i=0;
+  int valcn=0;
+  long long numCN = 0;
+  long long lineNumber1[5];
+  string FuncNumber1[3];
+  string f;
+  ifstream reader("BabyTest1-MC.txt");
+  
+  if( ! reader ) {
+    cout << "Error opening input file" << endl;
+    return 1;
+  }
+   final = 0;
+
+  while(reader.get(letter)) {
+   if (letter == '\n')
+   {
+       FillFinalArray();
+       LineNumber(lineNumber1);
+       FunctionNumber(f);
+       valcn=0;
+       numCN = 0;
+       f = "";
+   }
+   else
+   {
+    char t = letter;
+    long long b = 0;
+    b = (long long) letter;
+    b = b-48;
+    val[valcn] = b; 
+    if ( numCN <5)
+    {
+        // cout<< " b is  "<< b <<endl;
+        // cout<< " letter  is  "<< letter <<endl;
+        // cout<< " number  is  "<< numCN <<endl;
+        lineNumber1[numCN]=b;
+        numCN++;
+    }
+    else if (valcn <16 && valcn>12)
+    {
+        string  s( 1, letter);
+        f = f+s;
+        // cout<< " letter  is  "<< letter <<endl;
+        
+    }
+    
+    valcn++;
+   }
+  }
