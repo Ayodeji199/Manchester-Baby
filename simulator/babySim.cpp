@@ -73,7 +73,7 @@ int BabySim::fetchAndDecode()
 
     int lineNum = getLineNum(codeLine);// call method to get the line number
 
-    currentOpcode = // call method to get the opcode
+    currentOpcode = getOpcode(codeLine); // call method to get the opcode
 
     return lineNum;
 }
@@ -87,7 +87,7 @@ int BabySim::getLineNum(string line)
         lineNumB = lineNumB + line[i];
     }
 
-    int num = // call binary to decimal converter
+    int num = stringtest(lineNumB); // call binary to decimal converter
 
     return num;
 }
@@ -101,7 +101,7 @@ int BabySim::getOpcode(string line)
         opcode = opcode + line[i];
     }
 
-    int opNum = // call binary to decimal converter
+    int opNum = stringtest(opcode); // call binary to decimal converter
 
     return opNum;
 
@@ -126,41 +126,6 @@ int BabySim::getOpcode(string line)
 
 void BabySim::doInstruction() 
 {
-    // if (opcode == "000")
-    // {
-    //     CI = S;
-    // }
-    // else if (opcode == "100")
-    // {
-    //     CI += S;
-    // }
-    // else if (opcode == "010")
-    // {
-    //     accummulator = -S;
-    // }
-    // else if (opcode == "110")
-    // {
-    //     S = accummulator;
-    // }
-    // else if (opcode == "001" || opcode == "101")
-    // {
-    //     accummulator -= S;
-    // }
-    // else if (opcode == "011")
-    // {
-    //     if (accummulator < 0)
-    //     {
-    //         CI++;
-    //     }
-    // }
-    // else if (opcode == "111")
-    // {
-    //     stop = true;
-    // }
-    // else
-    // {
-    //     // idk how to stop ur dumbass code ur screwed lmao
-    // }
 
     switch (currentOpcode)
     {
@@ -195,7 +160,6 @@ int main()
 
     obj.babyMemory = obj.readInCode();
 
-    obj.doInstruction("011");
     obj.fetchAndDecode();
 
     cout << obj.currentInstruction << endl;
