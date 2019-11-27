@@ -6,39 +6,34 @@
 
 using namespace std;
 
-class babySim // dont use lowercase as the first letter in a class name pls ty - FIXME <---------------
+class BabySim
 {
 public:
     vector<string> babyMemory; // Memory for the Baby (RAM)
     int S;                     // Need to store S into this somehow with error checking
     int CI;
-    int PI;
+    string PI;
     int accummulator;
     bool stop;
 
-    babySim();
+    BabySim();
     vector<string> readInCode();
-<<<<<<< HEAD
     int incrementCI(int CI);
     int fetchAndDecode();
-=======
-    void fetchData();
-    void decode();
->>>>>>> tadas
-    void execute();
     void doInstruction(string);
 };
 
-babySim::babySim()
+BabySim::BabySim()
 {
     babyMemory = {};
     CI = 0;
-    PI = 0;
+    PI = " ";
     accummulator = 0;
+    stop = false;
 }
 
 // read in the data from file given from user if the file exist
-vector<string> babySim::readInCode()
+vector<string> BabySim::readInCode()
 {
     string line; // create string to store data from file
     vector<string> data;
@@ -63,15 +58,14 @@ vector<string> babySim::readInCode()
     return data; // return our string
 }
 
-<<<<<<< HEAD
-int babySim::incrementCI(int CI)
+int BabySim::incrementCI(int CI)
 {
     CI++;
 
     return CI;
 }
 
-int babySim::fetchAndDecode()
+int BabySim::fetchAndDecode()
 {
     string codeLine = babyMemory[CI];
 
@@ -80,20 +74,10 @@ int babySim::fetchAndDecode()
     PI = // call method to get the opcode
 
     return lineNum;
-=======
-void babySim::fetchData()
-{
-    string codeLine = babyMemory[CI];
->>>>>>> tadas
 }
 
-void babySim::execute()
+int BabySim::getLine(string line)
 {
-}
-
-int babySim::getLine(string line)
-{
-<<<<<<< HEAD
     string lineNumB;
 
     for (int i = 0; i < 4 ; ++i)
@@ -103,8 +87,6 @@ int babySim::getLine(string line)
     }
 
     return 0;
-=======
->>>>>>> tadas
 }
 
 // void babyRun()
@@ -124,42 +106,68 @@ int babySim::getLine(string line)
 //  }
 // }
 
-void babySim::doInstruction(string opcode) // This needs to be made into a case (opcodes will need to be made into enums) because the ifs are disgusting - TODO
+void BabySim::doInstruction(string opcode) // This needs to be made into a case (opcodes will need to be made into enums) because the ifs are disgusting - TODO
 {
-    if (opcode == "000")
+    // if (opcode == "000")
+    // {
+    //     CI = S;
+    // }
+    // else if (opcode == "100")
+    // {
+    //     CI += S;
+    // }
+    // else if (opcode == "010")
+    // {
+    //     accummulator = -S;
+    // }
+    // else if (opcode == "110")
+    // {
+    //     S = accummulator;
+    // }
+    // else if (opcode == "001" || opcode == "101")
+    // {
+    //     accummulator -= S;
+    // }
+    // else if (opcode == "011")
+    // {
+    //     if (accummulator < 0)
+    //     {
+    //         CI++;
+    //     }
+    // }
+    // else if (opcode == "111")
+    // {
+    //     stop = true;
+    // }
+    // else
+    // {
+    //     // idk how to stop ur dumbass code ur screwed lmao
+    // }
+
+    switch (opcode)
     {
-        CI = S;
-    }
-    else if (opcode == "100")
-    {
-        CI += S;
-    }
-    else if (opcode == "010")
-    {
-        accummulator = -S;
-    }
-    else if (opcode == "110")
-    {
-        S = accummulator;
-    }
-    else if (opcode == "001" || opcode == "101")
-    {
-        accummulator -= S;
-    }
-    else if (opcode == "011")
-    {
+        case "000": CI = S;
+            break;
+        case "100": CI += S;
+            break;
+        case "010": accummulator = -S;
+            break;
+        case "110": S = accummulator;
+            break;
+        case "001": accummulator -= S;
+            break;
+        case "101": accummulator -= S;
+            break;
+        case "011":  
         if (accummulator < 0)
         {
             CI++;
         }
-    }
-    else if (opcode == "111")
-    {
-        // idk how to stop ur dumbass code ur screwed lmao
-    }
-    else
-    {
-        // idk how to stop ur dumbass code ur screwed lmao
+            break;
+        case "111": stop = true;
+            break;
+        default:
+            break;
     }
 }
 
