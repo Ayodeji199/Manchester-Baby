@@ -88,8 +88,8 @@ void Assembler::assignArgs(vector<string> args)
 					{
 						// try to parse the integer
 						memoryWordSize = stoi(args.at(i + 1));
-						//if the size entered is less than 32
-						if (memoryWordSize < 32)
+						//if the size entered is less than 32 or more than 8192
+						if (memoryWordSize < 32 || memoryWordSize > 8192)
 						{
 							// display error
 							checkValidity(INVALID_MEMORY_SIZE);
