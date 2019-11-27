@@ -20,8 +20,7 @@ public:
     babySim();
     vector<string> readInCode();
     int incrementCI(int CI);
-    void fetchData();
-    void decode();
+    int fetchAndDecode();
     void execute();
     
 };
@@ -67,21 +66,33 @@ int babySim::incrementCI(int CI)
     return CI;
 }
 
-void babySim::fetchData()
+int babySim::fetchAndDecode()
 {
     string codeLine = babyMemory[CI];
 
-    
-}
+    int lineNum = getLine(codeLine);// call method to get the line number
 
-void babySim::decode()
-{
+    PI = // call method to get the opcode
 
+    return lineNum;
 }
 
 void babySim::execute()
 {
 
+}
+
+int babySim::getLine(string line)
+{
+    string lineNumB;
+
+    for (int i = 0; i < 4 ; ++i)
+    {
+        lineNumB = lineNumB + line[i];
+        cout << lineNumB << endl;
+    }
+
+    return 0;
 }
 
 // void babyRun()
