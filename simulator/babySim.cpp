@@ -23,6 +23,7 @@ public:
     int getOpcode(string line);
     void babyRun();
     void doInstruction(int);
+    void printMemory();
 };
 
 BabySim::BabySim()
@@ -88,7 +89,7 @@ int BabySim::getLineNum(string line)
     }
 
     int rp = lineNumB.size();
-    int num = stringtest(lineNumB, rp); // call binary to decimal converter
+    int num = binaryConversion(lineNumB, rp); // call binary to decimal converter
 
     return num;
 }
@@ -103,7 +104,7 @@ int BabySim::getOpcode(string line)
     }
 
     int rp = opcode.size();
-    int opNum = stringtest(opcode, rp); // call binary to decimal converter
+    int opNum = binaryConversion(opcode, rp); // call binary to decimal converter
 
     return opNum;
 
@@ -112,6 +113,8 @@ int BabySim::getOpcode(string line)
 void BabySim::babyRun()
 {
     int num = 0;
+
+    printMemory();
 
      while(!stop)
      {
@@ -124,13 +127,13 @@ void BabySim::babyRun()
 
      cout << babyMemory[9] << endl;
      int length = babyMemory[9].size();
-     cout << stringtest(babyMemory[9], length) << endl;
+     cout << binaryConversion(babyMemory[9], length) << endl;
 }
 
 void BabySim::doInstruction(int lineNum) 
 {
     int stringLength = babyMemory[lineNum].size();
-    int memItem = stringtest(babyMemory[lineNum] ,stringLength);
+    int memItem = binaryConversion(babyMemory[lineNum] ,stringLength);
 
     switch (currentOpcode)
     {
@@ -170,6 +173,17 @@ void BabySim::doInstruction(int lineNum)
         default:
             break;
     }
+}
+
+void BabySim::printMemory()
+{
+    cout << "Data in Memory" << endl;
+
+    for (int i = 0; i < babyMemory.size(); ++i)
+    {
+        cout << babyMemory[i] << endl;
+    }
+     cout << endl;
 }
 
 int main()

@@ -49,7 +49,7 @@ void Arrayinitilizer()
     
 }
 
-long long stringtest(string bi , int length)
+long long binaryConversion(string bi , int length)
 {
 Arrayinitilizer();
 long long finalval = 0;
