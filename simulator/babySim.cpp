@@ -6,24 +6,22 @@
 
 using namespace std;
 
-class babySim
+class babySim // dont use lowercase as the first letter in a class name pls ty - FIXME <---------------
 {
 public:
-
     vector<string> babyMemory; // Memory for the Baby (RAM)
+    int S;                     // Need to store S into this somehow with error checking
     int CI;
     int PI;
     int accummulator;
     bool stop;
 
-
     babySim();
     vector<string> readInCode();
-    int incrementCI(int CI);
     void fetchData();
     void decode();
     void execute();
-    
+    void doInstruction(string);
 };
 
 babySim::babySim()
@@ -38,19 +36,19 @@ babySim::babySim()
 vector<string> babySim::readInCode()
 {
     string line; // create string to store data from file
-    vector<string> data;    
+    vector<string> data;
 
     ifstream fp("BabyTest1-MC.txt");
 
     if (!fp) // check if the file failed to open
     {
         // print error message
-        cout<< "Error Opening File, Please try again"<<endl;
+        cout << "Error Opening File, Please try again" << endl;
         exit(0); // End the program
     }
 
     // loop until there is no data left in the file
-    while(getline(fp, line))
+    while (getline(fp, line))
     {
         data.push_back(line);
     }
@@ -60,28 +58,17 @@ vector<string> babySim::readInCode()
     return data; // return our string
 }
 
-int babySim::incrementCI(int CI)
-{
-    CI++;
-
-    return CI;
-}
-
 void babySim::fetchData()
 {
     string codeLine = babyMemory[CI];
-
-    
 }
 
 void babySim::decode()
 {
-
 }
 
 void babySim::execute()
 {
-
 }
 
 // void babyRun()
@@ -101,28 +88,44 @@ void babySim::execute()
 //  }
 // }
 
-string parseInstruction(string opcode){
-    if (opcode == "000"){
-        return "JMP";
-    } else if (opcode == "100"){
-        return "JRP";
-    } else if (opcode == "010"){
-        return "LDN";
-    } else if (opcode == "110"){
-        return "STO";
-    } else if (opcode == "001"){
-        return "SUB";
-    } else if (opcode == "101"){
-        return "SUB";
-    } else if (opcode == "011"){
-        return "CMP";
-    } else if (opcode == "111"){
-        return "STP";
-    } else {
-        return "invalid opcode";
+void babySim::doInstruction(string opcode) // This needs to be made into a case (opcodes will need to be made into enums) because the ifs are disgusting - TODO
+{
+    if (opcode == "000")
+    {
+        CI = S;
+    }
+    else if (opcode == "100")
+    {
+        CI += S;
+    }
+    else if (opcode == "010")
+    {
+        accummulator = -S;
+    }
+    else if (opcode == "110")
+    {
+        S = accummulator;
+    }
+    else if (opcode == "001" || opcode == "101")
+    {
+        accummulator -= S;
+    }
+    else if (opcode == "011")
+    {
+        if (accummulator < 0)
+        {
+            CI++;
+        }
+    }
+    else if (opcode == "111")
+    {
+        // idk how to stop ur dumbass code ur screwed lmao
+    }
+    else
+    {
+        // idk how to stop ur dumbass code ur screwed lmao
     }
 }
-
 
 int main()
 {
@@ -132,18 +135,16 @@ int main()
 
     int i = 0;
 
-    while(!obj.babyMemory[i].empty())
+    while (!obj.babyMemory[i].empty())
     {
         cout << obj.babyMemory[i] << endl;
         i++;
     }
 
-    obj.CI = obj.incrementCI(obj.CI);
+    obj.doInstruction("011");
     obj.fetchData();
 
     cout << obj.CI << endl;
 
     return 0;
 }
-
-
