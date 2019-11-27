@@ -308,3 +308,62 @@ void Arrayinitilizer()
 // cout<< " Temp is  "<< temp<<endl;
 // // cout<< "The string is " << bi<<endl;
 // }
+/********************************************************** OPcode part *************************************
+ * 
+ * 
+ * 
+ */
+
+long long exponent(int power)
+{
+    long long base = 1;
+    
+    long long ex =2;
+    for (int i = 0; i < power; i++)
+    {
+       base = base * ex;
+    }
+    return base;
+}
+string optest(string bi)
+{
+int finalval = 0;
+// int dumb[5];
+string opcode;
+bi.resize (5);
+for (int i = 13; i < 16; i++)
+{
+    opcode = opcode + bi[i];
+}
+
+return opcode;
+}
+
+void Arrayinitilizer()
+{
+    Bits[0]=1;
+    Bits[1]=2;
+    cout<< " Reached 1" <<endl;
+    for (int i = 2; 0 < 32; i++)
+    {
+        Bits[i] = exponent(i);
+        if (i == 31)
+        {
+           break;
+        }
+        
+    }
+    
+}
+
+// int main()
+// {
+//  string bi = "00000000000001110000000000000000";
+//  string p;
+// // Arrayinitilizer();
+// // printArray();
+// // test();
+//  p = optest(bi);
+// cout<< " p is  "<< p<<endl;
+// // cout<< "The string is " << bi<<endl;
+// }
