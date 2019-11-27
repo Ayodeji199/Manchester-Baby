@@ -52,6 +52,7 @@ void Arrayinitilizer()
 
 long long stringtest(string bi)
 {
+Arrayinitilizer();
 long long finalval = 0;
 long long dumb[32];
 for (int i = 0; i < 32; i++)
