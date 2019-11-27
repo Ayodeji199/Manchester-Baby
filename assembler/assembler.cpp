@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	Assembler assemblerObj = Assembler();
-	assemblerObj.assignArgs(assemblerObj.getArgs(argc,argv));
+	assemblerObj.assignArgs(assemblerObj.getArgs(argc, argv));
 	assemblerObj.assembly();
 	return SUCCESS;
 }
@@ -44,7 +44,6 @@ Assembler::Assembler()
 	objectCode = new vector<string>;
 }
 
-// REVIEW needs checking if it works since I don't want to mess up Max's tester
 /*==============================================
 	Gets arguments and returns them as a vector
 ==============================================*/
@@ -66,7 +65,6 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 	return args;
 }
 
-// REVIEW needs checking if it works since I don't want to mess up Max's tester
 /*=====================================================================================================
 	If possible, assigns filenames, memory size, extended instruction set arguments values from vector
 =====================================================================================================*/
