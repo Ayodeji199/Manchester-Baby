@@ -11,14 +11,14 @@ class BabySim
 public:
     vector<string> babyMemory; // Memory for the Baby (RAM)
     int S;                     // Need to store S into this somehow with error checking
-    int CI;
-    int PI;
+    int currentInstruction;
+    int currentOpcode;
     int accummulator;
     bool stop;
 
     BabySim();
     vector<string> readInCode();
-    int incrementCI(int CI);
+    int incrementCI(int currentInstruction);
     int fetchAndDecode();
     int getLineNum(string line);
     int getOpcode(string line);
@@ -28,8 +28,8 @@ public:
 BabySim::BabySim()
 {
     babyMemory = {};
-    CI = 0;
-    PI = " ";
+    currentInstruction = 0;
+    currentOpcode = 0;
     accummulator = 0;
     stop = false;
 }
@@ -60,20 +60,20 @@ vector<string> BabySim::readInCode()
     return data; // return our string
 }
 
-int BabySim::incrementCI(int CI)
+int BabySim::incrementCI(int currentInstruction)
 {
-    CI++;
+    currentInstruction++;
 
-    return CI;
+    return currentInstruction;
 }
 
 int BabySim::fetchAndDecode()
 {
-    string codeLine = babyMemory[CI];
+    string codeLine = babyMemory[currentInstruction];
 
     int lineNum = getLineNum(codeLine);// call method to get the line number
 
-    PI = // call method to get the opcode
+    currentOpcode = // call method to get the opcode
 
     return lineNum;
 }
@@ -162,11 +162,11 @@ void BabySim::doInstruction()
     //     // idk how to stop ur dumbass code ur screwed lmao
     // }
 
-    switch (PI)
+    switch (currentOpcode)
     {
-        case 0: CI = S;
+        case 0: currentInstruction = S;
             break;
-        case 1: CI += S;
+        case 1: currentInstruction += S;
             break;
         case 2: accummulator = -S;
             break;
@@ -179,7 +179,7 @@ void BabySim::doInstruction()
         case 6:  
             if (accummulator < 0)
             {
-                CI++;
+                currentInstruction++;
             }
             break;
         case 7: stop = true;
@@ -191,14 +191,14 @@ void BabySim::doInstruction()
 
 int main()
 {
-    babySim obj;
+    BabySim obj;
 
     obj.babyMemory = obj.readInCode();
 
     obj.doInstruction("011");
-    obj.fetchData();
+    obj.fetchAndDecode();
 
-    cout << obj.CI << endl;
+    cout << obj.currentInstruction << endl;
 
     return 0;
 }
