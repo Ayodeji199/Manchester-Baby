@@ -10,7 +10,6 @@ class BabySim
 {
 public:
     vector<string> babyMemory; // Memory for the Baby (RAM)
-    int S;                     // Need to store S into this somehow with error checking
     int currentInstruction;
     int currentOpcode;
     int accummulator;
@@ -22,7 +21,7 @@ public:
     int fetchAndDecode();
     int getLineNum(string line);
     int getOpcode(string line);
-    void doInstruction(string);
+    void doInstruction(int);
 };
 
 BabySim::BabySim()
@@ -87,6 +86,7 @@ int BabySim::getLineNum(string line)
         lineNumB = lineNumB + line[i];
     }
 
+    int rp = lineNumB.size();
     int num = stringtest(lineNumB); // call binary to decimal converter
 
     return num;
@@ -101,6 +101,7 @@ int BabySim::getOpcode(string line)
         opcode = opcode + line[i];
     }
 
+    int rp = opcode.size();
     int opNum = stringtest(opcode); // call binary to decimal converter
 
     return opNum;
@@ -124,22 +125,24 @@ int BabySim::getOpcode(string line)
 //  }
 // }
 
-void BabySim::doInstruction() 
+void BabySim::doInstruction(int lineNum) 
 {
+    int stringLength = babyMemory[lineNum].size();
+    int memItem = stringtest(babyMemory[lineNum]);
 
     switch (currentOpcode)
     {
-        case 0: currentInstruction = S;
+        case 0: currentInstruction = memItem;
             break;
-        case 1: currentInstruction += S;
+        case 1: currentInstruction += memItem;
             break;
-        case 2: accummulator = -S;
+        case 2: accummulator = -memItem;
             break;
-        case 3: S = accummulator;
+        case 3: memItem = accummulator;
             break;
-        case 4: accummulator -= S;
+        case 4: accummulator -= memItem;
             break;
-        case 5: accummulator -= S;
+        case 5: accummulator -= memItem;
             break;
         case 6:  
             if (accummulator < 0)
@@ -160,9 +163,9 @@ int main()
 
     obj.babyMemory = obj.readInCode();
 
-    obj.fetchAndDecode();
+    int num = obj.fetchAndDecode();
 
-    cout << obj.currentInstruction << endl;
+    obj.doInstruction(num);
 
     return 0;
 }
