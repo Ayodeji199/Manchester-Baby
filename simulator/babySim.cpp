@@ -96,7 +96,7 @@ int BabySim::getOpcode(string line)
 {
     string opcode;
 
-    for (int i = 12; i < 15 ; ++i)
+    for (int i = 13; i < 16 ; ++i)
     {
         opcode = opcode + line[i];
     }
