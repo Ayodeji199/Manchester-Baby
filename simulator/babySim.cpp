@@ -21,7 +21,7 @@ public:
     int incrementCI(int CI);
     int fetchAndDecode();
     int getLineNum(string line);
-    void getOpcode(string line);
+    int getOpcode(string line);
     void doInstruction(string);
 };
 
@@ -71,7 +71,7 @@ int BabySim::fetchAndDecode()
 {
     string codeLine = babyMemory[CI];
 
-    int lineNum = getLine(codeLine);// call method to get the line number
+    int lineNum = getLineNum(codeLine);// call method to get the line number
 
     PI = // call method to get the opcode
 
@@ -92,7 +92,7 @@ int BabySim::getLineNum(string line)
     return num;
 }
 
-void BabySim::getOpcode(string line)
+int BabySim::getOpcode(string line)
 {
     string opcode;
 
@@ -101,7 +101,9 @@ void BabySim::getOpcode(string line)
         opcode = opcode + line[i];
     }
 
-    PI = // call binary to decimal converter
+    int opNum = // call binary to decimal converter
+
+    return opNum;
 
 }
 
@@ -122,7 +124,7 @@ void BabySim::getOpcode(string line)
 //  }
 // }
 
-void BabySim::doInstruction(string opcode) // This needs to be made into a case (opcodes will need to be made into enums) because the ifs are disgusting - TODO
+void BabySim::doInstruction() 
 {
     // if (opcode == "000")
     // {
@@ -160,29 +162,27 @@ void BabySim::doInstruction(string opcode) // This needs to be made into a case 
     //     // idk how to stop ur dumbass code ur screwed lmao
     // }
 
-
-
-    switch (opcode)
+    switch (PI)
     {
-        case "000": CI = S;
+        case 0: CI = S;
             break;
-        case "100": CI += S;
+        case 1: CI += S;
             break;
-        case "010": accummulator = -S;
+        case 2: accummulator = -S;
             break;
-        case "110": S = accummulator;
+        case 3: S = accummulator;
             break;
-        case "001": accummulator -= S;
+        case 4: accummulator -= S;
             break;
-        case "101": accummulator -= S;
+        case 5: accummulator -= S;
             break;
-        case "011":  
+        case 6:  
             if (accummulator < 0)
             {
                 CI++;
             }
             break;
-        case "111": stop = true;
+        case 7: stop = true;
             break;
         default:
             break;
