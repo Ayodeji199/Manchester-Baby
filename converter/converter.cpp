@@ -13,7 +13,7 @@
 using namespace std;
 long long  Bits[32];
 
-long long test(long long val[])
+long long test(long long val[] , int length)
 {
     long long m = 0;
     for (int i = 0; i < 32; i++)
@@ -50,16 +50,16 @@ void Arrayinitilizer()
     
 }
 
-long long stringtest(string bi)
+long long stringtest(string bi , int length)
 {
 long long finalval = 0;
 long long dumb[32];
-for (int i = 0; i < 32; i++)
+for (int i = 0; i < length; i++)
 {
     int ia = (int)bi[i];
     dumb[i]=ia - 48;
 }
-finalval = test(dumb);
+finalval = test(dumb,length);
 
 return finalval;
 }
