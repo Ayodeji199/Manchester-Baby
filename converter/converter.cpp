@@ -3,9 +3,24 @@
 #include <iostream>
 #include <locale>
 #include <algorithm>
-
+#include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <iomanip>
+#include <string>
+#include <fstream>
+#include <stdlib.h> 
 using namespace std;
-
+long long  Bits[32];
+int f;
+int f1;
+int f2;
+long long final = 0;
+long long decimal = 0;
+long long values[10];
+long long val[32];
+long long lineNumber[10];
+string FuncNumber[10];
 int binaryToDecimal(string binary)
 {
     // error checking, check if the string is empty, check if the string is in 8 bit binary format
@@ -68,16 +83,15 @@ int binaryToDecimal(string binary)
     return convertedDecimal; // return the converted decimal number
 }
 
-string decimalToBinary(int decimal, int bits)
+string decimalConversion(long long int decimalNum)
 {
     // initialise variables for conversion algorithm
     string convertedBinary;
-    long long int temp = decimal;
+    long long int temp = decimalNum;
     long long int binaryVal;
-    int i = 0;
 
     // while loop runs 8 times to allow return value to be in 8 bit binary form
-    while (i != bits)
+    while (temp != 0)
     {
         binaryVal = temp % 2; // get the binary value be getting the remainder of decimal number / 2
         temp = temp / 2;      // divide the decimal number by 2
@@ -90,8 +104,136 @@ string decimalToBinary(int decimal, int bits)
         {
             convertedBinary += "1"; // if so, add a 1 to the binary string
         }
-        i++;
     }
 
     return convertedBinary; // return the converted binary as a string
 }
+
+// ***************************************** Deji's Binary to Decimal converter **************************************************************
+
+/**
+ * This is the final method that puts the final values of the array into an array.
+ **/
+void FillFinalArray()
+{
+    
+    long long l = 0;
+    for (int i = 0; i < 32; i++)
+    {
+        
+        l = l +(val[i]*Bits[i]);
+
+    }
+    // cout<<" Reached counter  is  "<< f <<endl;
+    // cout<<" l is  "<< l<<endl;
+    values[f]=l;
+    f++;
+}
+// This is the method that calculates the exponents of the array.
+long long exponent(int power)
+{
+    long long base = 1;
+    
+    long long ex =2;
+    for (int i = 0; i < power; i++)
+    {
+       base = base * ex;
+    }
+    return base;
+    
+
+
+}
+// This method initialises the array
+void Arrayinitilizer()
+{
+    Bits[0]=1;
+    Bits[1]=2;
+    for (int i = 2; 0 < 32; i++)
+    {
+        Bits[i] = exponent(i);
+        if (i == 31)
+        {
+           break;
+        }
+        
+    }
+    
+}
+void LineNumber(long long linNum[])
+{
+    long long m = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        if (linNum[i]<0)
+        {
+            linNum[i] = 0;
+        }
+        
+        
+        m = m +(linNum[i]*Bits[i]);
+
+    }
+    lineNumber[f2]=m;
+    f2++;
+}
+
+void FunctionNumber( string v)
+{
+    FuncNumber[f1]=v;
+    f1++;
+}
+
+// This is the method that reads the character file
+int CharReader() {
+  char letter;
+  int i=0;
+  int valcn=0;
+  long long numCN = 0;
+  long long lineNumber1[5];
+  string FuncNumber1[3];
+  string f;
+  ifstream reader("BabyTest1-MC.txt");
+  
+  if( ! reader ) {
+    cout << "Error opening input file" << endl;
+    return 1;
+  }
+   final = 0;
+
+  while(reader.get(letter)) {
+   if (letter == '\n')
+   {
+       FillFinalArray();
+       LineNumber(lineNumber1);
+       FunctionNumber(f);
+       valcn=0;
+       numCN = 0;
+       f = "";
+   }
+   else
+   {
+    char t = letter;
+    long long b = 0;
+    b = (long long) letter;
+    b = b-48;
+    val[valcn] = b; 
+    if ( numCN <5)
+    {
+        // cout<< " b is  "<< b <<endl;
+        // cout<< " letter  is  "<< letter <<endl;
+        // cout<< " number  is  "<< numCN <<endl;
+        lineNumber1[numCN]=b;
+        numCN++;
+    }
+    else if (valcn <16 && valcn>12)
+    {
+        string  s( 1, letter);
+        f = f+s;
+        // cout<< " letter  is  "<< letter <<endl;
+        
+    }
+    
+    valcn++;
+   }
+  }
