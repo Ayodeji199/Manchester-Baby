@@ -263,9 +263,9 @@ void Assembler::storeInstruction(string opcodeCandidate, string operandCandidate
 	}
 }
 
-/*=============================================================================
-Calculates the number of blank bits that are needed to produce a 32 bit number
-=============================================================================*/
+/*=================================================================================
+	Calculates the number of blank bits that are needed to produce a 32 bit number
+===================================================================================*/
 string Assembler::calcBlankBits()
 {
 	if (memoryWordSize > 8192 || memoryWordSize < 0)
@@ -284,13 +284,19 @@ string Assembler::calcBlankBits()
 	return blankBits;
 }
 
+/*=================================================================================================
+	Recursive algorithim for calculating how many blank bits are needed to produce a 32 bit number
+===================================================================================================*/
 int Assembler::calcZeros(int number)
 {
+	// Returns 0 because there's no longer any bits left 
+	// between the opcode and the operand at this length
 	if (number == pow(2, 13))
 	{
 		return 0;
 	}
 
+	// Adds 1 each time 
 	int zeros = calcZeros(number * 2) + 1;
 	return zeros;
 }
