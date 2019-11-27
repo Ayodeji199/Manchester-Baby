@@ -60,7 +60,6 @@ void assemblerFirstPassTest()
   cout << endl
        << "\tPower: " << assemblerObj.calcZeros(64) << endl;
 
-  
   assemblerObj.assembly();
   // vector<string> objectCode = assemblerObj.getObjectCode();
   // printVector(objectCode);

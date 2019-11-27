@@ -24,6 +24,7 @@
 #define INVALID_OPCODE 200
 #define INVALID_OPERAND 201
 #define INVALID_MEMORY_SIZE 202
+#define INVALID_NUMBER_OF_ARGS 203
 
 // Displays an error message to the user based on the apppropriate error code
 // imported and quits the program, will do nothing if SUCCESS is passed
