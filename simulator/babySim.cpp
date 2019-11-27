@@ -1,4 +1,4 @@
-#include "../converter/converter.cpp";
+#include "../converter/converter.cpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -70,9 +70,14 @@ int BabySim::fetchAndDecode()
 {
     string codeLine = babyMemory[currentInstruction];
 
+    cout << "codeLine: "<< codeLine << endl;
+
     int lineNum = getLineNum(codeLine);// call method to get the line number
 
     currentOpcode = getOpcode(codeLine); // call method to get the opcode
+
+    cout << "Line: " << lineNum << endl;
+    cout << "Op: " << currentOpcode << endl;
 
     return lineNum;
 }
@@ -81,13 +86,15 @@ int BabySim::getLineNum(string line)
 {
     string lineNumB;
 
-    for (int i = 0; i < 4 ; ++i)
+    for (int i = 0; i < 5 ; ++i)
     {
         lineNumB = lineNumB + line[i];
     }
 
+    cout << "lineNum: " << lineNumB <<endl;
+
     int rp = lineNumB.size();
-    int num = stringtest(lineNumB); // call binary to decimal converter
+    int num = stringtest(lineNumB, rp); // call binary to decimal converter
 
     return num;
 }
@@ -101,8 +108,10 @@ int BabySim::getOpcode(string line)
         opcode = opcode + line[i];
     }
 
+    cout << "op string: " << opcode <<endl;
+
     int rp = opcode.size();
-    int opNum = stringtest(opcode); // call binary to decimal converter
+    int opNum = stringtest(opcode, rp); // call binary to decimal converter
 
     return opNum;
 
@@ -128,21 +137,27 @@ int BabySim::getOpcode(string line)
 void BabySim::doInstruction(int lineNum) 
 {
     int stringLength = babyMemory[lineNum].size();
-    int memItem = stringtest(babyMemory[lineNum]);
+    int memItem = stringtest(babyMemory[lineNum] ,stringLength);
 
     switch (currentOpcode)
     {
-        case 0: currentInstruction = memItem;
+        case 0: 
+            currentInstruction = memItem;
             break;
-        case 1: currentInstruction += memItem;
+        case 1: 
+            currentInstruction += memItem;
             break;
-        case 2: accummulator = -memItem;
+        case 2: 
+            accummulator = -memItem;
             break;
-        case 3: memItem = accummulator;
+        case 3: 
+            memItem = accummulator;
             break;
-        case 4: accummulator -= memItem;
+        case 4: 
+            accummulator -= memItem;
             break;
-        case 5: accummulator -= memItem;
+        case 5: 
+            accummulator -= memItem;
             break;
         case 6:  
             if (accummulator < 0)
@@ -150,7 +165,9 @@ void BabySim::doInstruction(int lineNum)
                 currentInstruction++;
             }
             break;
-        case 7: stop = true;
+        case 7: 
+            stop = true;
+            cout << "gay stop" << endl;
             break;
         default:
             break;
@@ -162,10 +179,13 @@ int main()
     BabySim obj;
 
     obj.babyMemory = obj.readInCode();
+    obj.currentInstruction = obj.incrementCI(obj.currentInstruction);
 
     int num = obj.fetchAndDecode();
 
     obj.doInstruction(num);
+
+    cout << "current accum: "<< obj.accummulator <<endl;
 
     return 0;
 }

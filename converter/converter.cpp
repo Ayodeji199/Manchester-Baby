@@ -16,10 +16,9 @@ long long  Bits[32];
 long long test(long long val[] , int length)
 {
     long long m = 0;
-    for (int i = 0; i < 32; i++)
+    for (int i = 0; i < length; i++)
     {
         m = m + (val[i] * Bits[i]);
-        cout<< " m is  "<< m <<endl;
     }
     return m;   
 }
