@@ -4,10 +4,14 @@
 using namespace std;
 
 // Constructor
-Opcodes::Opcodes()
+Opcodes::Opcodes(bool extendedinstr)
 {
   table = map<string,string>();
   storeDefaults();
+  if (extendedinstr)
+  {
+    store("ADD",8);
+  }
 }
 
 // Returns true if the variable is contained within the Opcodes table

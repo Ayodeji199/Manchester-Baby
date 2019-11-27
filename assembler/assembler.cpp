@@ -38,7 +38,7 @@ Assembler::Assembler()
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	extendedinstr = true;
-	opcodesObj = new Opcodes();
+	opcodesObj = new Opcodes(extendedinstr);
 	symbolsObj = new Symbols(memoryWordSize);
 	line = new vector<string>; // vector to store lines
 	objectCode = new vector<string>;
