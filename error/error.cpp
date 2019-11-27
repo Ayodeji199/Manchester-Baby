@@ -50,6 +50,7 @@ void checkValidity(int valid)
         cout << "Invalid or unsupported memory size input detected. "
                 "This could be caused by the input not being an integer "
                 "or the input size being invalid/unsupported";
+        break;
 
     case INVALID_NUMBER_OF_ARGS: // REVIEW - there might be too many endlines here, not sure.
         cout << "Invalid number of arguments when executing the assembler. "
@@ -61,9 +62,9 @@ void checkValidity(int valid)
              << "./assembler -memsize 64 -extended true" << endl
              << "./assembler" << endl
              << "./assembler -extended 0 -writename yourwritename.txt -readname yourreadname.txt -memsize 64";
+        break;
     default:
         cout << "Error Code is invalid or has not been fully implemented";
-        break;
     }
 
     cout << endl;
