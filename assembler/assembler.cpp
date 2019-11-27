@@ -5,12 +5,13 @@
 
 using namespace std;
 
-// int main(int argc, char *argv[])
-// {
-// 	Assembler assemblerObj = Assembler();
-// 	assemblerObj.assembly();
-// 	return SUCCESS;
-// }
+int main(int argc, char *argv[])
+{
+	Assembler assemblerObj = Assembler();
+	assemblerObj.assignArgs(assemblerObj.getArgs(argc,argv));
+	assemblerObj.assembly();
+	return SUCCESS;
+}
 
 // > CURRENT OUTPUT <
 /*
@@ -36,26 +37,113 @@ Assembler::Assembler()
 	saveFyall = "assembler/output.txt";
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
+	extendedinstr = true;
 	opcodesObj = new Opcodes();
 	symbolsObj = new Symbols(memoryWordSize);
 	line = new vector<string>; // vector to store lines
 	objectCode = new vector<string>;
 }
 
+// REVIEW needs checking if it works since I don't want to mess up Max's tester
 /*==============================================
-	Gets arguments and returns them as a vector - REVIEW 
+	Gets arguments and returns them as a vector
 ==============================================*/
 vector<string> Assembler::getArgs(int argc, char *argv[])
 {
-	vector<string> args = {};
-	for (int i = 0; i < argc; i++)
+	vector<string> args = {}; // initialize the empty vector
+	// go through each argument
+	for (int i = 1; i < argc; i++)
 	{
-		if (argv[i] != NULL && i != 0)
+		// if argument isn't NULL
+		if (argv[i] != NULL)
 		{
+			// add argument to the vector
 			args.push_back(argv[i]);
+			cout << "add_arg<" << argv[i] << ">" << endl;
 		}
 	}
+
 	return args;
+}
+
+// REVIEW needs checking if it works since I don't want to mess up Max's tester
+/*=====================================================================================================
+	If possible, assigns filenames, memory size, extended instruction set arguments values from vector
+=====================================================================================================*/
+void Assembler::assignArgs(vector<string> args)
+{
+	// if the amount of arguments is divisable by 2 and is equal or less than 8 (which would be 4 flags with a value each)
+	if ((int)args.size() % 2 == 0 && (int)args.size() <= 8)
+	{
+		// for every flag
+		for (int i = 0; i < (int)args.size(); i = i + 2)
+		{
+			// TIL you can't do string switches. A sad day.
+
+			// if the flag is -memsize
+			if (args.at(i) == "-memsize")
+			{
+				// if the size to set isn't another flag (and isn't negative)
+				if (args.at(i)[0] != '-')
+					try
+					{
+						// try to parse the integer
+						memoryWordSize = stoi(args.at(i + 1));
+						//if the size entered is less than 32
+						if (memoryWordSize < 32)
+						{
+							// display error
+							checkValidity(INVALID_MEMORY_SIZE);
+						}
+					}
+					catch (invalid_argument &e)
+					{
+						// display error if the value entered isn't an integer
+						checkValidity(INVALID_FILENAME);
+					}
+					catch (out_of_range &e)
+					{
+						// display error if the value entered is too big for a non-long integer
+						checkValidity(INVALID_MEMORY_SIZE);
+					}
+			}
+
+			// if the flag is -readname
+			else if (args.at(i) == "-readname")
+			{
+				// assign name of fyall to read from (hehe max fyall get it)
+				openFyall = args.at(i + 1);
+			}
+
+			// if the flag is -writename
+			else if (args.at(i) == "-writename")
+			{
+				// assign name of fyall to write to (hehe max fyall get it)
+				saveFyall = args.at(i + 1);
+			}
+
+			// if the flag is -extended
+			else if (args.at(i) == "-extended")
+			{
+				// if the value after is true/false/1/0
+				if (args.at(i + 1) == "true" || args.at(i + 1) == "false" || args.at(i + 1) == "1" || args.at(i + 1) == "0")
+				{
+					// assign if the extended instruction set should be used
+					istringstream(args.at(i + 1)) >> extendedinstr;
+				}
+				else
+				{
+					// if it's not true/false/1/0, display error
+					checkValidity(INVALID_INPUT_PARAMETER);
+				}
+			}
+		}
+	}
+	else
+	{
+		// display error
+		checkValidity(INVALID_NUMBER_OF_ARGS);
+	}
 }
 
 /*=============================================
@@ -71,8 +159,8 @@ void Assembler::assembly()
 	{
 		vector<string> token;		   // create vector to store the line's components
 		splitLine(line->at(i), token); // separates a line into different components
-		processLine(token);			   // 
-		components.push_back(token);   // 
+		processLine(token);			   //
+		components.push_back(token);   //
 	}
 
 	// Second Pass: Generates object code
@@ -142,15 +230,17 @@ void Assembler::processLine(vector<string> &token)
 		{
 			// Checks if there is an opcode and an operand to process
 			// this is not the case with STP instruction
-			if ((int) token.size() > i + 1) {
+			if ((int)token.size() > i + 1)
+			{
 				// Analyses the opcode and operand together as an instruction
 				analyseInstruction(token[i], token[i + 1]);
 				// Increments counter by 1 as the next component is an operand and has already been analysed
 				i++;
 			}
-			else {
+			else
+			{
 				// Analyses the opcode
-				analyseInstruction(token[i],"");
+				analyseInstruction(token[i], "");
 			}
 		}
 	}
@@ -176,24 +266,30 @@ void Assembler::analyseInstruction(string opcodeCandidate, string operandCandida
 }
 
 /*==================================
-	Prints converted code into file - TODO
+	Prints converted code into file
 ==================================*/
 void Assembler::printMachineCode(string filenameOut)
 {
+	// open file to write
 	ofstream fileOut;
 	fileOut.open(filenameOut);
 
+	// check if file opened properly
 	if (fileOut)
 	{
+		// for each line
 		for (int i = 0; i < (int)objectCode->size(); i++)
 		{
+			// print machine code
 			cout << objectCode->at(i) << endl;
+			fileOut << objectCode->at(i) << endl;
 		}
 
 		fileOut.close();
 	}
 	else
 	{
+		// display error
 		checkValidity(FILE_NOT_FOUND);
 	}
 }
@@ -213,7 +309,7 @@ void Assembler::genBinary(vector<string> &token)
 			// string name = token[i].substr(0, token[i].size() - 1);
 			// Lookups the memory location in the symbols table for the variable
 			// string memoryLocation = symbolsObj->get(token[i + 1]);
-			// Stores the line for the object code 
+			// Stores the line for the object code
 			// objectCode->push_back(memoryLocation);
 		}
 		// Checks if we dealing with a STP instruction
@@ -226,7 +322,7 @@ void Assembler::genBinary(vector<string> &token)
 		}
 		else
 		{
-			// 
+			//
 			storeInstruction(token[i], token[i + 1]);
 			// Increments counter by 1 as the next component is an operand and has already been analysed
 			i++;
