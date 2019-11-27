@@ -14,13 +14,14 @@ using namespace std;
 long long  Bits[32];
 int f;
 int f1;
-int f2;
+
 long long final = 0;
 long long decimal = 0;
 long long values[10];
 long long val[32];
 long long lineNumber[10];
 string FuncNumber[10];
+long long m = 0;
 int binaryToDecimal(string binary)
 {
     // error checking, check if the string is empty, check if the string is in 8 bit binary format
@@ -160,9 +161,9 @@ void Arrayinitilizer()
     }
     
 }
-void LineNumber(long long linNum[])
+long long LineNumber(long long linNum[])
 {
-    long long m = 0;
+    m = 0;
     for (int i = 0; i < 5; i++)
     {
         if (linNum[i]<0)
@@ -174,8 +175,8 @@ void LineNumber(long long linNum[])
         m = m +(linNum[i]*Bits[i]);
 
     }
-    lineNumber[f2]=m;
-    f2++;
+    return m;
+    
 }
 
 void FunctionNumber( string v)
@@ -237,3 +238,73 @@ int CharReader() {
     valcn++;
    }
   }
+}
+  /************************************* Redone part for fyall *******************************************
+   * 
+   * 
+   */
+int test(int val[])
+{
+    int m = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        m = m + (val[i] * Bits[i]);
+    }
+    return m;   
+}
+long long exponent(int power)
+{
+    long long base = 1;
+    
+    long long ex =2;
+    for (int i = 0; i < power; i++)
+    {
+       base = base * ex;
+    }
+    return base;
+}
+int stringtest(string bi)
+{
+int finalval = 0;
+int dumb[5];
+bi.resize (5);
+for (int i = 0; i < 5; i++)
+{
+    int ia = (int)bi[i];
+    dumb[i]=ia - 48;
+}
+for (int i = 0; i < 5; i++)
+{
+    cout<<" The "<< i << " Value for dumb is "<< dumb[i]<<endl;
+}
+finalval = test(dumb);
+cout<< " The final value is  "<< finalval <<endl;
+
+return finalval;
+}
+void Arrayinitilizer()
+{
+    Bits[0]=1;
+    Bits[1]=2;
+    cout<< " Reached 1" <<endl;
+    for (int i = 2; 0 < 32; i++)
+    {
+        Bits[i] = exponent(i);
+        if (i == 31)
+        {
+           break;
+        }
+        
+    }
+    
+}
+// int main()
+// {
+//  string bi = "10110110010000000000000000000000";
+// Arrayinitilizer();
+// // printArray();
+// // test();
+// int temp = stringtest(bi);
+// cout<< " Temp is  "<< temp<<endl;
+// // cout<< "The string is " << bi<<endl;
+// }
