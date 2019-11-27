@@ -7,15 +7,15 @@ CFLAGS_LESSER = -Wall -Werror
 CVERSION = -std=c++17
 
 # Main
-all: realMaxTester
+all: assembler
 
 realMaxTester: tester/realMaxTester.cpp assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp converter/converter.cpp file/file.cpp error/error.cpp
 	# Compiles real max tester
 	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o realMaxTester.o tester/realMaxTester.cpp assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp converter/converter.cpp file/file.cpp error/error.cpp 
 
-assembler: assembler/assembler.cpp file.file.cpp error/error.cpp converter/converter.cpp
+assembler: assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp file/file.cpp error/error.cpp converter/converter.cpp
 	# Compiles assembler
-	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o assembler.o assembler/assembler.cpp file/file.cpp error/error.cpp converter/converter.cpp
+	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o assembler.o assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp file/file.cpp error/error.cpp converter/converter.cpp
 
 clean :
 	# Deletes unused files

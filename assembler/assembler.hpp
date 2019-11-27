@@ -28,7 +28,7 @@ public:
     std::vector<std::string> getArgs(int argc, char *argv[]);
 
     // If possible, assigns filenames, memory size, extended instruction set arguments values from vector
-    void Assembler::assignArgs(vector<string> args);
+    void assignArgs(std::vector<std::string> args);
 
     // The assembly loop
     void assembly();

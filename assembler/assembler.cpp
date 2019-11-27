@@ -5,12 +5,13 @@
 
 using namespace std;
 
-// int main(int argc, char *argv[])
-// {
-// 	Assembler assemblerObj = Assembler();
-// 	assemblerObj.assembly();
-// 	return SUCCESS;
-// }
+int main(int argc, char *argv[])
+{
+	Assembler assemblerObj = Assembler();
+	assemblerObj.assignArgs(assemblerObj.getArgs(argc,argv));
+	assemblerObj.assembly();
+	return SUCCESS;
+}
 
 // > CURRENT OUTPUT <
 /*
@@ -75,7 +76,7 @@ void Assembler::assignArgs(vector<string> args)
 	if ((int)args.size() % 2 == 0 && (int)args.size() <= 8)
 	{
 		// for every flag
-		for (int i = 0; i < (int)args.size(); i + 2)
+		for (int i = 0; i < (int)args.size(); i = i + 2)
 		{
 			// TIL you can't do string switches. A sad day.
 
