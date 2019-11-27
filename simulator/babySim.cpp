@@ -21,6 +21,7 @@ public:
     int fetchAndDecode();
     int getLineNum(string line);
     int getOpcode(string line);
+    void babyRun();
     void doInstruction(int);
 };
 
@@ -70,14 +71,9 @@ int BabySim::fetchAndDecode()
 {
     string codeLine = babyMemory[currentInstruction];
 
-    cout << "codeLine: "<< codeLine << endl;
-
     int lineNum = getLineNum(codeLine);// call method to get the line number
 
     currentOpcode = getOpcode(codeLine); // call method to get the opcode
-
-    cout << "Line: " << lineNum << endl;
-    cout << "Op: " << currentOpcode << endl;
 
     return lineNum;
 }
@@ -90,8 +86,6 @@ int BabySim::getLineNum(string line)
     {
         lineNumB = lineNumB + line[i];
     }
-
-    cout << "lineNum: " << lineNumB <<endl;
 
     int rp = lineNumB.size();
     int num = stringtest(lineNumB, rp); // call binary to decimal converter
@@ -108,8 +102,6 @@ int BabySim::getOpcode(string line)
         opcode = opcode + line[i];
     }
 
-    cout << "op string: " << opcode <<endl;
-
     int rp = opcode.size();
     int opNum = stringtest(opcode, rp); // call binary to decimal converter
 
@@ -117,22 +109,23 @@ int BabySim::getOpcode(string line)
 
 }
 
-// void babyRun()
-// {
-//  // read in data from the file and store into the memory.
-//  // NOTE: Memory Space 0 i.e. the first memory location, must remain empty
+void BabySim::babyRun()
+{
+    int num = 0;
 
-//  while(stop)
-//  {
-//      // call methods to run the baby
-//      // likly be
-//      // increment our CI
-//      // fetch data from memory
-//      // decode
-//      // execute
-//      // display everything that is happening
-//  }
-// }
+     while(!stop)
+     {
+
+        currentInstruction = incrementCI(currentInstruction);
+        num = fetchAndDecode();
+        doInstruction(num);
+
+     }
+
+     cout << babyMemory[9] << endl;
+     int length = babyMemory[9].size();
+     cout << stringtest(babyMemory[9], length) << endl;
+}
 
 void BabySim::doInstruction(int lineNum) 
 {
@@ -149,12 +142,17 @@ void BabySim::doInstruction(int lineNum)
             break;
         case 2: 
             accummulator = -memItem;
+            cout << "Current Acum: "<< accummulator << endl; 
             break;
         case 3: 
-            memItem = accummulator;
+            cout << "Current Acum: "<< accummulator << endl;
+            babyMemory[lineNum] = decimalConversion(-(accummulator));
+            cout << decimalConversion(accummulator) << endl;
+            cout << "Stored: " << babyMemory[lineNum] <<endl;
             break;
         case 4: 
             accummulator -= memItem;
+            cout << "Current Acum: "<< accummulator << endl;
             break;
         case 5: 
             accummulator -= memItem;
@@ -179,13 +177,7 @@ int main()
     BabySim obj;
 
     obj.babyMemory = obj.readInCode();
-    obj.currentInstruction = obj.incrementCI(obj.currentInstruction);
-
-    int num = obj.fetchAndDecode();
-
-    obj.doInstruction(num);
-
-    cout << "current accum: "<< obj.accummulator <<endl;
+    obj.babyRun();
 
     return 0;
 }
