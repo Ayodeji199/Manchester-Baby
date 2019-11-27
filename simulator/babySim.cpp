@@ -12,7 +12,7 @@ public:
     vector<string> babyMemory; // Memory for the Baby (RAM)
     int S;                     // Need to store S into this somehow with error checking
     int CI;
-    string PI;
+    int PI;
     int accummulator;
     bool stop;
 
@@ -20,6 +20,8 @@ public:
     vector<string> readInCode();
     int incrementCI(int CI);
     int fetchAndDecode();
+    int getLineNum(string line);
+    void getOpcode(string line);
     void doInstruction(string);
 };
 
@@ -76,17 +78,31 @@ int BabySim::fetchAndDecode()
     return lineNum;
 }
 
-int BabySim::getLine(string line)
+int BabySim::getLineNum(string line)
 {
     string lineNumB;
 
     for (int i = 0; i < 4 ; ++i)
     {
         lineNumB = lineNumB + line[i];
-        cout << lineNumB << endl;
     }
 
-    return 0;
+    int num = // call binary to decimal converter
+
+    return num;
+}
+
+void BabySim::getOpcode(string line)
+{
+    string opcode;
+
+    for (int i = 12; i < 15 ; ++i)
+    {
+        opcode = opcode + line[i];
+    }
+
+    PI = // call binary to decimal converter
+
 }
 
 // void babyRun()
@@ -144,6 +160,8 @@ void BabySim::doInstruction(string opcode) // This needs to be made into a case 
     //     // idk how to stop ur dumbass code ur screwed lmao
     // }
 
+
+
     switch (opcode)
     {
         case "000": CI = S;
@@ -159,10 +177,10 @@ void BabySim::doInstruction(string opcode) // This needs to be made into a case 
         case "101": accummulator -= S;
             break;
         case "011":  
-        if (accummulator < 0)
-        {
-            CI++;
-        }
+            if (accummulator < 0)
+            {
+                CI++;
+            }
             break;
         case "111": stop = true;
             break;
@@ -176,14 +194,6 @@ int main()
     babySim obj;
 
     obj.babyMemory = obj.readInCode();
-
-    int i = 0;
-
-    while (!obj.babyMemory[i].empty())
-    {
-        cout << obj.babyMemory[i] << endl;
-        i++;
-    }
 
     obj.doInstruction("011");
     obj.fetchData();
