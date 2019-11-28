@@ -63,7 +63,7 @@ void Arrayinitilizer()
  * This is the method for the binary conversion 
  * It takes in a string and the length of the string then converts it to binary
  */
-long long binaryConversion(string bi , int length)
+long long binaryToDecimal(string bi , int length)
 {
     Arrayinitilizer();
     long long finalval = 0;
@@ -80,7 +80,7 @@ long long binaryConversion(string bi , int length)
 
 
 
-string decimalConversion(long long decimalNum, int bits)
+string decimalToBinary(long long decimalNum, int bits)
 {
     // initialise variables for conversion algorithm
     string convertedBinary;
@@ -105,6 +105,8 @@ string decimalConversion(long long decimalNum, int bits)
 
         i++;
     }
+
+    cout << convertedBinary << endl;
 
     return convertedBinary; // return the converted binary as a string
 }

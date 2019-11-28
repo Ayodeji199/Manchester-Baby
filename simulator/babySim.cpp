@@ -50,7 +50,7 @@ vector<string> BabySim::readInCode()
     string line; // create string to store data from file
     vector<string> data;
 
-    ifstream fp("Subtraction");
+    ifstream fp("BabyTest1-MC.txt");
 
     if (!fp) // check if the file failed to open
     {
@@ -98,7 +98,7 @@ int BabySim::getLineNum(string line)
     }
 
     int rp = lineNumB.size();
-    int num = binaryConversion(lineNumB, rp); // call binary to decimal converter
+    int num = binaryToDecimal(lineNumB, rp); // call binary to decimal converter
 
     return num;
 }
@@ -113,7 +113,7 @@ int BabySim::getOpcode(string line)
     }
 
     int rp = opcode.size();
-    int opNum = binaryConversion(opcode, rp); // call binary to decimal converter
+    int opNum = binaryToDecimal(opcode, rp); // call binary to decimal converter
 
     return opNum;
 
@@ -139,13 +139,18 @@ void BabySim::babyRun()
     }
 
      int length = babyMemory[answerLocation].size();
-     cout << "Final Answer: " << binaryConversion(babyMemory[answerLocation], length) << endl;
+     cout << "Final Answer: " << binaryToDecimal(babyMemory[answerLocation], length) << endl;
 }
+
+// bool BabySim::checkAccumulator()
+// {
+
+// }
 
 void BabySim::doInstruction(int lineNum) 
 {
     int stringLength = babyMemory[lineNum].size();
-    int memItem = binaryConversion(babyMemory[lineNum] ,stringLength);
+    int memItem = binaryToDecimal(babyMemory[lineNum] ,stringLength);
 
     switch (currentOpcode)
     {
@@ -159,7 +164,7 @@ void BabySim::doInstruction(int lineNum)
             accummulator = -memItem;
             break;
         case 3: // store value from accumulator into storage
-            babyMemory[lineNum] = decimalConversion(-(accummulator), 32);
+            babyMemory[lineNum] = decimalToBinary(accummulator, 32);
             answerLocation = lineNum;
             break;
         case 4: // subtract content of store location from accumulator
