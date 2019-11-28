@@ -2,6 +2,15 @@
 #define CONVERTER_H
 
 #include <string>
+#include "../error/error.hpp"
+#include <iostream>
+#include <locale>
+#include <algorithm>
+#include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <iomanip>
+#include <stdlib.h> 
 
 long long test(long long val[] , int length);
 long long exponent(int power);
