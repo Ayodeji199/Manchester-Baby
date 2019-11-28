@@ -159,6 +159,15 @@ void BabySim::babyRun()
         exit(0);
     }
 
+    for (int i = 0; i < babyMemory.size(); ++i)
+    {
+        if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
+        {
+            cout << "A LINE OF CODE HAS EXCEEDED THE MEMORY LIMIT - PLEASE TRY AGAIN" << endl;
+            exit(0);
+        }
+    }
+    
     // create variable to store line number
     int num = 0;
 
