@@ -32,7 +32,7 @@ all: main
 # 	$(CC) -c $(CCFLAGS) -o src/main.c ../assembler/assembler.cpp ../assembler/opcodes.cpp ../assembler/symbols.cpp ../file/file.cpp ../error/error.cpp ../converter/converter.cpp $(GTKLIB) 
     
 main: $(OBJS)
-	$(CC) $(CCFLAGS) -rdynamic -g -o main.o $(OBJS) $(GTKLIB)
+	$(CC) $(CCFLAGS) -rdynamic -g -o ../main.o $(OBJS) $(GTKLIB)
 
 clean:
 	rm -f *.o $(TARGET)

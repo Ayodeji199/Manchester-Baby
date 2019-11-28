@@ -2,69 +2,6 @@
 <!-- Generated with glade 3.22.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkFileChooserDialog" id="fileChooserExport">
-    <property name="can_focus">False</property>
-    <property name="type_hint">dialog</property>
-    <property name="action">save</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkFileChooserDialog" id="fileChooserImport">
-    <property name="can_focus">False</property>
-    <property name="type_hint">dialog</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-    </child>
-  </object>
   <object class="GtkAdjustment" id="memoryWordSize">
     <property name="lower">32</property>
     <property name="upper">8192</property>
@@ -76,40 +13,25 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Manchester Baby</property>
     <property name="default_width">640</property>
-    <property name="default_height">480</property>
+    <property name="default_height">400</property>
     <signal name="destroy" handler="on_windowMain_destroy" swapped="no"/>
     <child>
       <object class="GtkFixed">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkLabel" id="lblAssembler">
+          <object class="GtkLabel" id="lblMain">
             <property name="width_request">640</property>
-            <property name="height_request">40</property>
+            <property name="height_request">80</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Assembler</property>
+            <property name="label" translatable="yes">Manchester Baby</property>
             <attributes>
-              <attribute name="scale" value="1.5"/>
+              <attribute name="scale" value="2"/>
             </attributes>
           </object>
           <packing>
             <property name="y">20</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="lblSimulator">
-            <property name="width_request">640</property>
-            <property name="height_request">40</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Hardware Simulator</property>
-            <attributes>
-              <attribute name="scale" value="1.5"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="y">260</property>
           </packing>
         </child>
         <child>
@@ -123,8 +45,8 @@
             <signal name="clicked" handler="on_btnAssembler_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="x">500</property>
-            <property name="y">200</property>
+            <property name="x">165</property>
+            <property name="y">300</property>
           </packing>
         </child>
         <child>
@@ -138,8 +60,8 @@
             <signal name="clicked" handler="on_btnSimulator_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="x">500</property>
-            <property name="y">400</property>
+            <property name="x">365</property>
+            <property name="y">300</property>
           </packing>
         </child>
         <child>
@@ -152,7 +74,7 @@
           </object>
           <packing>
             <property name="x">55</property>
-            <property name="y">90</property>
+            <property name="y">140</property>
           </packing>
         </child>
         <child>
@@ -165,7 +87,7 @@
           </object>
           <packing>
             <property name="x">250</property>
-            <property name="y">90</property>
+            <property name="y">140</property>
           </packing>
         </child>
         <child>
@@ -182,11 +104,11 @@
             <property name="snap_to_ticks">True</property>
             <property name="numeric">True</property>
             <property name="update_policy">if-valid</property>
-            <property name="value">64</property>
+            <property name="value">32</property>
           </object>
           <packing>
             <property name="x">445</property>
-            <property name="y">115</property>
+            <property name="y">165</property>
           </packing>
         </child>
         <child>
@@ -199,7 +121,7 @@
           </object>
           <packing>
             <property name="x">445</property>
-            <property name="y">90</property>
+            <property name="y">140</property>
           </packing>
         </child>
         <child>
@@ -209,12 +131,11 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="action">save</property>
-            <property name="dialog">fileChooserExport</property>
             <property name="title" translatable="yes">Export</property>
           </object>
           <packing>
             <property name="x">250</property>
-            <property name="y">115</property>
+            <property name="y">165</property>
           </packing>
         </child>
         <child>
@@ -223,12 +144,12 @@
             <property name="height_request">30</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="dialog">fileChooserImport</property>
             <property name="title" translatable="yes">Import</property>
+            <signal name="current-folder-changed" handler="on_fileChooserBtnImport_current_folder_changed" swapped="no"/>
           </object>
           <packing>
             <property name="x">55</property>
-            <property name="y">115</property>
+            <property name="y">165</property>
           </packing>
         </child>
       </object>
