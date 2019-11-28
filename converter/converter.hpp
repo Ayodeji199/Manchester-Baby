@@ -19,5 +19,4 @@ long long binaryToDecimal(std::string binary, int length);
 
 std::string decimalToBinary(long long decimal, int bits);
 
-
 #endif

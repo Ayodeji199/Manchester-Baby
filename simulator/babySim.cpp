@@ -42,9 +42,9 @@ vector<string> BabySim::getArgs(int argc, char *argv[])
     return args;
 }
 
-/*=====================================================================================================
-	If possible, assigns filename, memory size, extended instruction set arguments values from vector - TODO only the fyallname has been implemented
-=====================================================================================================*/
+/*====================================================================================================
+	If possible, assigns filename, memory size, extended instruction set arguments values from vector
+====================================================================================================*/
 void BabySim::assignArgs(vector<string> args)
 {
     // if the amount of arguments is divisable by 2 and is equal or less than 6 (which would be 3 flags with a value each)
@@ -111,6 +111,7 @@ void BabySim::assignArgs(vector<string> args)
         checkValidity(INVALID_NUMBER_OF_ARGS);
     }
 }
+
 
 // read in the data from file given from user if the file exist
 vector<string> BabySim::readInCode()
@@ -181,7 +182,7 @@ int BabySim::getLineNum(string line)
     // check if the line number we have aquired is outwith our maximum memory
     if (num > babyMemory.size())
     {
-        cout << "INVALID OPERATION - YOU HAVE RAN OUT OF MEMORY" << endl;
+        checkValidity(INVALID_INPUT_PARAMETER);
         exit(0);
     }
 
@@ -212,13 +213,13 @@ void BabySim::babyRun()
     // check if our memory vector is empty
     if (babyMemory.empty())
     {
-        cout << "MEMORY IS EMPTY - PLEASE CHECK YOUR SOURCE CODE" << endl;
+        checkValidity(MEMORY_EMPTY);
         exit(0);
     }
 
     if (babyMemory.size() > 32 /* this can be change to a defined varible when we get there */)
     {
-        cout << "ERROR - YOU HAVE RUN OUT OF MEMORY" << endl;
+        checkValidity(INVALID_MEMORY_SIZE);
         exit(0);
     }
 
@@ -226,7 +227,7 @@ void BabySim::babyRun()
     {
         if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
         {
-            cout << "A LINE OF CODE HAS EXCEEDED THE MEMORY LIMIT - PLEASE TRY AGAIN" << endl;
+            checkValidity(MEMORY_OVERLOAD);
             exit(0);
         }
     }
@@ -292,39 +293,39 @@ void BabySim::doInstruction(int lineNum)
     // use our decimal opcode for conversion
     switch (convertedOpcode)
     {
-    case 0: // set current instruction to content of store location
-        currentInstruction = memItem;
-        break;
-    case 1: // add content of store location to current instruction
-        currentInstruction += memItem;
-        break;
-    case 2: // load data from store location in accumulator
-        accummulator = -memItem;
-        break;
-    case 3: // store value from accumulator into storage
-        babyMemory[lineNum] = decimalToBinary(accummulator, 32);
-        answerLocation = lineNum;
-        break;
-    case 4: // subtract content of store location from accumulator
-        accummulator -= memItem;
-        break;
-    case 5: // same as 4
-        accummulator -= memItem;
-        break;
-    case 6: // increment current instruction if accumulator value is negative
-        if (accummulator < 0)
-        {
-            currentInstruction++;
-        }
-        break;
-    case 7: // stop program
-        stop = true;
-        break;
-    default:
-        // if we get an invalid opcode, print an error message and stop the program
-        cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
-        exit(0);
-        break;
+        case 0: // set current instruction to content of store location
+            currentInstruction = memItem;
+            break;
+        case 1: // add content of store location to current instruction
+            currentInstruction += memItem;
+            break;
+        case 2: // load data from store location in accumulator
+            accummulator = -memItem;
+            break;
+        case 3: // store value from accumulator into storage
+            babyMemory[lineNum] = decimalToBinary(accummulator, 32);
+            answerLocation = lineNum;
+            break;
+        case 4: // subtract content of store location from accumulator
+            accummulator -= memItem;
+            break;
+        case 5: // same as 4
+            accummulator -= memItem;
+            break;
+        case 6: // increment current instruction if accumulator value is negative
+            if (accummulator < 0)
+            {
+                currentInstruction++;
+            }
+            break;
+        case 7: // stop program
+            stop = true;
+            break;
+        default:
+            // if we get an invalid opcode, print an error message and stop the program 
+            cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
+            exit(0);
+            break;
     }
 }
 
