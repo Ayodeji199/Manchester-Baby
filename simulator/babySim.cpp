@@ -1,4 +1,4 @@
-#include "../converter/converter.cpp";
+#include "../converter/converter.cpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -6,34 +6,44 @@
 
 using namespace std;
 
-class babySim // dont use lowercase as the first letter in a class name pls ty - FIXME <---------------
+class BabySim
 {
-public:
-    vector<string> babyMemory; // Memory for the Baby (RAM)
-    int S;                     // Need to store S into this somehow with error checking
-    int CI;
-    int PI;
-    int accummulator;
-    bool stop;
 
-    babySim();
+public:
+    // variables to simulate baby functionality
+    vector<string> babyMemory; // Baby Memory
+    int currentInstruction; // stores the line number of the current instruction
+    int currentOpcode; // stores the current opcode as an integer
+    int accummulator; // the temporary storage of the baby
+    int answerLocation; // a variable to store the location of our final answer
+    bool stop; // a boolean to determine if our program is finshed
+
+    BabySim(); // constructor to initialise variables
+
     vector<string> readInCode();
-    void fetchData();
-    void decode();
-    void execute();
-    void doInstruction(string);
+    
+    int incrementCI(int currentInstruction);
+    int fetchAndDecode();
+    int getLineNum(string line);
+    int getOpcode(string line);
+    void babyRun();
+    void doInstruction(int);
+    void printMemory();
+    void printData();
 };
 
-babySim::babySim()
+BabySim::BabySim()
 {
     babyMemory = {};
-    CI = 0;
-    PI = 0;
+    currentInstruction = 0;
+    currentOpcode = 0;
     accummulator = 0;
+    answerLocation = 0;
+    stop = false;
 }
 
 // read in the data from file given from user if the file exist
-vector<string> babySim::readInCode()
+vector<string> BabySim::readInCode()
 {
     string line; // create string to store data from file
     vector<string> data;
@@ -58,93 +68,144 @@ vector<string> babySim::readInCode()
     return data; // return our string
 }
 
-void babySim::fetchData()
+int BabySim::incrementCI(int currentInstruction)
 {
-    string codeLine = babyMemory[CI];
+    currentInstruction++;
+
+    return currentInstruction;
 }
 
-void babySim::decode()
+int BabySim::fetchAndDecode()
 {
+    string codeLine = babyMemory[currentInstruction];
+
+    int lineNum = getLineNum(codeLine);// call method to get the line number
+
+    currentOpcode = getOpcode(codeLine); // call method to get the opcode
+
+    return lineNum;
 }
 
-void babySim::execute()
+int BabySim::getLineNum(string line)
 {
+    string lineNumB;
+
+    for (int i = 0; i < 5 ; ++i)
+    {
+        lineNumB = lineNumB + line[i];
+    }
+
+    int rp = lineNumB.size();
+    int num = binaryConversion(lineNumB, rp); // call binary to decimal converter
+
+    return num;
 }
 
-// void babyRun()
-// {
-//  // read in data from the file and store into the memory.
-//  // NOTE: Memory Space 0 i.e. the first memory location, must remain empty
-
-//  while(stop)
-//  {
-//      // call methods to run the baby
-//      // likly be
-//      // increment our CI
-//      // fetch data from memory
-//      // decode
-//      // execute
-//      // display everything that is happening
-//  }
-// }
-
-void babySim::doInstruction(string opcode) // This needs to be made into a case (opcodes will need to be made into enums) because the ifs are disgusting - TODO
+int BabySim::getOpcode(string line)
 {
-    if (opcode == "000")
+    string opcode;
+
+    for (int i = 13; i < 16 ; ++i)
     {
-        CI = S;
+        opcode = opcode + line[i];
     }
-    else if (opcode == "100")
+
+    int rp = opcode.size();
+    int opNum = binaryConversion(opcode, rp); // call binary to decimal converter
+
+    return opNum;
+
+}
+
+// run the a source code file through the baby
+void BabySim::babyRun()
+{
+    int num = 0;
+
+    cout << "Memory at Start" << endl;
+    printMemory();
+
+    while(!stop)
     {
-        CI += S;
+
+        currentInstruction = incrementCI(currentInstruction);
+        num = fetchAndDecode();
+        doInstruction(num);
+        printMemory();
+        printData();
+
     }
-    else if (opcode == "010")
+
+     int length = babyMemory[answerLocation].size();
+     cout << "Final Answer: " << binaryConversion(babyMemory[answerLocation], length) << endl;
+}
+
+void BabySim::doInstruction(int lineNum) 
+{
+    int stringLength = babyMemory[lineNum].size();
+    int memItem = binaryConversion(babyMemory[lineNum] ,stringLength);
+
+    switch (currentOpcode)
     {
-        accummulator = -S;
+        case 0: 
+            currentInstruction = memItem;
+            break;
+        case 1: 
+            currentInstruction += memItem;
+            break;
+        case 2: 
+            accummulator = -memItem;
+            break;
+        case 3: 
+            babyMemory[lineNum] = decimalConversion(-(accummulator));
+            answerLocation = lineNum;
+            break;
+        case 4: 
+            accummulator -= memItem;
+            break;
+        case 5: 
+            accummulator -= memItem;
+            break;
+        case 6:  
+            if (accummulator < 0)
+            {
+                currentInstruction++;
+            }
+            break;
+        case 7: 
+            stop = true;
+            break;
+        default:
+            break;
     }
-    else if (opcode == "110")
+}
+
+void BabySim::printMemory()
+{
+    cout << "Data in Memory" << endl;
+
+    for (int i = 0; i < babyMemory.size(); ++i)
     {
-        S = accummulator;
+        cout << babyMemory[i] << endl;
     }
-    else if (opcode == "001" || opcode == "101")
-    {
-        accummulator -= S;
-    }
-    else if (opcode == "011")
-    {
-        if (accummulator < 0)
-        {
-            CI++;
-        }
-    }
-    else if (opcode == "111")
-    {
-        // idk how to stop ur dumbass code ur screwed lmao
-    }
-    else
-    {
-        // idk how to stop ur dumbass code ur screwed lmao
-    }
+     cout << endl;
+}
+
+void BabySim::printData()
+{
+    cout << "The Current line we are getting instructions from: " << currentInstruction << endl;
+    cout << "The Current Opcode: " << currentOpcode << endl;
+    cout << "The Current state of the accummulator: " << accummulator << endl;
+    cout << "Current state of stop: " << stop << endl;
+    cout << endl;
 }
 
 int main()
 {
-    babySim obj;
+    BabySim obj;
 
     obj.babyMemory = obj.readInCode();
-
-    int i = 0;
-
-    while (!obj.babyMemory[i].empty())
-    {
-        cout << obj.babyMemory[i] << endl;
-        i++;
-    }
-
-    obj.doInstruction("011");
-    obj.fetchData();
-
-    cout << obj.CI << endl;
+    obj.babyRun();
 
     return 0;
 }
