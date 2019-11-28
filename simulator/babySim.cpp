@@ -17,6 +17,7 @@ public:
     int accummulator; // the temporary storage of the baby
     int answerLocation; // a variable to store the location of our final answer
     bool stop; // a boolean to determine if our program is finshed
+    bool storeIsNegative; // checks if the value currently in the store location is negative
 
     BabySim(); // constructor to initialise variables
 
@@ -40,6 +41,7 @@ BabySim::BabySim()
     accummulator = 0;
     answerLocation = 0;
     stop = false;
+    storeIsNegative = false;
 }
 
 // read in the data from file given from user if the file exist
@@ -147,32 +149,32 @@ void BabySim::doInstruction(int lineNum)
 
     switch (currentOpcode)
     {
-        case 0: 
+        case 0: // set current instruction to content of store location
             currentInstruction = memItem;
             break;
-        case 1: 
+        case 1: // add content of store location to current instruction
             currentInstruction += memItem;
             break;
-        case 2: 
+        case 2: // load data from store location in accumulator
             accummulator = -memItem;
             break;
-        case 3: 
+        case 3: // store value from accumulator into storage
             babyMemory[lineNum] = decimalConversion(-(accummulator), 32);
             answerLocation = lineNum;
             break;
-        case 4: 
+        case 4: // subtract content of store location from accumulator
             accummulator -= memItem;
             break;
-        case 5: 
+        case 5: // same as 4
             accummulator -= memItem;
             break;
-        case 6:  
+        case 6: // increment current instruction if accumulator value is negative
             if (accummulator < 0)
             {
                 currentInstruction++;
             }
             break;
-        case 7: 
+        case 7: // stop program
             stop = true;
             break;
         default:
