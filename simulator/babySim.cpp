@@ -368,12 +368,12 @@ void BabySim::printData()
     cout << endl;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     BabySim obj;
 
+    obj.assignArgs(obj.getArgs(argc, argv));
+
     obj.babyMemory = obj.readInCode();
     obj.babyRun();
-
-    return 0;
 }
