@@ -72,6 +72,7 @@ string decimalConversion(long long decimalNum)
     string convertedBinary;
     long long temp = decimalNum;
     long long binaryVal;
+    int i = 0;
 
     // while loop runs 8 times to allow return value to be in 8 bit binary form
     while (temp != 0)

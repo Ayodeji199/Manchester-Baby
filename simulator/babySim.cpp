@@ -8,15 +8,20 @@ using namespace std;
 
 class BabySim
 {
-public:
-    vector<string> babyMemory; // Memory for the Baby (RAM)
-    int currentInstruction;
-    int currentOpcode;
-    int accummulator;
-    bool stop;
 
-    BabySim();
+public:
+    // variables to simulate baby functionality
+    vector<string> babyMemory; // Baby Memory
+    int currentInstruction; // stores the line number of the current instruction
+    int currentOpcode; // stores the current opcode as an integer
+    int accummulator; // the temporary storage of the baby
+    int answerLocation; // a variable to store the location of our final answer
+    bool stop; // a boolean to determine if our program is finshed
+
+    BabySim(); // constructor to initialise variables
+
     vector<string> readInCode();
+    
     int incrementCI(int currentInstruction);
     int fetchAndDecode();
     int getLineNum(string line);
@@ -24,6 +29,7 @@ public:
     void babyRun();
     void doInstruction(int);
     void printMemory();
+    void printData();
 };
 
 BabySim::BabySim()
@@ -32,6 +38,7 @@ BabySim::BabySim()
     currentInstruction = 0;
     currentOpcode = 0;
     accummulator = 0;
+    answerLocation = 0;
     stop = false;
 }
 
@@ -114,20 +121,22 @@ void BabySim::babyRun()
 {
     int num = 0;
 
+    cout << "Memory at Start" << endl;
     printMemory();
 
-     while(!stop)
-     {
+    while(!stop)
+    {
 
         currentInstruction = incrementCI(currentInstruction);
         num = fetchAndDecode();
         doInstruction(num);
+        printMemory();
+        printData();
 
-     }
+    }
 
-     cout << babyMemory[9] << endl;
-     int length = babyMemory[9].size();
-     cout << binaryConversion(babyMemory[9], length) << endl;
+     int length = babyMemory[answerLocation].size();
+     cout << "Final Answer: " << binaryConversion(babyMemory[answerLocation], length) << endl;
 }
 
 void BabySim::doInstruction(int lineNum) 
@@ -145,17 +154,13 @@ void BabySim::doInstruction(int lineNum)
             break;
         case 2: 
             accummulator = -memItem;
-            cout << "Current Acum: "<< accummulator << endl; 
             break;
         case 3: 
-            cout << "Current Acum: "<< accummulator << endl;
             babyMemory[lineNum] = decimalConversion(-(accummulator));
-            cout << decimalConversion(accummulator) << endl;
-            cout << "Stored: " << babyMemory[lineNum] <<endl;
+            answerLocation = lineNum;
             break;
         case 4: 
             accummulator -= memItem;
-            cout << "Current Acum: "<< accummulator << endl;
             break;
         case 5: 
             accummulator -= memItem;
@@ -168,7 +173,6 @@ void BabySim::doInstruction(int lineNum)
             break;
         case 7: 
             stop = true;
-            cout << "gay stop" << endl;
             break;
         default:
             break;
@@ -184,6 +188,15 @@ void BabySim::printMemory()
         cout << babyMemory[i] << endl;
     }
      cout << endl;
+}
+
+void BabySim::printData()
+{
+    cout << "The Current line we are getting instructions from: " << currentInstruction << endl;
+    cout << "The Current Opcode: " << currentOpcode << endl;
+    cout << "The Current state of the accummulator: " << accummulator << endl;
+    cout << "Current state of stop: " << stop << endl;
+    cout << endl;
 }
 
 int main()
