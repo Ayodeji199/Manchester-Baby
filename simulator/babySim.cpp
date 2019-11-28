@@ -113,6 +113,14 @@ int BabySim::getLineNum(string line)
     int size = lineNumB.size(); // get the size of our string
     int num = binaryToDecimal(lineNumB, size); // call binary to decimal converter
 
+
+    // check if the line number we have aquired is outwith our maximum memory
+    if (num > babyMemory.size())
+    {
+        cout << "INVALID OPERATION - YOU HAVE RAN OUT OF MEMORY" << endl;
+        exit(0);
+    }
+
     return num; // return our line number as integer
 }
 
@@ -138,6 +146,13 @@ string BabySim::getOpcode(string line)
 */
 void BabySim::babyRun()
 {
+    // check if our memory vector is empty
+    if (babyMemory.empty())
+    {
+        cout << "MEMORY IS EMPTY - PLEASE CHECK YOUR SOURCE CODE" << endl;
+        exit(0);
+    }
+
     // create variable to store line number
     int num = 0;
 

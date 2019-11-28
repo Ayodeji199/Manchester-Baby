@@ -106,7 +106,5 @@ string decimalToBinary(long long decimalNum, int bits)
         i++;
     }
 
-    cout << convertedBinary << endl;
-
     return convertedBinary; // return the converted binary as a string
 }
