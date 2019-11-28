@@ -153,11 +153,7 @@ vector<string> BabySim::readInCode()
     string line; // create string to store data from file
     vector<string> data;
 
-<<<<<<< HEAD
-    ifstream fp("BabyTest1-MC.txt");
-=======
     ifstream fp(fyallName);
->>>>>>> master
 
     if (!fp) // check if the file failed to open
     {
