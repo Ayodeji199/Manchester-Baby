@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <stdlib.h> 
 
-long long test(long long val[] , int length);
+long long binaryArrarytoDecimal(long long val[] , int length);
 long long exponent(int power);
 void Arrayinitilizer();
 long long binaryToDecimal(std::string binary, int length);

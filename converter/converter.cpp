@@ -10,9 +10,9 @@ long long Bits[lineLength];
   multiplies it by the exponent of its 
   current position then adds them together
 */
-long long test(long long val[] , int length)
+long long binaryArrarytoDecimal(long long val[] , int length)
 {
-    long long m = 0;
+    long long binaryDecimal = 0;
     int limit = length;
     bool negative = false;
 
@@ -26,14 +26,14 @@ long long test(long long val[] , int length)
     }
     for (int i = 0; i < limit; i++)
     {
-        m = m + (val[i] * Bits[i]);
+        binaryDecimal = binaryDecimal + (val[i] * Bits[i]);
     }
 
     if (negative){
-        m = -m;
+        binaryDecimal = -binaryDecimal;
     }
 
-    return m;   
+    return binaryDecimal;   
 }
 /*
   This is the method that helpes to calculate the exponent in the array
@@ -66,19 +66,19 @@ void Arrayinitilizer()
  * This is the method for the binary conversion 
  * It takes in a string and the length of the string then converts it to binary
  */
-long long binaryToDecimal(string bi , int length)
+long long binaryToDecimal(string binary , int length)
 {
     Arrayinitilizer();
     long long finalval = 0;
-    long long dumb[lineLength];
+    long long binaryArray[lineLength];
 
     for (int i = 0; i < length; i++)
     {
-        int currentBit = (int)bi[i];
-        dumb[i] = currentBit - 48; // using (int)bi[i] converts to ASCII of 1 or 0, this deals with that to turn into true 1 or 0
+        int currentBit = (int)binary[i];
+        binaryArray[i] = currentBit - 48; // using (int)bi[i] converts to ASCII of 1 or 0, this deals with that to turn into true 1 or 0
     }
 
-    finalval = test(dumb,length);
+    finalval = binaryArrarytoDecimal(binaryArray, length);
 
     return finalval;
 }
@@ -91,15 +91,15 @@ string decimalToBinary(long long decimalNum, int numberOfBits)
 {
     // initialise variables for conversion algorithm
     string convertedBinary;
-    long long temp = abs(decimalNum);
+    long long absoluteDecimal = abs(decimalNum);
     long long binaryVal;
     int i = 0;
 
     // while loop runs 'numberOfBits' times to allow return value to be specified bit length in binary form
     while (i < numberOfBits)
     {
-        binaryVal = temp % 2; // get the binary value be getting the remainder of decimal number / 2
-        temp = temp / 2;      // divide the decimal number by 2
+        binaryVal = absoluteDecimal % 2; // get the binary value be getting the remainder of decimal number / 2
+        absoluteDecimal = absoluteDecimal / 2;      // divide the decimal number by 2
 
         if (i < numberOfBits-1){ // check if i isn't last bit
             if (binaryVal == 0) // check if the binary value is 0
