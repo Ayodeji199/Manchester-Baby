@@ -53,7 +53,7 @@ vector<string> BabySim::readInCode()
     string line; // create string to store data from file
     vector<string> data;
 
-    ifstream fp(fileToRead);
+    ifstream fp("BabyTest1-MC.txt");
 
     if (!fp) // check if the file failed to open
     {
@@ -172,11 +172,17 @@ void BabySim::babyRun()
     // create variable to store line number
     int num = 0;
 
-    cout << "Memory at Start" << endl; // print message to show what the baby's memory is at the start of the program
+    int cycleNum = 0; // create variable to keep track of the number of cycles
+
+    // print messages
+    cout << "PROGRAM START" << endl;
+    cout << endl;
+    cout << "Memory Initialised:" << endl;
+
     printMemory(); // print the current state of the memory
 
     while(!stop) // while stop is false i.e. we haven't been told to stop
-    {  
+    {
         // increment the CI
         currentInstruction = incrementCI(currentInstruction);
 
@@ -186,7 +192,12 @@ void BabySim::babyRun()
         // go to the instruction set to carry out our instruction based on our current opcode
         doInstruction(num);
 
-        // print the baby memory after a cycle has finished
+        cycleNum++; // 
+
+        cout << "Cycle "<< cycleNum << " Finished" << endl;
+        cout << endl;
+
+          // print the baby memory after a cycle has finished
         printMemory();
 
         // print the values of baby variables
@@ -195,6 +206,9 @@ void BabySim::babyRun()
     }
 
      int length = babyMemory[answerLocation].size(); // get the length our final answer's binary
+
+     cout << "PROGRAM FINISHED" << endl;
+     cout << endl;
 
      // print the final answer in decimal format
      cout << "Final Answer: " << binaryToDecimal(babyMemory[answerLocation], length) << endl;
@@ -210,7 +224,6 @@ void BabySim::doInstruction(int lineNum)
 
     // get the decimal number we require
     int memItem = binaryToDecimal(babyMemory[lineNum] ,stringLength);
-    cout << "memitem is " << memItem << endl;
 
     // convert our opcode to a decimal number to use it for comparisons
     int convertedOpcode = binaryToDecimal(currentOpcode, currentOpcode.size());
@@ -276,10 +289,10 @@ void BabySim::printMemory()
 void BabySim::printData()
 {
     // print our data
-    cout << "The Current line we are getting instructions from: " << currentInstruction << endl;
-    cout << "The Current Opcode: " << currentOpcode << endl;
-    cout << "The Current state of the accummulator: " << accummulator << endl;
-    cout << "Current state of stop: " << stop << endl;
+    cout << "The CI: " << currentInstruction << endl;
+    cout << "The Opcode: " << currentOpcode << endl;
+    cout << "The Accummulator: " << accummulator << endl;
+    cout << "Stop: " << stop << endl;
     cout << endl;
 }
 

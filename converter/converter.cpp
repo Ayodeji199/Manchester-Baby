@@ -41,9 +41,6 @@ long long test(long long val[] , int length)
         m = -m;
     }
 
-    // cout << "Value to convert was " << val << endl;
-    // cout << "Converted value is " << m << endl;
-
     return m;   
 }
 /*
@@ -83,19 +80,13 @@ long long binaryToDecimal(string bi , int length)
     long long finalval = 0;
     long long dumb[lineLength];
 
-    cout << "Converting binary to decimal..." << endl;
-    cout << "Length is " << length << endl;
     for (int i = 0; i < length; i++)
     {
         int currentBit = (int)bi[i];
         dumb[i] = currentBit - 48; // using (int)bi[i] converts to ASCII of 1 or 0, this deals with that to turn into true 1 or 0
-        cout << dumb[i];
     }
-    cout << endl;
 
     finalval = test(dumb,length);
-
-    cout << "Converted " << bi << " to decimal: " << finalval << endl;
 
     return finalval;
 }
@@ -137,13 +128,6 @@ string decimalToBinary(long long decimalNum, int numberOfBits)
 
         i++;
     }
-
-<<<<<<< HEAD
-=======
-    // cout << convertedBinary << endl;
-
->>>>>>> master
-    cout << "Converted " << decimalNum << " to binary: " << convertedBinary << endl;
 
     return convertedBinary; // return the converted binary as a string
 }
