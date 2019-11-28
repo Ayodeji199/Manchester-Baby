@@ -1,13 +1,5 @@
 #include "converter.hpp"
-#include "../error/error.hpp"
-#include <iostream>
-#include <locale>
-#include <algorithm>
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <iomanip>
-#include <stdlib.h> 
+
 using namespace std;
 // This is the array that holds the values of two to the 32nd power starting from 1
 const int lineLength = 32; // number of bits that make up each number
