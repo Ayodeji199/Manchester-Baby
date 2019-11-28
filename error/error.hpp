@@ -26,6 +26,10 @@
 #define INVALID_MEMORY_SIZE 202
 #define INVALID_NUMBER_OF_ARGS 203
 
+// Simulator-specific codes
+#define MEMORY_EMPTY 300
+#define MEMORY_OVERLOAD 301
+
 // Displays an error message to the user based on the apppropriate error code
 // imported and quits the program, will do nothing if SUCCESS is passed
 void checkValidity(int valid);

@@ -62,7 +62,12 @@ void checkValidity(int valid)
              << "./assembler -memsize 64 -extended true" << endl
              << "./assembler" << endl
              << "./assembler -extended 0 -writename yourwritename.txt -readname yourreadname.txt -memsize 64";
-        break;
+    case MEMORY_EMPTY:
+        cout << "Your program has not been loaded into memory."
+             << "This is probably because the file you chose is empty." << endl;
+    case MEMORY_OVERLOAD:
+        cout << "A line in your program has exceeded the specified line limit."
+             << "Please adjust this to fit the memory size specified."<< endl;
     default:
         cout << "Error Code is invalid or has not been fully implemented";
     }
