@@ -153,6 +153,12 @@ void BabySim::babyRun()
         exit(0);
     }
 
+    if (babyMemory.size() > 32 /* this can be change to a defined varible when we get there */)
+    {
+        cout << "ERROR - YOU HAVE RUN OUT OF MEMORY" << endl;
+        exit(0);
+    }
+
     // create variable to store line number
     int num = 0;
 
@@ -231,14 +237,9 @@ void BabySim::doInstruction(int lineNum)
             stop = true;
             break;
         default:
-<<<<<<< HEAD
             // if we get an invalid opcode, print an error message and stop the program 
             cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
             exit(0);
-=======
-            cout << "Incorrect instruction received. Stopping program" << endl;
-            stop = true;
->>>>>>> nickdv
             break;
     }
 }

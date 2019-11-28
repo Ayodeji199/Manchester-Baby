@@ -7,8 +7,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <iomanip>
-#include <string>
-#include <fstream>
 #include <stdlib.h> 
 using namespace std;
 // This is the array that holds the values of two to the 32nd power starting from 1
@@ -137,12 +135,7 @@ string decimalToBinary(long long decimalNum, int numberOfBits)
         i++;
     }
 
-<<<<<<< HEAD
-=======
-    // cout << convertedBinary << endl;
-
     cout << "Converted " << decimalNum << " to binary: " << convertedBinary << endl;
 
->>>>>>> nickdv
     return convertedBinary; // return the converted binary as a string
 }
