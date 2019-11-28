@@ -9,23 +9,23 @@
 #include <iomanip>
 #include <string>
 #include <fstream>
-#include <stdlib.h> 
+#include <stdlib.h>
 using namespace std;
 // This is the array that holds the values of two to the 32nd power starting from 1
-long long  Bits[32];
+long long Bits[32];
 /**
  * This is the method that takes in the int,
  *  multiplies it by the exponent of its 
  * current position then adds them together
  */
-long long test(long long val[] , int length)
+long long test(long long val[], int length)
 {
     long long m = 0;
     for (int i = 0; i < length; i++)
     {
         m = m + (val[i] * Bits[i]);
     }
-    return m;   
+    return m;
 }
 /**
  * This is the method that helpes to calculate the exponent in the array
@@ -33,11 +33,11 @@ long long test(long long val[] , int length)
 long long exponent(int power)
 {
     long long base = 1;
-    
-    long long ex =2;
+
+    long long ex = 2;
     for (int i = 0; i < power; i++)
     {
-       base = base * ex;
+        base = base * ex;
     }
     return base;
 }
@@ -46,39 +46,35 @@ long long exponent(int power)
  */
 void Arrayinitilizer()
 {
-    Bits[0]=1;
-    Bits[1]=2;
+    Bits[0] = 1;
+    Bits[1] = 2;
     for (int i = 2; 0 < 32; i++)
     {
         Bits[i] = exponent(i);
         if (i == 31)
         {
-           break;
+            break;
         }
-        
     }
-    
 }
 /**
  * This is the method for the binary conversion 
  * It takes in a string and the length of the string then converts it to binary
  */
-long long binaryConversion(string bi , int length)
+long long binaryConversion(string bi, int length)
 {
-Arrayinitilizer();
-long long finalval = 0;
-long long dumb[32];
-for (int i = 0; i < length; i++)
-{
-    int ia = (int)bi[i];
-    dumb[i]=ia - 48;
+    Arrayinitilizer();
+    long long finalval = 0;
+    long long dumb[32];
+    for (int i = 0; i < length; i++)
+    {
+        int ia = (int)bi[i];
+        dumb[i] = ia - 48;
+    }
+    finalval = test(dumb, length);
+
+    return finalval;
 }
-finalval = test(dumb,length);
-
-return finalval;
-}
-
-
 
 string decimalConversion(long long decimalNum)
 {
