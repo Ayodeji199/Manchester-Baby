@@ -65,22 +65,22 @@ void Arrayinitilizer()
  */
 long long binaryConversion(string bi , int length)
 {
-Arrayinitilizer();
-long long finalval = 0;
-long long dumb[32];
-for (int i = 0; i < length; i++)
-{
-    int ia = (int)bi[i];
-    dumb[i]=ia - 48;
+    Arrayinitilizer();
+    long long finalval = 0;
+    long long dumb[32];
+        for (int i = 0; i < length; i++)
+        {
+            int ia = (int)bi[i];
+            dumb[i]=ia - 48;
+        }
+    finalval = test(dumb,length);
+
+    return finalval;
 }
-finalval = test(dumb,length);
-
-return finalval;
-}
 
 
 
-string decimalConversion(long long decimalNum)
+string decimalConversion(long long decimalNum, int bits)
 {
     // initialise variables for conversion algorithm
     string convertedBinary;
@@ -89,7 +89,7 @@ string decimalConversion(long long decimalNum)
     int i = 0;
 
     // while loop runs 8 times to allow return value to be in 8 bit binary form
-    while (i != 32)
+    while (i != bits)
     {
         binaryVal = temp % 2; // get the binary value be getting the remainder of decimal number / 2
         temp = temp / 2;      // divide the decimal number by 2

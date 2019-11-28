@@ -48,7 +48,7 @@ vector<string> BabySim::readInCode()
     string line; // create string to store data from file
     vector<string> data;
 
-    ifstream fp("BabyTest1-MC.txt");
+    ifstream fp("Subtraction");
 
     if (!fp) // check if the file failed to open
     {
@@ -157,7 +157,7 @@ void BabySim::doInstruction(int lineNum)
             accummulator = -memItem;
             break;
         case 3: 
-            babyMemory[lineNum] = decimalConversion(-(accummulator));
+            babyMemory[lineNum] = decimalConversion(-(accummulator), 32);
             answerLocation = lineNum;
             break;
         case 4: 
