@@ -1,5 +1,6 @@
 #include "../converter/converter.cpp"
 #include "../error/error.cpp"
+#include "../file/file.cpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -28,8 +29,6 @@ public:
 
     vector<string> getArgs(int argc, char *argv[]);
     void assignArgs(vector<string> args);
-
-    vector<string> readInCode(); // temporary just to get the data
     
     int incrementCI(int currentInstruction); // increment the CI
     int fetchAndDecode(); // fetch and decode our line number and opcode
@@ -144,33 +143,6 @@ void BabySim::assignArgs(vector<string> args)
         // display error
         checkValidity(INVALID_NUMBER_OF_ARGS);
     }
-}
-
-
-// read in the data from file given from user if the file exist
-vector<string> BabySim::readInCode()
-{
-    string line; // create string to store data from file
-    vector<string> data;
-
-    ifstream fp(fyallName);
-
-    if (!fp) // check if the file failed to open
-    {
-        // print error message
-        cout << "Error Opening File, Please try again" << endl;
-        exit(0); // End the program
-    }
-
-    // loop until there is no data left in the file
-    while (getline(fp, line))
-    {
-        data.push_back(line);
-    }
-
-    fp.close(); // close the file stream
-
-    return data; // return our string
 }
 
 /*
@@ -402,6 +374,6 @@ int main(int argc, char *argv[])
 
     obj.assignArgs(obj.getArgs(argc, argv));
 
-    obj.babyMemory = obj.readInCode();
+    loadFile(obj.babyMemory, obj.fyallName);
     obj.babyRun();
 }
