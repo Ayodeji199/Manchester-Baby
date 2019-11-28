@@ -10,6 +10,7 @@ class BabySim
 {
 
 public:
+    string fileToRead;
     // variables to simulate baby functionality
     vector<string> babyMemory; // Baby Memory
     int currentInstruction; // stores the line number of the current instruction
@@ -52,7 +53,7 @@ vector<string> BabySim::readInCode()
     string line; // create string to store data from file
     vector<string> data;
 
-    ifstream fp("BabyTest1-MC.txt");
+    ifstream fp(fileToRead);
 
     if (!fp) // check if the file failed to open
     {
