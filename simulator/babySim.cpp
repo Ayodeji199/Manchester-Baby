@@ -52,7 +52,7 @@ vector<string> BabySim::readInCode()
     string line; // create string to store data from file
     vector<string> data;
 
-    ifstream fp("BabyTest1-MC.txt");
+    ifstream fp("Subtraction");
 
     if (!fp) // check if the file failed to open
     {

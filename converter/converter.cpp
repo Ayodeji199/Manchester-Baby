@@ -23,18 +23,17 @@ long long Bits[lineLength];
 long long test(long long val[] , int length)
 {
     long long m = 0;
-    int limit;
-    bool negative;
+    int limit = length;
+    bool negative = false;
 
-    if(val[length-1]==1)
-    {
-        limit = length-1;
-        negative = true;
-    } else {
-        limit = length;
-        negative = false;
+    if (length == lineLength){
+        if(val[length-1]==1)
+        {
+            limit = length-1;
+            negative = true;
+        }
+    
     }
-
     for (int i = 0; i < limit; i++)
     {
         m = m + (val[i] * Bits[i]);
