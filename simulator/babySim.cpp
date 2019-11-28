@@ -10,7 +10,11 @@ class BabySim
 {
 
 public:
-    string fileToRead;
+    // potential arguments when executing. otherwise default
+    int memoryWordSize; // bit size allowed to store in memory
+    string fyallName;   // filename (fyallname xdddddd) to use when reading instructions
+    bool extendedInstr; // use extended instructions if true, do not if false
+    
     // variables to simulate baby functionality
     vector<string> babyMemory; // Baby Memory
     int currentInstruction; // stores the line number of the current instruction
