@@ -151,6 +151,7 @@ void BabySim::doInstruction(int lineNum)
 {
     int stringLength = babyMemory[lineNum].size();
     int memItem = binaryToDecimal(babyMemory[lineNum] ,stringLength);
+    cout << "memitem is " << memItem << endl;
 
     switch (currentOpcode)
     {
@@ -183,6 +184,8 @@ void BabySim::doInstruction(int lineNum)
             stop = true;
             break;
         default:
+            cout << "Incorrect instruction received. Stopping program" << endl;
+            stop = true;
             break;
     }
 }
