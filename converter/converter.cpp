@@ -141,12 +141,9 @@ string decimalToBinary(long long decimalNum, int numberOfBits)
         i++;
     }
 
-<<<<<<< HEAD
-=======
     // cout << convertedBinary << endl;
 
     cout << "Converted " << decimalNum << " to binary: " << convertedBinary << endl;
 
->>>>>>> nickdv
     return convertedBinary; // return the converted binary as a string
 }

@@ -231,14 +231,9 @@ void BabySim::doInstruction(int lineNum)
             stop = true;
             break;
         default:
-<<<<<<< HEAD
             // if we get an invalid opcode, print an error message and stop the program 
             cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
             exit(0);
-=======
-            cout << "Incorrect instruction received. Stopping program" << endl;
-            stop = true;
->>>>>>> nickdv
             break;
     }
 }
