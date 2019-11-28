@@ -50,6 +50,8 @@ Assembler::Assembler()
 vector<string> Assembler::getArgs(int argc, char *argv[])
 {
 	vector<string> args = {}; // initialize the empty vector
+	// Prints number of arguments
+	cout << "Argc: " << argc << endl;
 	// go through each argument
 	for (int i = 1; i < argc; i++)
 	{

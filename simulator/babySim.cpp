@@ -1,50 +1,15 @@
-#include "../converter/converter.cpp"
-#include "../error/error.cpp"
+#include "../converter/converter.hpp"
+#include "../error/error.hpp"
+#include "babySim.hpp"
 #include <iostream>
-#include <string>
-#include <vector>
 #include <fstream>
 
 using namespace std;
 
-class BabySim
-{
-
-public:
-    // potential arguments when executing. otherwise default
-    int memoryWordSize; // bit size allowed to store in memory
-    string fyallName = "Subtraction";   // filename (fyallname xdddddd) to use when reading instructions
-    bool extendedInstr; // use extended instructions if true, do not if false
-
-    // variables to simulate baby functionality
-    vector<string> babyMemory; // Baby Memory
-    int currentInstruction; // stores the line number of the current instruction
-    string currentOpcode; // stores the current opcode as an integer
-    int accummulator; // the temporary storage of the baby
-    int answerLocation; // a variable to store the location of our final answer
-    bool stop; // a boolean to determine if our program is finshed
-
-    BabySim(); // constructor to initialise variables
-
-    vector<string> getArgs(int argc, char *argv[]);
-    void assignArgs(vector<string> args);
-
-    vector<string> readInCode(); // temporary just to get the data
-    
-    int incrementCI(int currentInstruction); // increment the CI
-    int fetchAndDecode(); // fetch and decode our line number and opcode
-    int getLineNum(string line); // get the line number from a line of source code
-    string getOpcode(string line); // get the opcode from a line of source code
-    void babyRun(); // contains the baby algorithm
-    void doInstruction(int); // contains the instruction set
-    void printMemory(); // prints the whole memory of the baby
-    void printData(); // prints values of baby
-};
-
 /*
     Constructor
 */
-BabySim::BabySim()
+BabySim::BabySim(char fyallName[])
 {
     // set default values
     babyMemory = {};
@@ -53,6 +18,7 @@ BabySim::BabySim()
     accummulator = 0;
     answerLocation = 0;
     stop = false;
+    this->fyallName = string(fyallName);
 }
 
 /*==============================================
@@ -146,7 +112,6 @@ void BabySim::assignArgs(vector<string> args)
     }
 }
 
-
 // read in the data from file given from user if the file exist
 vector<string> BabySim::readInCode()
 {
@@ -190,13 +155,12 @@ int BabySim::fetchAndDecode()
 {
     string codeLine = babyMemory[currentInstruction]; // get our line of machine code
 
-    int lineNum = getLineNum(codeLine);// call method to get the line number
+    int lineNum = getLineNum(codeLine); // call method to get the line number
 
     currentOpcode = getOpcode(codeLine); // call method to get the opcode
 
     return lineNum; // return our line number for use later on
 }
-
 
 /*
     Retreive the line number from line of machine code
@@ -206,14 +170,13 @@ int BabySim::getLineNum(string line)
     string lineNumB; // create temporary variable
 
     // get the data we need from the line of machine code
-    for (int i = 0; i < 5 ; ++i)
+    for (int i = 0; i < 5; ++i)
     {
         lineNumB = lineNumB + line[i];
     }
 
-    int size = lineNumB.size(); // get the size of our string
+    int size = lineNumB.size();                // get the size of our string
     int num = binaryToDecimal(lineNumB, size); // call binary to decimal converter
-
 
     // check if the line number we have aquired is outwith our maximum memory
     if (num > babyMemory.size())
@@ -233,13 +196,12 @@ string BabySim::getOpcode(string line)
     string opcode; // create temporary variable
 
     // get the data we need from the line of machine code
-    for (int i = 13; i < 16 ; ++i)
+    for (int i = 13; i < 16; ++i)
     {
         opcode = opcode + line[i];
     }
 
     return opcode; // return our opcode as string
-
 }
 
 /*
@@ -268,7 +230,7 @@ void BabySim::babyRun()
             exit(0);
         }
     }
-    
+
     // create variable to store line number
     int num = 0;
 
@@ -281,7 +243,7 @@ void BabySim::babyRun()
 
     printMemory(); // print the current state of the memory
 
-    while(!stop) // while stop is false i.e. we haven't been told to stop
+    while (!stop) // while stop is false i.e. we haven't been told to stop
     {
         // increment the CI
         currentInstruction = incrementCI(currentInstruction);
@@ -292,38 +254,37 @@ void BabySim::babyRun()
         // go to the instruction set to carry out our instruction based on our current opcode
         doInstruction(num);
 
-        cycleNum++; // 
+        cycleNum++; //
 
-        cout << "Cycle "<< cycleNum << " Finished" << endl;
+        cout << "Cycle " << cycleNum << " Finished" << endl;
         cout << endl;
 
-          // print the baby memory after a cycle has finished
+        // print the baby memory after a cycle has finished
         printMemory();
 
         // print the values of baby variables
         printData();
-
     }
 
-     int length = babyMemory[answerLocation].size(); // get the length our final answer's binary
+    int length = babyMemory[answerLocation].size(); // get the length our final answer's binary
 
-     cout << "PROGRAM FINISHED" << endl;
-     cout << endl;
+    cout << "PROGRAM FINISHED" << endl;
+    cout << endl;
 
-     // print the final answer in decimal format
-     cout << "Final Answer: " << binaryToDecimal(babyMemory[answerLocation], length) << endl;
+    // print the final answer in decimal format
+    cout << "Final Answer: " << binaryToDecimal(babyMemory[answerLocation], length) << endl;
 }
 
 /*
     Performs instructions based on what the current opcode is
 */
-void BabySim::doInstruction(int lineNum) 
+void BabySim::doInstruction(int lineNum)
 {
     // get the length of our string in memory
     int stringLength = babyMemory[lineNum].size();
 
     // get the decimal number we require
-    int memItem = binaryToDecimal(babyMemory[lineNum] ,stringLength);
+    int memItem = binaryToDecimal(babyMemory[lineNum], stringLength);
 
     // convert our opcode to a decimal number to use it for comparisons
     int convertedOpcode = binaryToDecimal(currentOpcode, currentOpcode.size());
@@ -331,39 +292,39 @@ void BabySim::doInstruction(int lineNum)
     // use our decimal opcode for conversion
     switch (convertedOpcode)
     {
-        case 0: // set current instruction to content of store location
-            currentInstruction = memItem;
-            break;
-        case 1: // add content of store location to current instruction
-            currentInstruction += memItem;
-            break;
-        case 2: // load data from store location in accumulator
-            accummulator = -memItem;
-            break;
-        case 3: // store value from accumulator into storage
-            babyMemory[lineNum] = decimalToBinary(accummulator, 32);
-            answerLocation = lineNum;
-            break;
-        case 4: // subtract content of store location from accumulator
-            accummulator -= memItem;
-            break;
-        case 5: // same as 4
-            accummulator -= memItem;
-            break;
-        case 6: // increment current instruction if accumulator value is negative
-            if (accummulator < 0)
-            {
-                currentInstruction++;
-            }
-            break;
-        case 7: // stop program
-            stop = true;
-            break;
-        default:
-            // if we get an invalid opcode, print an error message and stop the program 
-            cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
-            exit(0);
-            break;
+    case 0: // set current instruction to content of store location
+        currentInstruction = memItem;
+        break;
+    case 1: // add content of store location to current instruction
+        currentInstruction += memItem;
+        break;
+    case 2: // load data from store location in accumulator
+        accummulator = -memItem;
+        break;
+    case 3: // store value from accumulator into storage
+        babyMemory[lineNum] = decimalToBinary(accummulator, 32);
+        answerLocation = lineNum;
+        break;
+    case 4: // subtract content of store location from accumulator
+        accummulator -= memItem;
+        break;
+    case 5: // same as 4
+        accummulator -= memItem;
+        break;
+    case 6: // increment current instruction if accumulator value is negative
+        if (accummulator < 0)
+        {
+            currentInstruction++;
+        }
+        break;
+    case 7: // stop program
+        stop = true;
+        break;
+    default:
+        // if we get an invalid opcode, print an error message and stop the program
+        cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
+        exit(0);
+        break;
     }
 }
 
@@ -396,12 +357,12 @@ void BabySim::printData()
     cout << endl;
 }
 
-int main(int argc, char *argv[])
-{
-    BabySim obj;
+// int main(int argc, char *argv[])
+// {
+//     BabySim obj;
 
-    obj.assignArgs(obj.getArgs(argc, argv));
+//     obj.assignArgs(obj.getArgs(argc, argv));
 
-    obj.babyMemory = obj.readInCode();
-    obj.babyRun();
-}
+//     obj.babyMemory = obj.readInCode();
+//     obj.babyRun();
+// }

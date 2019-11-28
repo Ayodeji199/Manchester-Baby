@@ -21,7 +21,7 @@ GTKLIB=`pkg-config --cflags --libs gtk+-3.0`
 # LD=g++
 # LDFLAGS=$(PTHREAD) $(GTKLIB) -export-dynamic
 
-OBJS=src/main.c ../assembler/assembler.cpp ../assembler/opcodes.cpp ../assembler/symbols.cpp ../file/file.cpp src/errorGui.c ../converter/converter.cpp
+OBJS=src/main.c ../assembler/assembler.cpp ../assembler/opcodes.cpp ../assembler/symbols.cpp ../file/file.cpp src/errorGui.c ../converter/converter.cpp ../simulator/babySim.cpp
 
 # all: $(OBJS)
 # 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)

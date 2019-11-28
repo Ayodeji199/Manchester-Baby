@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include "../../assembler/assembler.hpp"
 #include <stdio.h>
+#include "../../simulator/babySim.hpp"
 
 // Created using this tutorial
 // https://prognotes.net/2015/06/gtk-3-c-program-using-glade-3/
@@ -59,13 +60,17 @@ extern "C"
         std::string memsize = std::to_string(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory)));
         char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
         char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
-        std::vector<std::string> run_args = {"-memsize ", memsize, "-readname", std::string(readname), "-writename", std::string(writename)};
-        assemblerObj.assignArgs(run_args);
+        // std::vector<std::string> run_args = {"-memsize ", memsize, "-readname", std::string(readname), "-writename", std::string(writename)};
+        // assemblerObj.assignArgs(run_args);
         assemblerObj.assembly();
     }
 
     // Called when simulator button is clicked
     void on_btnSimulator_clicked()
     {
+        BabySim babyObj = BabySim("Subtraction");
+        babyObj.assignArgs(babyObj.getArgs(argNum, argV));
+        babyObj.babyMemory = babyObj.readInCode();
+        babyObj.babyRun();
     }
 }
