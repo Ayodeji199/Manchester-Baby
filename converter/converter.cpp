@@ -89,7 +89,7 @@ string decimalConversion(long long decimalNum)
     int i = 0;
 
     // while loop runs 8 times to allow return value to be in 8 bit binary form
-    while (temp != 0)
+    while (i != 32)
     {
         binaryVal = temp % 2; // get the binary value be getting the remainder of decimal number / 2
         temp = temp / 2;      // divide the decimal number by 2
@@ -102,6 +102,8 @@ string decimalConversion(long long decimalNum)
         {
             convertedBinary += "1"; // if so, add a 1 to the binary string
         }
+
+        i++;
     }
 
     return convertedBinary; // return the converted binary as a string
