@@ -194,6 +194,7 @@ void BabySim::doInstruction(int lineNum)
 
     // get the decimal number we require
     int memItem = binaryToDecimal(babyMemory[lineNum] ,stringLength);
+    cout << "memitem is " << memItem << endl;
 
     // convert our opcode to a decimal number to use it for comparisons
     int convertedOpcode = binaryToDecimal(currentOpcode, currentOpcode.size());
@@ -230,9 +231,14 @@ void BabySim::doInstruction(int lineNum)
             stop = true;
             break;
         default:
+<<<<<<< HEAD
             // if we get an invalid opcode, print an error message and stop the program 
             cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
             exit(0);
+=======
+            cout << "Incorrect instruction received. Stopping program" << endl;
+            stop = true;
+>>>>>>> nickdv
             break;
     }
 }
