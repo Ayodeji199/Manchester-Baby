@@ -55,21 +55,27 @@ extern "C"
     // Called when assemble button is clicked
     void on_btnAssembler_clicked()
     {
+        
         Assembler assemblerObj = Assembler();
         assemblerObj.assignArgs(assemblerObj.getArgs(argNum, argV));
-        std::string memsize = std::to_string(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory)));
-        char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
-        char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
-        // std::vector<std::string> run_args = {"-memsize ", memsize, "-readname", std::string(readname), "-writename", std::string(writename)};
+        printf("Doc");
+        // int memsize = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory));
+        // char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
+        // char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
+        // std::vector<std::string> run_args = {"-memsize ", std::string(memsize), "-readname", std::string(readname), "-writename", std::string(writename)};
         // assemblerObj.assignArgs(run_args);
-        assemblerObj.assembly();
+        // assemblerObj.assembly();
     }
 
     // Called when simulator button is clicked
     void on_btnSimulator_clicked()
     {
         BabySim babyObj = BabySim("Subtraction");
-        babyObj.assignArgs(babyObj.getArgs(argNum, argV));
+        int memsize = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory));
+        char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
+        char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
+        std::vector<std::string> run_args = {"-memsize ", std::to_string(memsize), "-readname", std::string(readname), "-writename", std::string(writename)};
+        babyObj.assignArgs(run_args);
         babyObj.babyMemory = babyObj.readInCode();
         babyObj.babyRun();
     }
