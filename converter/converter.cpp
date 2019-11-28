@@ -11,8 +11,13 @@
 #include <fstream>
 #include <stdlib.h> 
 using namespace std;
+// This is the array that holds the values of two to the 32nd power starting from 1
 long long  Bits[32];
-
+/**
+ * This is the method that takes in the int,
+ *  multiplies it by the exponent of its 
+ * current position then adds them together
+ */
 long long test(long long val[] , int length)
 {
     long long m = 0;
@@ -22,6 +27,9 @@ long long test(long long val[] , int length)
     }
     return m;   
 }
+/**
+ * This is the method that helpes to calculate the exponent in the array
+ */
 long long exponent(int power)
 {
     long long base = 1;
@@ -33,6 +41,9 @@ long long exponent(int power)
     }
     return base;
 }
+/**
+ *The purpose of this method is to initialise the first 2 values of the array
+ */
 void Arrayinitilizer()
 {
     Bits[0]=1;
@@ -48,7 +59,10 @@ void Arrayinitilizer()
     }
     
 }
-
+/**
+ * This is the method for the binary conversion 
+ * It takes in a string and the length of the string then converts it to binary
+ */
 long long binaryConversion(string bi , int length)
 {
 Arrayinitilizer();
