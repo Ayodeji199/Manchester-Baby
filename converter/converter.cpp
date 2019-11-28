@@ -1,95 +1,123 @@
 #include "converter.hpp"
-#include "../error/error.hpp"
-#include <iostream>
-#include <locale>
-#include <algorithm>
 
 using namespace std;
+// This is the array that holds the values of two to the 32nd power starting from 1
+const int lineLength = 32; // number of bits that make up each number
+long long Bits[lineLength];
 
-int binaryToDecimal(string binary)
+/*
+  This is the method that takes in the int,
+  multiplies it by the exponent of its 
+  current position then adds them together
+*/
+long long binaryArrarytoDecimal(long long val[] , int length)
 {
-    // error checking, check if the string is empty, check if the string is in 8 bit binary format
-    if (binary.empty())
-    {
-        // print an error message if any of the above conditions are true
-        checkValidity(INVALID_INPUT_PARAMETER);
-    }
+    long long binaryDecimal = 0;
+    int limit = length;
+    bool negative = false;
 
-    // initialise variables for error check algorithm
-    int i = 0;
-    string tempString;
-
-    // while loop runs thorugh the inputed string checking if any of the elements are not a 1 or a 0
-    while (binary[i] != '\0')
-    {
-        // set the temporary variable to the element in the string
-        tempString = binary[i];
-
-        // use the compare function to check if the element is a 0 (i.e. does it return 0)
-        if (tempString.compare("0") != 0)
+    if (length == lineLength){
+        if(val[length-1]==1)
         {
-            // if the element is not a 0 then it must be a 1, use compare function to check
-            if (tempString.compare("1") != 0)
-            {
-                // if the element is not a 1 then it is invalid. Print an error messages to signal this
-                checkValidity(INVALID_INPUT_PARAMETER);
-            }
+            limit = length-1;
+            negative = true;
         }
-
-        i++; // add one to the counter variable to move to the next element in the string
+    
     }
-
-    reverse(binary.begin(), binary.end()); // format the binary so that our answer is correct
-
-    // initialise variables for conversion algorithm
-    // Conversion algorithm was aquired from https://www.geeksforgeeks.org/program-binary-decimal-conversion/
-    long int temp = stol(binary); // note we convert the user's string to an integer using the stoi function
-    int convertedDecimal = 0;
-    int base = 1;
-    int lastNum;
-
-    // while loop runs until the temporary varible reaches 0
-    while (temp != 0)
+    for (int i = 0; i < limit; i++)
     {
-        // get the last number in the binary sequence
-        lastNum = temp % 10;
-
-        // move the temporary variable down to the next number in the sequence
-        temp = temp / 10;
-
-        // add the result of the last number * base to the convert variable
-        convertedDecimal += lastNum * base;
-
-        // increment the base up to the next base of 8 bit binary, the final base being 128
-        base = base * 2;
+        binaryDecimal = binaryDecimal + (val[i] * Bits[i]);
     }
-    // end of conversion algorithm
 
-    return convertedDecimal; // return the converted decimal number
+    if (negative){
+        binaryDecimal = -binaryDecimal;
+    }
+
+    return binaryDecimal;   
+}
+/*
+  This is the method that helpes to calculate the exponent in the array
+*/
+long long exponent(int power)
+{
+    long long base = 1;
+    
+    long long ex =2;
+    for (int i = 0; i < power; i++)
+    {
+       base = base * ex;
+    }
+    return base;
+}
+/**
+ *The purpose of this method is to initialise the first 2 values of the array
+ */
+void Arrayinitilizer()
+{
+    Bits[0]=1;
+    Bits[1]=2;
+    for (int i = 2; i < lineLength; i++)
+    {
+        Bits[i] = exponent(i);
+    }
+    
+}
+/**
+ * This is the method for the binary conversion 
+ * It takes in a string and the length of the string then converts it to binary
+ */
+long long binaryToDecimal(string binary , int length)
+{
+    Arrayinitilizer();
+    long long finalval = 0;
+    long long binaryArray[lineLength];
+
+    for (int i = 0; i < length; i++)
+    {
+        int currentBit = (int)binary[i];
+        binaryArray[i] = currentBit - 48; // using (int)bi[i] converts to ASCII of 1 or 0, this deals with that to turn into true 1 or 0
+    }
+
+    finalval = binaryArrarytoDecimal(binaryArray, length);
+
+    return finalval;
 }
 
-string decimalToBinary(int decimal, int bits)
+
+/*
+Converts decimal to binary (string)
+*/
+string decimalToBinary(long long decimalNum, int numberOfBits)
 {
     // initialise variables for conversion algorithm
     string convertedBinary;
-    long long int temp = decimal;
-    long long int binaryVal;
+    long long absoluteDecimal = abs(decimalNum);
+    long long binaryVal;
     int i = 0;
 
-    // while loop runs 8 times to allow return value to be in 8 bit binary form
-    while (i != bits)
+    // while loop runs 'numberOfBits' times to allow return value to be specified bit length in binary form
+    while (i < numberOfBits)
     {
-        binaryVal = temp % 2; // get the binary value be getting the remainder of decimal number / 2
-        temp = temp / 2;      // divide the decimal number by 2
+        binaryVal = absoluteDecimal % 2; // get the binary value be getting the remainder of decimal number / 2
+        absoluteDecimal = absoluteDecimal / 2;      // divide the decimal number by 2
 
-        if (binaryVal == 0) // check if the binary value is 0
-        {
-            convertedBinary += "0"; // if so, add a 0 to the binary string
+        if (i < numberOfBits-1){ // check if i isn't last bit
+            if (binaryVal == 0) // check if the binary value is 0
+            {
+                convertedBinary += "0"; // if so, add a 0 to the binary string
+            }
+            else if (binaryVal == 1) // check if the binary value is 1
+            {
+                convertedBinary += "1"; // if so, add a 1 to the binary string
+            }
+        } else { // if i is on the last bit
+            if(decimalNum < 0){ // if the input number is negative
+                convertedBinary += "1"; // use two's complement to store it correctly
+            } else {
+                convertedBinary += "0"; // don't use two's complement so value stays positive
+            }
         }
-        else if (binaryVal == 1) // check if the binary value is 1
-        {
-            convertedBinary += "1"; // if so, add a 1 to the binary string
-        }
+
         i++;
     }
 

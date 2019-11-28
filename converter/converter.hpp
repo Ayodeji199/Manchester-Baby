@@ -2,14 +2,22 @@
 #define CONVERTER_H
 
 #include <string>
+#include "../error/error.hpp"
+#include <iostream>
+#include <locale>
+#include <algorithm>
+#include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <iomanip>
+#include <stdlib.h> 
 
-int binaryToDecimal(std::string binary);
-int binaryToHex(int hex);
+long long binaryArrarytoDecimal(long long val[] , int length);
+long long exponent(int power);
+void Arrayinitilizer();
+long long binaryToDecimal(std::string binary, int length);
 
-std::string decimalToBinary(int decimal, int bits);
-int decimalToHex(int decimal);
+std::string decimalToBinary(long long decimal, int bits);
 
-std::string hexToBinary(int hex);
-int hexToDecimal(int hex);
 
 #endif

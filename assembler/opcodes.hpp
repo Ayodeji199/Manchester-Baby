@@ -17,7 +17,7 @@ private:
 
 public:
   // Constructor
-  Opcodes();
+  Opcodes(bool extendedinstr);
   // Returns true if the variable is contained within the Symbols table
   bool isOpcode(std::string assembly);
   // Stores an opcode in the table

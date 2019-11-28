@@ -5,13 +5,13 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
-	Assembler assemblerObj = Assembler();
-	assemblerObj.assignArgs(assemblerObj.getArgs(argc,argv));
-	assemblerObj.assembly();
-	return SUCCESS;
-}
+// int main(int argc, char *argv[])
+// {
+// 	Assembler assemblerObj = Assembler();
+// 	assemblerObj.assignArgs(assemblerObj.getArgs(argc,argv));
+// 	assemblerObj.assembly();
+// 	return SUCCESS;
+// }
 
 // > CURRENT OUTPUT <
 /*
@@ -38,19 +38,20 @@ Assembler::Assembler()
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	extendedinstr = true;
-	opcodesObj = new Opcodes();
+	opcodesObj = new Opcodes(extendedinstr);
 	symbolsObj = new Symbols(memoryWordSize);
 	line = new vector<string>; // vector to store lines
 	objectCode = new vector<string>;
 }
 
-// REVIEW needs checking if it works since I don't want to mess up Max's tester
 /*==============================================
 	Gets arguments and returns them as a vector
 ==============================================*/
 vector<string> Assembler::getArgs(int argc, char *argv[])
 {
 	vector<string> args = {}; // initialize the empty vector
+	// Prints number of arguments
+	cout << "Argc: " << argc << endl;
 	// go through each argument
 	for (int i = 1; i < argc; i++)
 	{
@@ -66,7 +67,6 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 	return args;
 }
 
-// REVIEW needs checking if it works since I don't want to mess up Max's tester
 /*=====================================================================================================
 	If possible, assigns filenames, memory size, extended instruction set arguments values from vector
 =====================================================================================================*/
@@ -89,8 +89,8 @@ void Assembler::assignArgs(vector<string> args)
 					{
 						// try to parse the integer
 						memoryWordSize = stoi(args.at(i + 1));
-						//if the size entered is less than 32
-						if (memoryWordSize < 32)
+						//if the size entered is less than 32 or more than 8192
+						if (memoryWordSize < 32 || memoryWordSize > 8192)
 						{
 							// display error
 							checkValidity(INVALID_MEMORY_SIZE);
@@ -359,9 +359,9 @@ void Assembler::storeInstruction(string opcodeCandidate, string operandCandidate
 	}
 }
 
-/*=============================================================================
-Calculates the number of blank bits that are needed to produce a 32 bit number
-=============================================================================*/
+/*=================================================================================
+	Calculates the number of blank bits that are needed to produce a 32 bit number
+===================================================================================*/
 string Assembler::calcBlankBits()
 {
 	if (memoryWordSize > 8192 || memoryWordSize < 0)
@@ -380,13 +380,19 @@ string Assembler::calcBlankBits()
 	return blankBits;
 }
 
+/*=================================================================================================
+	Recursive algorithim for calculating how many blank bits are needed to produce a 32 bit number
+===================================================================================================*/
 int Assembler::calcZeros(int number)
 {
+	// Returns 0 because there's no longer any bits left 
+	// between the opcode and the operand at this length
 	if (number == pow(2, 13))
 	{
 		return 0;
 	}
 
+	// Adds 1 each time 
 	int zeros = calcZeros(number * 2) + 1;
 	return zeros;
 }

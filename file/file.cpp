@@ -29,6 +29,8 @@ void loadFile(vector<string> &fileLines, string filename)
   }
   // Displays an error message and quits the program if we haven't successfully opened a file
   checkValidity(valid);
+  // Displays a success message
+  cout << "File " + filename + " successfully loaded" << endl;
 }
 
 // Attempts to open a file and returns if the function was successful
@@ -65,6 +67,8 @@ void saveFile(vector<string> &fileLines, string filename)
   fileToWrite.close();
   // Displays an error message and quits the program if we haven't successfully saved a file
   checkValidity(valid);
+  // Displays a success message
+  cout << "File " + filename + " successfully saved" << endl;
 }
 
 // Attempts to open a file to write to and returns if the function was successful
