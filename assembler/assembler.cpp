@@ -44,7 +44,6 @@ Assembler::Assembler()
 	objectCode = new vector<string>;
 }
 
-// REVIEW needs checking if it works since I don't want to mess up Max's tester
 /*==============================================
 	Gets arguments and returns them as a vector
 ==============================================*/
@@ -66,7 +65,6 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 	return args;
 }
 
-// REVIEW needs checking if it works since I don't want to mess up Max's tester
 /*=====================================================================================================
 	If possible, assigns filenames, memory size, extended instruction set arguments values from vector
 =====================================================================================================*/
@@ -89,8 +87,8 @@ void Assembler::assignArgs(vector<string> args)
 					{
 						// try to parse the integer
 						memoryWordSize = stoi(args.at(i + 1));
-						//if the size entered is less than 32
-						if (memoryWordSize < 32)
+						//if the size entered is less than 32 or more than 8192
+						if (memoryWordSize < 32 || memoryWordSize > 8192)
 						{
 							// display error
 							checkValidity(INVALID_MEMORY_SIZE);
