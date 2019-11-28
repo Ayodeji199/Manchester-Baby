@@ -117,6 +117,7 @@ int BabySim::getOpcode(string line)
 
 }
 
+// run the a source code file through the baby
 void BabySim::babyRun()
 {
     int num = 0;
