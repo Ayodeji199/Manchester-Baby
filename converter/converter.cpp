@@ -12,7 +12,8 @@
 #include <stdlib.h> 
 using namespace std;
 // This is the array that holds the values of two to the 32nd power starting from 1
-long long Bits[32];
+const int lineLength = 32; // number of bits that make up each number
+long long Bits[lineLength];
 
 /*
   This is the method that takes in the int,
@@ -24,7 +25,7 @@ long long test(long long val[] , int length)
     long long m = 0;
     int limit;
     bool negative;
-    
+
     if(val[length-1]==1)
     {
         limit = length-1;
@@ -42,6 +43,9 @@ long long test(long long val[] , int length)
     if (negative){
         m = -m;
     }
+
+    // cout << "Value to convert was " << val << endl;
+    // cout << "Converted value is " << m << endl;
 
     return m;   
 }
@@ -66,14 +70,9 @@ void Arrayinitilizer()
 {
     Bits[0]=1;
     Bits[1]=2;
-    for (int i = 2; 0 < 32; i++)
+    for (int i = 2; i < lineLength; i++)
     {
         Bits[i] = exponent(i);
-        if (i == 31)
-        {
-           break;
-        }
-        
     }
     
 }
@@ -85,13 +84,18 @@ long long binaryToDecimal(string bi , int length)
 {
     Arrayinitilizer();
     long long finalval = 0;
-    long long dumb[32];
-        for (int i = 0; i < length; i++)
-        {
-            int ia = (int)bi[i];
-            dumb[i]=ia - 48;
-            
-        }
+    long long dumb[lineLength];
+
+    cout << "Converting binary to decimal..." << endl;
+    cout << "Length is " << length << endl;
+    for (int i = 0; i < length; i++)
+    {
+        int currentBit = (int)bi[i];
+        dumb[i] = currentBit - 48; // using (int)bi[i] converts to ASCII of 1 or 0, this deals with that to turn into true 1 or 0
+        cout << dumb[i];
+    }
+    cout << endl;
+
     finalval = test(dumb,length);
 
     cout << "Converted " << bi << " to decimal: " << finalval << endl;
