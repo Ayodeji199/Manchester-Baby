@@ -3,81 +3,93 @@
 #include <iostream>
 #include <locale>
 #include <algorithm>
-
+#include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <iomanip>
+#include <string>
+#include <fstream>
+#include <stdlib.h> 
 using namespace std;
-
-int binaryToDecimal(string binary)
+// This is the array that holds the values of two to the 32nd power starting from 1
+long long  Bits[32];
+/**
+ * This is the method that takes in the int,
+ *  multiplies it by the exponent of its 
+ * current position then adds them together
+ */
+long long test(long long val[] , int length)
 {
-    // error checking, check if the string is empty, check if the string is in 8 bit binary format
-    if (binary.empty())
+    long long m = 0;
+    for (int i = 0; i < length; i++)
     {
-        // print an error message if any of the above conditions are true
-        checkValidity(INVALID_INPUT_PARAMETER);
+        m = m + (val[i] * Bits[i]);
     }
-
-    // initialise variables for error check algorithm
-    int i = 0;
-    string tempString;
-
-    // while loop runs thorugh the inputed string checking if any of the elements are not a 1 or a 0
-    while (binary[i] != '\0')
+    return m;   
+}
+/**
+ * This is the method that helpes to calculate the exponent in the array
+ */
+long long exponent(int power)
+{
+    long long base = 1;
+    
+    long long ex =2;
+    for (int i = 0; i < power; i++)
     {
-        // set the temporary variable to the element in the string
-        tempString = binary[i];
-
-        // use the compare function to check if the element is a 0 (i.e. does it return 0)
-        if (tempString.compare("0") != 0)
+       base = base * ex;
+    }
+    return base;
+}
+/**
+ *The purpose of this method is to initialise the first 2 values of the array
+ */
+void Arrayinitilizer()
+{
+    Bits[0]=1;
+    Bits[1]=2;
+    for (int i = 2; 0 < 32; i++)
+    {
+        Bits[i] = exponent(i);
+        if (i == 31)
         {
-            // if the element is not a 0 then it must be a 1, use compare function to check
-            if (tempString.compare("1") != 0)
-            {
-                // if the element is not a 1 then it is invalid. Print an error messages to signal this
-                checkValidity(INVALID_INPUT_PARAMETER);
-            }
+           break;
         }
-
-        i++; // add one to the counter variable to move to the next element in the string
+        
     }
+    
+}
+/**
+ * This is the method for the binary conversion 
+ * It takes in a string and the length of the string then converts it to binary
+ */
+long long binaryConversion(string bi , int length)
+{
+Arrayinitilizer();
+long long finalval = 0;
+long long dumb[32];
+for (int i = 0; i < length; i++)
+{
+    int ia = (int)bi[i];
+    dumb[i]=ia - 48;
+}
+finalval = test(dumb,length);
 
-    reverse(binary.begin(), binary.end()); // format the binary so that our answer is correct
-
-    // initialise variables for conversion algorithm
-    // Conversion algorithm was aquired from https://www.geeksforgeeks.org/program-binary-decimal-conversion/
-    long int temp = stol(binary); // note we convert the user's string to an integer using the stoi function
-    int convertedDecimal = 0;
-    int base = 1;
-    int lastNum;
-
-    // while loop runs until the temporary varible reaches 0
-    while (temp != 0)
-    {
-        // get the last number in the binary sequence
-        lastNum = temp % 10;
-
-        // move the temporary variable down to the next number in the sequence
-        temp = temp / 10;
-
-        // add the result of the last number * base to the convert variable
-        convertedDecimal += lastNum * base;
-
-        // increment the base up to the next base of 8 bit binary, the final base being 128
-        base = base * 2;
-    }
-    // end of conversion algorithm
-
-    return convertedDecimal; // return the converted decimal number
+return finalval;
 }
 
-string decimalToBinary(int decimal, int bits)
+
+
+string decimalConversion(long long decimalNum)
 {
     // initialise variables for conversion algorithm
     string convertedBinary;
-    long long int temp = decimal;
-    long long int binaryVal;
+    long long temp = decimalNum;
+    long long binaryVal;
     int i = 0;
 
     // while loop runs 8 times to allow return value to be in 8 bit binary form
-    while (i != bits)
+    while (temp != 0)
     {
         binaryVal = temp % 2; // get the binary value be getting the remainder of decimal number / 2
         temp = temp / 2;      // divide the decimal number by 2
@@ -90,7 +102,6 @@ string decimalToBinary(int decimal, int bits)
         {
             convertedBinary += "1"; // if so, add a 1 to the binary string
         }
-        i++;
     }
 
     return convertedBinary; // return the converted binary as a string
