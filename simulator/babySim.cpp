@@ -218,7 +218,7 @@ int BabySim::getLineNum(string line)
     // check if the line number we have aquired is outwith our maximum memory
     if (num > babyMemory.size())
     {
-        cout << "INVALID OPERATION - YOU HAVE RAN OUT OF MEMORY" << endl;
+        checkValidity(INVALID_INPUT_PARAMETER);
         exit(0);
     }
 
@@ -250,13 +250,13 @@ void BabySim::babyRun()
     // check if our memory vector is empty
     if (babyMemory.empty())
     {
-        cout << "MEMORY IS EMPTY - PLEASE CHECK YOUR SOURCE CODE" << endl;
+        checkValidity(MEMORY_EMPTY);
         exit(0);
     }
 
     if (babyMemory.size() > 32 /* this can be change to a defined varible when we get there */)
     {
-        cout << "ERROR - YOU HAVE RUN OUT OF MEMORY" << endl;
+        checkValidity(INVALID_MEMORY_SIZE);
         exit(0);
     }
 
@@ -264,7 +264,7 @@ void BabySim::babyRun()
     {
         if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
         {
-            cout << "A LINE OF CODE HAS EXCEEDED THE MEMORY LIMIT - PLEASE TRY AGAIN" << endl;
+            checkValidity(MEMORY_OVERLOAD);
             exit(0);
         }
     }
@@ -361,7 +361,7 @@ void BabySim::doInstruction(int lineNum)
             break;
         default:
             // if we get an invalid opcode, print an error message and stop the program 
-            cout << "INVALID OPCODE DETECTED - PLEASE CHECK YOUR SOURCE CODE FILE" << endl;
+            checkValidity(INVALID_OPCODE);
             exit(0);
             break;
     }
