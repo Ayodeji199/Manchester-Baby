@@ -14,7 +14,7 @@ extern "C"
     GtkFileChooserButton *gfileChooserExport;
     GtkWidget *gspinBtnMemory;
 
-    int main(int argc, char *argv[])
+    int main(int argc, char **argv)
     {
         argNum = argc;
         argV = argv;
@@ -33,7 +33,6 @@ extern "C"
         gspinBtnMemory = GTK_WIDGET(gtk_builder_get_object(builder, "spinBtnMemory"));
 
         g_object_unref(builder);
-
         gtk_widget_show(window);
         gtk_main();
 
@@ -52,31 +51,48 @@ extern "C"
         gtk_main_quit();
     }
 
+    void get_args(char *args)
+    {
+        int memsize = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory));
+        int num = memsize;
+        int intLength;
+        for (intLength = 0; num != 0; intLength++, num = num / 10)
+        {
+        }
+        char *length = (char *)intLength;
+        char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
+        char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
+
+        args = new char[intLength + strlen(readname) + strlen(writename)];
+        strcpy(args, "-memsize");
+        strcat(args, (char *)memsize);
+        strcat(args, "-readname");
+        strcat(args, readname);
+        strcat(args, "-writename");
+        strcat(args, writename);
+    }
+
     // Called when assemble button is clicked
     void on_btnAssembler_clicked()
     {
-        
+
         Assembler assemblerObj = Assembler();
-        assemblerObj.assignArgs(assemblerObj.getArgs(argNum, argV));
+        // assemblerObj.assignArgs(assemblerObj.getArgs(argNum, argV));
         printf("Doc");
-        // int memsize = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory));
-        // char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
-        // char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
-        // std::vector<std::string> run_args = {"-memsize ", std::string(memsize), "-readname", std::string(readname), "-writename", std::string(writename)};
-        // assemblerObj.assignArgs(run_args);
-        // assemblerObj.assembly();
+
+        char *run_args;
+        get_args(run_args);
+        assemblerObj.assignArgs((int)strlen(run_args), run_args);
+        assemblerObj.assembly();
     }
 
     // Called when simulator button is clicked
     void on_btnSimulator_clicked()
     {
         BabySim babyObj = BabySim("Subtraction");
-        int memsize = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory));
-        char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
-        char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
-        std::vector<std::string> run_args = {"-memsize ", std::to_string(memsize), "-readname", std::string(readname), "-writename", std::string(writename)};
-        babyObj.assignArgs(run_args);
-        babyObj.babyMemory = babyObj.readInCode();
-        babyObj.babyRun();
+        // char *run_args[] = get_args();
+        // babyObj.assignArgs(run_args);
+        // babyObj.babyMemory = babyObj.readInCode();
+        // babyObj.babyRun();
     }
 }
