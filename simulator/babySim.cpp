@@ -1,3 +1,11 @@
+/*
+    Max Kelly: 180004073
+    Nick De Villiers: 180003967
+    Max Fyall: 180011724
+    Tadas Saltenis: 180015959
+    Ayodeji Shote: 180004145
+*/
+
 #include "../converter/converter.hpp"
 #include "../error/error.hpp"
 #include "babySim.hpp"
@@ -192,15 +200,17 @@ void BabySim::babyRun()
         exit(0);
     }
 
-    if (babyMemory.size() > 32 /* this can be change to a defined varible when we get there */)
+    // check if we breach the memory limit
+    if (babyMemory.size() > 32)
     {
         checkValidity(INVALID_MEMORY_SIZE);
         exit(0);
     }
 
+    // check if we breach the memory limit
     for (int i = 0; i < babyMemory.size(); ++i)
     {
-        if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
+        if (babyMemory[i].size() > 33)
         {
             checkValidity(MEMORY_OVERLOAD);
             exit(0);
