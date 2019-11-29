@@ -14,7 +14,7 @@ class BabySim
 public:
     // potential arguments when executing. otherwise default
     int memoryWordSize; // bit size allowed to store in memory
-    string fyallName = "Subtraction";   // filename (fyallname xdddddd) to use when reading instructions
+    string fyallName = "Test.txt";   // filename (fyallname xdddddd) to use when reading instructions
     bool extendedInstr; // use extended instructions if true, do not if false
 
     // variables to simulate baby functionality
@@ -166,6 +166,8 @@ int BabySim::fetchAndDecode()
 
     currentOpcode = getOpcode(codeLine); // call method to get the opcode
 
+    cout << "Data Fetched" << endl;
+
     return lineNum; // return our line number for use later on
 }
 
@@ -300,36 +302,46 @@ void BabySim::doInstruction(int lineNum)
     // convert our opcode to a decimal number to use it for comparisons
     int convertedOpcode = binaryToDecimal(currentOpcode, currentOpcode.size());
 
+    cout << "Data Decoded" << endl;
+
     // use our decimal opcode for conversion
     switch (convertedOpcode)
     {
         case 0: // set current instruction to content of store location
             currentInstruction = memItem;
+            cout << "Instruction Executed" << endl;
             break;
         case 1: // add content of store location to current instruction
             currentInstruction += memItem;
+            cout << "Instruction Executed" << endl;
             break;
         case 2: // load data from store location in accumulator
             accummulator = -memItem;
+            cout << "Instruction Executed" << endl;
             break;
         case 3: // store value from accumulator into storage
             babyMemory[lineNum] = decimalToBinary(accummulator, 32);
+            cout << "Instruction Executed" << endl;
             answerLocation = lineNum;
             break;
         case 4: // subtract content of store location from accumulator
             accummulator -= memItem;
+            cout << "Instruction Executed" << endl;
             break;
         case 5: // same as 4
             accummulator -= memItem;
+            cout << "Instruction Executed" << endl;
             break;
         case 6: // increment current instruction if accumulator value is negative
             if (accummulator < 0)
             {
                 currentInstruction++;
             }
+            cout << "Instruction Executed" << endl;
             break;
         case 7: // stop program
             stop = true;
+            cout << "Instruction Executed" << endl;
             break;
         default:
             // if we get an invalid opcode, print an error message and stop the program 
