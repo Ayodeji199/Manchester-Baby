@@ -41,11 +41,11 @@ long long binaryArrarytoDecimal(long long val[] , int length)
 long long exponent(int power)
 {
     long long base = 1;
-    
-    long long ex =2;
+
+    long long ex = 2;
     for (int i = 0; i < power; i++)
     {
-       base = base * ex;
+        base = base * ex;
     }
     return base;
 }
@@ -60,7 +60,6 @@ void Arrayinitilizer()
     {
         Bits[i] = exponent(i);
     }
-    
 }
 /**
  * This is the method for the binary conversion 
