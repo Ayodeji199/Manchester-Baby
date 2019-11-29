@@ -157,12 +157,12 @@ void Assembler::assignArgs(int argc, char *argv)
 	for (int i = 1; i < argc; i++)
 	{
 		// if argument isn't NULL
-		if (argv[i] != NULL)
-		{
+		// if (argv[i] != NULL)
+		// {
 			// add argument to the vector
 			args.push_back(to_string(argv[i]));
 			cout << "add_arg<" << argv[i] << ">" << endl;
-		}
+		// }
 	}
 
 	// if the amount of arguments is divisable by 2 and is equal or less than 8 (which would be 4 flags with a value each)
