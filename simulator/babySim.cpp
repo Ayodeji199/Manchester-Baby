@@ -9,7 +9,7 @@ using namespace std;
 /*
     Constructor
 */
-BabySim::BabySim(char fyallName[])
+BabySim::BabySim(char* fyallName)
 {
     // set default values
     babyMemory = {};
@@ -153,9 +153,10 @@ int BabySim::getLineNum(string line)
 
     int size = lineNumB.size();                // get the size of our string
     int num = binaryToDecimal(lineNumB, size); // call binary to decimal converter
+    int memSize = babyMemory.size();
 
     // check if the line number we have aquired is outwith our maximum memory
-    if (num > babyMemory.size())
+    if (num > memSize)
     {
         checkValidity(INVALID_INPUT_PARAMETER);
         exit(0);
@@ -185,6 +186,7 @@ string BabySim::getOpcode(string line)
 */
 void BabySim::babyRun()
 {
+    int memSize = babyMemory.size();
     // check if our memory vector is empty
     if (babyMemory.empty())
     {
@@ -192,13 +194,13 @@ void BabySim::babyRun()
         exit(0);
     }
 
-    if (babyMemory.size() > 32 /* this can be change to a defined varible when we get there */)
+    if (memSize > 32 /* this can be change to a defined varible when we get there */)
     {
         checkValidity(INVALID_MEMORY_SIZE);
         exit(0);
     }
 
-    for (int i = 0; i < babyMemory.size(); ++i)
+    for (int i = 0; i < memSize; ++i)
     {
         if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
         {
@@ -321,8 +323,9 @@ void BabySim::printMemory()
 {
     cout << "Data in Memory" << endl;
 
+    int memSize = babyMemory.size();
     // print each line of our string vector
-    for (int i = 0; i < babyMemory.size(); ++i)
+    for (int i = 0; i < memSize; ++i)
     {
         cout << babyMemory[i] << endl;
     }
@@ -342,13 +345,3 @@ void BabySim::printData()
     cout << "Stop: " << stop << endl;
     cout << endl;
 }
-
-// int main(int argc, char *argv[])
-// {
-//     BabySim obj;
-
-//     obj.assignArgs(obj.getArgs(argc, argv));
-
-//     obj.babyMemory = obj.readInCode();
-//     obj.babyRun();
-// }
