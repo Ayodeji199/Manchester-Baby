@@ -155,7 +155,7 @@ int BabySim::getLineNum(string line)
     int num = binaryToDecimal(lineNumB, size); // call binary to decimal converter
 
     // check if the line number we have aquired is outwith our maximum memory
-    if (num > babyMemory.size())
+    if (num > (int) babyMemory.size())
     {
         checkValidity(INVALID_INPUT_PARAMETER);
         exit(0);
@@ -198,7 +198,7 @@ void BabySim::babyRun()
         exit(0);
     }
 
-    for (int i = 0; i < babyMemory.size(); ++i)
+    for (int i = 0; i < (int) babyMemory.size(); ++i)
     {
         if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
         {
@@ -322,7 +322,7 @@ void BabySim::printMemory()
     cout << "Data in Memory" << endl;
 
     // print each line of our string vector
-    for (int i = 0; i < babyMemory.size(); ++i)
+    for (int i = 0; i < (int) babyMemory.size(); ++i)
     {
         cout << babyMemory[i] << endl;
     }
