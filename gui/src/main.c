@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
-#include "../../assembler/assembler.hpp"
 #include <stdio.h>
+#include <string.h>
+#include "../../assembler/assembler.hpp"
 #include "../../simulator/babySim.hpp"
 
 // Created using this tutorial
@@ -51,7 +52,7 @@ extern "C"
         gtk_main_quit();
     }
 
-    void get_args(char *args)
+    void get_args(char *args, int *argLength)
     {
         int memsize = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(gspinBtnMemory));
         int num = memsize;
@@ -59,13 +60,15 @@ extern "C"
         for (intLength = 0; num != 0; intLength++, num = num / 10)
         {
         }
-        char *length = (char *)intLength;
+        char *memsizeChar = new char[intLength];
+        sprintf(memsizeChar, "%d", memsize);
         char *readname = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserImport)));
         char *writename = gtk_file_chooser_get_filename((GTK_FILE_CHOOSER(gfileChooserExport)));
-
-        args = new char[intLength + strlen(readname) + strlen(writename)];
+        *argLength = (int) intLength + strlen(readname) + strlen(writename);
+        args = new char[*argLength];
+        // args = new char[intLength];
         strcpy(args, "-memsize");
-        strcat(args, (char *)memsize);
+        strcat(args, memsizeChar);
         strcat(args, "-readname");
         strcat(args, readname);
         strcat(args, "-writename");
@@ -75,21 +78,20 @@ extern "C"
     // Called when assemble button is clicked
     void on_btnAssembler_clicked()
     {
-
+        printf("Doc");
         Assembler assemblerObj = Assembler();
         // assemblerObj.assignArgs(assemblerObj.getArgs(argNum, argV));
-        printf("Doc");
-
-        char *run_args;
-        get_args(run_args);
-        assemblerObj.assignArgs((int)strlen(run_args), run_args);
+        char *run_args = NULL;
+        int argLength = 0;
+        get_args(run_args, &argLength);
+        assemblerObj.assignArgs(argLength, run_args);
         assemblerObj.assembly();
     }
 
     // Called when simulator button is clicked
     void on_btnSimulator_clicked()
     {
-        BabySim babyObj = BabySim("Subtraction");
+        // BabySim babyObj = BabySim("Subtraction");
         // char *run_args[] = get_args();
         // babyObj.assignArgs(run_args);
         // babyObj.babyMemory = babyObj.readInCode();
