@@ -7,7 +7,7 @@ class BabySim
 public:
     // potential arguments when executing. otherwise default
     int memoryWordSize;                    // bit size allowed to store in memory
-    std::string fyallName = "Subtraction"; // filename (fyallname xdddddd) to use when reading instructions
+    std::string fyallName = "BabyTest1-MC.txt"; // filename (fyallname xdddddd) to use when reading instructions
     bool extendedInstr;                    // use extended instructions if true, do not if false
 
     // variables to simulate baby functionality
@@ -18,7 +18,8 @@ public:
     int answerLocation;                  // a variable to store the location of our final answer
     bool stop;                           // a boolean to determine if our program is finshed
 
-    BabySim(char* fyallName); // constructor to initialise variables
+    BabySim();                // constructor to initialise variables
+    BabySim(char* fyallName); // constructor to initialise variables with custom fyallName
 
     std::vector<std::string> getArgs(int argc, char *argv[]);
     void assignArgs(std::vector<std::string> args);

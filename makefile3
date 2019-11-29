@@ -1,25 +1,27 @@
+# Sets default compiler
 CC = g++
 
+# Sets flags
 CFLAGS = -Wall -Wextra -pedantic -Werror -Wno-write-strings
 CFLAGS_LESSER = -Wall -Werror -Wno-write-strings
 CVERSION = -std=c++17
 
-GUI_OBJS = gui/src/main.c assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp file/file.cpp gui/src/errorGui.c converter/converter.cpp simulator/babySim.cpp
-GUI_FLAGS=$(DEBUG) $(OPT) $(WARN) -pthread -pipe
-GTKLIB=`pkg-config --cflags --libs gtk+-3.0`
+# Main
+all: assembler simulator
 
-all: assembler simulator gui
+realMaxTester: tester/realMaxTester.cpp assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp converter/converter.cpp file/file.cpp error/error.cpp
+	# Compiles real max tester
+	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o realMaxTester.o tester/realMaxTester.cpp assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp converter/converter.cpp file/file.cpp error/error.cpp 
 
 assembler: assembler/main.cpp assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp file/file.cpp error/error.cpp converter/converter.cpp
+	# Compiles assembler
 	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o assembler.o assembler/main.cpp assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp file/file.cpp error/error.cpp converter/converter.cpp
 
 simulator: simulator/main.cpp simulator/babySim.cpp file/file.cpp error/error.cpp converter/converter.cpp
+	# Compiles simulator
 	$(CC) $(CVERSION) $(CFLAGS_LESSER) -o simulator.o simulator/main.cpp simulator/babySim.cpp file/file.cpp error/error.cpp converter/converter.cpp
 
-gui: $(GUI_OBJS)
-	$(CC) $(GUI_FLAGS) -rdynamic -g -o gui.o $(GUI_OBJS) $(GTKLIB)
-
-clean: 
+clean :
+	# Deletes unused files
 	-rm $(objects) *.o
 
- 

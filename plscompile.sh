@@ -1,13 +1,13 @@
 # Sets default compiler
-# CC = g++
+CC=g++
 
 # Sets flags
-# CFLAGS = -Wall -Wextra -pedantic -Werror
-# CFLAGS_LESSER = -Wall -Werror
-# CVERSION = -std=c++17
+CFLAGS="-Wall -Wextra -pedantic -Werror"
+CFLAGS_LESSER="-Wall -Werror"
+CVERSION="-std=c++17"
 
 # Compiles assembler
-g++ -std=c++17 -o assembler.o assembler/assembler.cpp
+$CC $CVERSION $CFLAGS_LESSER -o assembler.o assembler/main.cpp assembler/assembler.cpp assembler/opcodes.cpp assembler/symbols.cpp file/file.cpp error/error.cpp converter/converter.cpp
 
 # Compiles simulator
-g++ -std=c++17 -o simulator.o simulator/main.cpp
+$CC $CVERSION $CFLAGS_LESSER -o simulator.o simulator/main.cpp simulator/babySim.cpp file/file.cpp error/error.cpp converter/converter.cpp
