@@ -5,13 +5,13 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
-	Assembler assemblerObj = Assembler();
-	assemblerObj.assignArgs(assemblerObj.getArgs(argc, argv));
-	assemblerObj.assembly();
-	return SUCCESS;
-}
+// int main(int argc, char *argv[])
+// {
+// 	Assembler assemblerObj = Assembler();
+// 	assemblerObj.assignArgs(assemblerObj.getArgs(argc,argv));
+// 	assemblerObj.assembly();
+// 	return SUCCESS;
+// }
 
 // > CURRENT OUTPUT <
 /*
@@ -38,7 +38,7 @@ Assembler::Assembler()
 	// Stores the number of words (32-bit integers our memory can store)
 	memoryWordSize = 32;
 	extendedinstr = true;
-	opcodesObj = new Opcodes();
+	opcodesObj = new Opcodes(extendedinstr);
 	symbolsObj = new Symbols(memoryWordSize);
 	line = new vector<string>; // vector to store lines
 	objectCode = new vector<string>;
@@ -50,6 +50,8 @@ Assembler::Assembler()
 vector<string> Assembler::getArgs(int argc, char *argv[])
 {
 	vector<string> args = {}; // initialize the empty vector
+	// Prints number of arguments
+	cout << "Argc: " << argc << endl;
 	// go through each argument
 	for (int i = 1; i < argc; i++)
 	{
@@ -70,6 +72,99 @@ vector<string> Assembler::getArgs(int argc, char *argv[])
 =====================================================================================================*/
 void Assembler::assignArgs(vector<string> args)
 {
+	// if the amount of arguments is divisable by 2 and is equal or less than 8 (which would be 4 flags with a value each)
+	if ((int)args.size() % 2 == 0 && (int)args.size() <= 8)
+	{
+		// for every flag
+		for (int i = 0; i < (int)args.size(); i = i + 2)
+		{
+			// TIL you can't do string switches. A sad day.
+
+			// if the flag is -memsize
+			if (args.at(i) == "-memsize")
+			{
+				// if the size to set isn't another flag (and isn't negative)
+				if (args.at(i)[0] != '-')
+					try
+					{
+						// try to parse the integer
+						memoryWordSize = stoi(args.at(i + 1));
+						//if the size entered is less than 32 or more than 8192
+						if (memoryWordSize < 32 || memoryWordSize > 8192)
+						{
+							// display error
+							checkValidity(INVALID_MEMORY_SIZE);
+						}
+					}
+					catch (invalid_argument &e)
+					{
+						// display error if the value entered isn't an integer
+						checkValidity(INVALID_FILENAME);
+					}
+					catch (out_of_range &e)
+					{
+						// display error if the value entered is too big for a non-long integer
+						checkValidity(INVALID_MEMORY_SIZE);
+					}
+			}
+
+			// if the flag is -readname
+			else if (args.at(i) == "-readname")
+			{
+				// assign name of fyall to read from (hehe max fyall get it)
+				openFyall = args.at(i + 1);
+			}
+
+			// if the flag is -writename
+			else if (args.at(i) == "-writename")
+			{
+				// assign name of fyall to write to (hehe max fyall get it)
+				saveFyall = args.at(i + 1);
+			}
+
+			// if the flag is -extended
+			else if (args.at(i) == "-extended")
+			{
+				// if the value after is true/false/1/0
+				if (args.at(i + 1) == "true" || args.at(i + 1) == "false" || args.at(i + 1) == "1" || args.at(i + 1) == "0")
+				{
+					// assign if the extended instruction set should be used
+					istringstream(args.at(i + 1)) >> extendedinstr;
+				}
+				else
+				{
+					// if it's not true/false/1/0, display error
+					checkValidity(INVALID_INPUT_PARAMETER);
+				}
+			}
+		}
+	}
+	else
+	{
+		// display error
+		checkValidity(INVALID_NUMBER_OF_ARGS);
+	}
+}
+
+// This is essentially a combined verson of getArgs and assignArgs to make it work in the GUI
+/*====================================================================================================
+	If possible, assigns filename, memory size, extended instruction set arguments values from vector ( NOTE - GUI VERSION )
+====================================================================================================*/
+void Assembler::assignArgs(int argc, char *argv)
+{
+	vector<string> args = {}; // initialize the empty vector
+	// go through each argument
+	for (int i = 1; i < argc; i++)
+	{
+		// if argument isn't NULL
+		if (argv[i] != NULL)
+		{
+			// add argument to the vector
+			args.push_back(to_string(argv[i]));
+			cout << "add_arg<" << argv[i] << ">" << endl;
+		}
+	}
+
 	// if the amount of arguments is divisable by 2 and is equal or less than 8 (which would be 4 flags with a value each)
 	if ((int)args.size() % 2 == 0 && (int)args.size() <= 8)
 	{
@@ -357,9 +452,9 @@ void Assembler::storeInstruction(string opcodeCandidate, string operandCandidate
 	}
 }
 
-/*=============================================================================
-Calculates the number of blank bits that are needed to produce a 32 bit number
-=============================================================================*/
+/*=================================================================================
+	Calculates the number of blank bits that are needed to produce a 32 bit number
+===================================================================================*/
 string Assembler::calcBlankBits()
 {
 	if (memoryWordSize > 8192 || memoryWordSize < 0)
@@ -378,13 +473,19 @@ string Assembler::calcBlankBits()
 	return blankBits;
 }
 
+/*=================================================================================================
+	Recursive algorithim for calculating how many blank bits are needed to produce a 32 bit number
+===================================================================================================*/
 int Assembler::calcZeros(int number)
 {
+	// Returns 0 because there's no longer any bits left 
+	// between the opcode and the operand at this length
 	if (number == pow(2, 13))
 	{
 		return 0;
 	}
 
+	// Adds 1 each time 
 	int zeros = calcZeros(number * 2) + 1;
 	return zeros;
 }
