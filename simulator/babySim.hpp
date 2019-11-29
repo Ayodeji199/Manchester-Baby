@@ -7,7 +7,7 @@ class BabySim
 public:
     // potential arguments when executing. otherwise default
     int memoryWordSize;                    // bit size allowed to store in memory
-    std::string fyallName = "Subtraction"; // filename (fyallname xdddddd) to use when reading instructions
+    std::string fyallName = "BabyTest1-MC.txt"; // filename (fyallname xdddddd) to use when reading instructions
     bool extendedInstr;                    // use extended instructions if true, do not if false
 
     // variables to simulate baby functionality

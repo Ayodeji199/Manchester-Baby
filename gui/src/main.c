@@ -17,6 +17,9 @@ extern "C"
 
     int main(int argc, char **argv)
     {
+        printf("GUI NOT FINISHED\n");
+        printf("FILLED WITH BUGS\n");
+        
         argNum = argc;
         argV = argv;
 
