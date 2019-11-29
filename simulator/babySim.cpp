@@ -9,6 +9,20 @@ using namespace std;
 /*
     Constructor
 */
+BabySim::BabySim()
+{
+    // set default values
+    babyMemory = {};
+    currentInstruction = 0;
+    currentOpcode = " ";
+    accummulator = 0;
+    answerLocation = 0;
+    stop = false;
+}
+
+/*
+    Constructor with custom fyallName
+*/
 BabySim::BabySim(char* fyallName)
 {
     // set default values
@@ -17,6 +31,7 @@ BabySim::BabySim(char* fyallName)
     currentOpcode = " ";
     accummulator = 0;
     answerLocation = 0;
+    memoryWordSize = 32;
     stop = false;
     this->fyallName = string(fyallName);
 }
@@ -61,7 +76,9 @@ void BabySim::assignArgs(vector<string> args)
                     try
                     {
                         // try to parse the integer
+                        cout << "Raw value of memory arg is " << args.at(i + 1) << endl;
                         memoryWordSize = stoi(args.at(i + 1));
+                        cout << "Parsed to int makes it " << memoryWordSize << endl;
                         //if the size entered is less than 32 or more than 8192
                         if (memoryWordSize < 32 || memoryWordSize > 8192)
                         {
@@ -194,15 +211,18 @@ void BabySim::babyRun()
         exit(0);
     }
 
-    if (memSize > 32 /* this can be change to a defined varible when we get there */)
+    if (memSize > memoryWordSize)
     {
+        cout << "memSize is " << memSize << endl;
+        cout << "memoryWordSize is " << memoryWordSize << endl;
+        cout << "Calling in at line 214" << endl;
         checkValidity(INVALID_MEMORY_SIZE);
         exit(0);
     }
 
     for (int i = 0; i < memSize; ++i)
     {
-        if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
+        if (babyMemory[i].size() > 33)
         {
             checkValidity(MEMORY_OVERLOAD);
             exit(0);

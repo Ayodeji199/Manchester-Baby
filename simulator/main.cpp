@@ -7,7 +7,7 @@ extern "C"
 {
     int main(int argc, char *argv[])
     {
-        BabySim obj = BabySim("simulator/Subtraction");
+        BabySim obj = BabySim();
 
         obj.assignArgs(obj.getArgs(argc, argv));
         loadFile(obj.babyMemory, obj.fyallName);
