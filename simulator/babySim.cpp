@@ -156,11 +156,7 @@ int BabySim::getLineNum(string line)
     int memSize = babyMemory.size();
 
     // check if the line number we have aquired is outwith our maximum memory
-<<<<<<< HEAD
     if (num > memSize)
-=======
-    if (num > (int) babyMemory.size())
->>>>>>> 8c408101e4d65488e7856fb4e9d7673310b5525a
     {
         checkValidity(INVALID_INPUT_PARAMETER);
         exit(0);
@@ -204,11 +200,7 @@ void BabySim::babyRun()
         exit(0);
     }
 
-<<<<<<< HEAD
     for (int i = 0; i < memSize; ++i)
-=======
-    for (int i = 0; i < (int) babyMemory.size(); ++i)
->>>>>>> 8c408101e4d65488e7856fb4e9d7673310b5525a
     {
         if (babyMemory[i].size() > 33 /* this can be change to a defined variable when we get there*/)
         {
@@ -333,11 +325,7 @@ void BabySim::printMemory()
 
     int memSize = babyMemory.size();
     // print each line of our string vector
-<<<<<<< HEAD
     for (int i = 0; i < memSize; ++i)
-=======
-    for (int i = 0; i < (int) babyMemory.size(); ++i)
->>>>>>> 8c408101e4d65488e7856fb4e9d7673310b5525a
     {
         cout << babyMemory[i] << endl;
     }
