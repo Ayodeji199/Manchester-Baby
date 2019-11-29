@@ -150,7 +150,7 @@ void Assembler::assignArgs(vector<string> args)
 /*====================================================================================================
 	If possible, assigns filename, memory size, extended instruction set arguments values from vector ( NOTE - GUI VERSION )
 ====================================================================================================*/
-void Assembler::assignArgs(int argc, char *argv[])
+void Assembler::assignArgs(int argc, char *argv)
 {
 	vector<string> args = {}; // initialize the empty vector
 	// go through each argument
@@ -160,7 +160,7 @@ void Assembler::assignArgs(int argc, char *argv[])
 		if (argv[i] != NULL)
 		{
 			// add argument to the vector
-			args.push_back(argv[i]);
+			args.push_back(to_string(argv[i]));
 			cout << "add_arg<" << argv[i] << ">" << endl;
 		}
 	}

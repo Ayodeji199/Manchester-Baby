@@ -31,7 +31,7 @@ public:
     void assignArgs(std::vector<std::string> args);
 
     // If possible, assigns filenames, memory size, extended instruction set arguments values from vector ( NOTE - GUI VERSION )
-    void assignArgs(int argc, char *argv[]);
+    void assignArgs(int argc, char *argv);
 
     // The assembly loop
     void assembly();
